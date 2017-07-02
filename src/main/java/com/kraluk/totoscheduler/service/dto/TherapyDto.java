@@ -1,5 +1,6 @@
 package com.kraluk.totoscheduler.service.dto;
 
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -117,10 +118,15 @@ public class TherapyDto implements Serializable {
 
     @Override
     public String toString() {
-        return "TherapyDto{" +
-            "id=" + getId() +
-            ", comment='" + getComment() + "'" +
-            ", date='" + getDate() + "'" +
-            "}";
+        return MoreObjects.toStringHelper(this)
+            .add("id", id)
+            .add("comment", comment)
+            .add("date", date)
+            .add("therapyEntryId", therapyEntryId)
+            .add("userId", userId)
+            .add("userLogin", userLogin)
+            .add("periodId", periodId)
+            .add("childId", childId)
+            .toString();
     }
 }

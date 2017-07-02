@@ -20,18 +20,18 @@ import java.util.stream.Collectors;
 @Service
 public class UserMapper {
 
-    public UserDto userToUserDTO(User user) {
+    public UserDto toDto(User user) {
         return new UserDto(user);
     }
 
-    public List<UserDto> usersToUserDTOs(List<User> users) {
+    public List<UserDto> toDtos(List<User> users) {
         return users.stream()
             .filter(Objects::nonNull)
-            .map(this::userToUserDTO)
+            .map(this::toDto)
             .collect(Collectors.toList());
     }
 
-    public User userDTOToUser(UserDto userDto) {
+    public User toEntity(UserDto userDto) {
         if (userDto == null) {
             return null;
         } else {
@@ -52,10 +52,10 @@ public class UserMapper {
         }
     }
 
-    public List<User> userDTOsToUsers(List<UserDto> userDtos) {
+    public List<User> toEntities(List<UserDto> userDtos) {
         return userDtos.stream()
             .filter(Objects::nonNull)
-            .map(this::userDTOToUser)
+            .map(this::toEntity)
             .collect(Collectors.toList());
     }
 

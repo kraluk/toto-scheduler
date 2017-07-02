@@ -580,7 +580,7 @@ public class UserResourceIntTest {
             DEFAULT_LOGIN,
             null,
             Stream.of(AuthoritiesConstants.USER).collect(Collectors.toSet()));
-        User user = userMapper.userDTOToUser(userDto);
+        User user = userMapper.toEntity(userDto);
         assertThat(user.getId()).isEqualTo(DEFAULT_ID);
         assertThat(user.getLogin()).isEqualTo(DEFAULT_LOGIN);
         assertThat(user.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
@@ -611,7 +611,7 @@ public class UserResourceIntTest {
         authorities.add(authority);
         user.setAuthorities(authorities);
 
-        UserDto userDto = userMapper.userToUserDTO(user);
+        UserDto userDto = userMapper.toDto(user);
 
         assertThat(userDto.getId()).isEqualTo(DEFAULT_ID);
         assertThat(userDto.getLogin()).isEqualTo(DEFAULT_LOGIN);

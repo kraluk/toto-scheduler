@@ -1,5 +1,6 @@
 package com.kraluk.totoscheduler.service.dto;
 
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -77,9 +78,11 @@ public class RoleDto implements Serializable {
 
     @Override
     public String toString() {
-        return "RoleDto{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            "}";
+        return MoreObjects.toStringHelper(this)
+            .add("id", id)
+            .add("name", name)
+            .add("userId", userId)
+            .add("userLogin", userLogin)
+            .toString();
     }
 }

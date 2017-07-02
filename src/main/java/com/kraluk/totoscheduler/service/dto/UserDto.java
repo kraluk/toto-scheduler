@@ -1,5 +1,6 @@
 package com.kraluk.totoscheduler.service.dto;
 
+import com.google.common.base.MoreObjects;
 import com.kraluk.totoscheduler.config.Constants;
 import com.kraluk.totoscheduler.domain.Authority;
 import com.kraluk.totoscheduler.domain.User;
@@ -154,19 +155,20 @@ public class UserDto {
 
     @Override
     public String toString() {
-        return "UserDto{" +
-            "login='" + login + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", email='" + email + '\'' +
-            ", imageUrl='" + imageUrl + '\'' +
-            ", activated=" + activated +
-            ", langKey='" + langKey + '\'' +
-            ", createdBy=" + createdBy +
-            ", createdDate=" + createdDate +
-            ", lastModifiedBy='" + lastModifiedBy + '\'' +
-            ", lastModifiedDate=" + lastModifiedDate +
-            ", authorities=" + authorities +
-            "}";
+        return MoreObjects.toStringHelper(this)
+            .add("id", id)
+            .add("login", login)
+            .add("firstName", firstName)
+            .add("lastName", lastName)
+            .add("email", email)
+            .add("imageUrl", imageUrl)
+            .add("activated", activated)
+            .add("langKey", langKey)
+            .add("createdBy", createdBy)
+            .add("createdDate", createdDate)
+            .add("lastModifiedBy", lastModifiedBy)
+            .add("lastModifiedDate", lastModifiedDate)
+            .add("authorities", authorities)
+            .toString();
     }
 }

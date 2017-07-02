@@ -1,5 +1,6 @@
 package com.kraluk.totoscheduler.service.dto;
 
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -79,11 +80,11 @@ public class ChildDto implements Serializable {
 
     @Override
     public String toString() {
-        return "ChildDto{" +
-            "id=" + getId() +
-            ", registerNumber='" + getRegisterNumber() + "'" +
-            ", name='" + getName() + "'" +
-            ", comment='" + getComment() + "'" +
-            "}";
+        return MoreObjects.toStringHelper(this)
+            .add("id", id)
+            .add("registerNumber", registerNumber)
+            .add("name", name)
+            .add("comment", comment)
+            .toString();
     }
 }

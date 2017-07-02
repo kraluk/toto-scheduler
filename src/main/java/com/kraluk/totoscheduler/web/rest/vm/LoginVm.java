@@ -1,5 +1,6 @@
 package com.kraluk.totoscheduler.web.rest.vm;
 
+import com.google.common.base.MoreObjects;
 import com.kraluk.totoscheduler.config.Constants;
 
 import javax.validation.constraints.NotNull;
@@ -48,9 +49,10 @@ public class LoginVm {
 
     @Override
     public String toString() {
-        return "LoginVm{" +
-            "username='" + username + '\'' +
-            ", rememberMe=" + rememberMe +
-            '}';
+        return MoreObjects.toStringHelper(this)
+            .add("username", username)
+            .add("password", password)
+            .add("rememberMe", rememberMe)
+            .toString();
     }
 }

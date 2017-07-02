@@ -21,13 +21,12 @@ import io.github.jhipster.config.JHipsterConstants;
  */
 @Aspect
 public class LoggingAspect {
-
     private static final Logger log = LoggerFactory.getLogger(LoggingAspect.class);
 
-    private final Environment env;
+    private final Environment environment;
 
-    public LoggingAspect(Environment env) {
-        this.env = env;
+    public LoggingAspect(Environment environment) {
+        this.environment = environment;
     }
 
     /**
@@ -59,7 +58,7 @@ public class LoggingAspect {
     @AfterThrowing(pointcut = "applicationPackagePointcut() && springBeanPointcut()",
         throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
-        if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
+        if (environment.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
             log.error("Exception in {}.{}() with cause = \'{}\' and exception = \'{}\'",
                 joinPoint.getSignature().getDeclaringTypeName(),
                 joinPoint.getSignature().getName(), e.getCause() != null ? e.getCause() : "NULL",
