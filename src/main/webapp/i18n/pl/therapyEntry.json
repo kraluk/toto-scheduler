@@ -1,0 +1,21 @@
+{
+    "totoSchedulerApp": {
+        "therapyEntry" : {
+            "home": {
+                "title": "Therapy Entries",
+                "createLabel": "Dodaj Therapy Entry",
+                "createOrEditLabel": "Dodaj lub edytuj: Therapy Entry"
+            },
+            "created": "Utworzono nowy Therapy Entry z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Therapy Entry z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Therapy Entry z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Therapy Entry {{ id }}?"
+            },
+            "detail": {
+                "title": "Therapy Entry"
+            },
+            "name": "Name"
+        }
+    }
+}
