@@ -59,6 +59,7 @@ local.properties
 *.ids
 *.orig
 classes/
+out/
 
 ######################
 # Visual Studio Code
@@ -76,6 +77,7 @@ classes/
 ######################
 .gradle/
 /build/
+.gradletasknamecache
 
 ######################
 # Package Files
