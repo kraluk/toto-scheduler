@@ -1,0 +1,43 @@
+entity Role {
+	name String required minlength(5),
+}
+
+entity Period {
+	name String required minlength(5),
+	comment String,
+	startDate LocalDate required,
+    endDate LocalDate required
+}
+
+entity Therapy {
+	comment String required,
+    date ZonedDateTime required
+}
+
+entity TherapyEntry {
+	name String required minlength(5)
+}
+
+entity Child {
+	registerNumber String required minlength(5),
+    name String required minlength(5),
+    comment String
+}
+
+relationship OneToOne {
+	Therapy{therapyEntry} to TherapyEntry
+}
+
+relationship OneToMany {
+	Child{therapy} to Therapy
+}
+
+relationship ManyToOne {
+	Therapy{user(login)} to User{therapy},
+    Therapy{period} to Period,
+    Role{user(login)} to User
+}
+
+dto Role, Period, Therapy, TherapyEntry, Child with mapstruct
+
+paginate Therapy, Period with infinite-scroll
