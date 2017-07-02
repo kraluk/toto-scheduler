@@ -1,15 +1,17 @@
 package com.kraluk.totoscheduler.service.dto;
 
 
-import java.time.LocalDate;
-import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * A DTO for the Period entity.
  */
-public class PeriodDTO implements Serializable {
+public class PeriodDto implements Serializable {
 
     private Long id;
 
@@ -74,11 +76,11 @@ public class PeriodDTO implements Serializable {
             return false;
         }
 
-        PeriodDTO periodDTO = (PeriodDTO) o;
-        if(periodDTO.getId() == null || getId() == null) {
+        PeriodDto periodDto = (PeriodDto) o;
+        if (periodDto.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), periodDTO.getId());
+        return Objects.equals(getId(), periodDto.getId());
     }
 
     @Override
@@ -88,7 +90,7 @@ public class PeriodDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "PeriodDTO{" +
+        return "PeriodDto{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", comment='" + getComment() + "'" +

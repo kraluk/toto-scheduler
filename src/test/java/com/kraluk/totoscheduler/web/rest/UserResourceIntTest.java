@@ -7,10 +7,11 @@ import com.kraluk.totoscheduler.repository.UserRepository;
 import com.kraluk.totoscheduler.security.AuthoritiesConstants;
 import com.kraluk.totoscheduler.service.MailService;
 import com.kraluk.totoscheduler.service.UserService;
-import com.kraluk.totoscheduler.service.dto.UserDTO;
+import com.kraluk.totoscheduler.service.dto.UserDto;
 import com.kraluk.totoscheduler.service.mapper.UserMapper;
 import com.kraluk.totoscheduler.web.rest.errors.ExceptionTranslator;
 import com.kraluk.totoscheduler.web.rest.vm.ManagedUserVM;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,20 +27,25 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.persistence.EntityManager;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the UserResource REST controller.
@@ -560,7 +566,7 @@ public class UserResourceIntTest {
 
     @Test
     public void testUserDTOtoUser() {
-        UserDTO userDTO = new UserDTO(
+        UserDto userDto = new UserDto(
             DEFAULT_ID,
             DEFAULT_LOGIN,
             DEFAULT_FIRSTNAME,
@@ -574,7 +580,7 @@ public class UserResourceIntTest {
             DEFAULT_LOGIN,
             null,
             Stream.of(AuthoritiesConstants.USER).collect(Collectors.toSet()));
-        User user = userMapper.userDTOToUser(userDTO);
+        User user = userMapper.userDTOToUser(userDto);
         assertThat(user.getId()).isEqualTo(DEFAULT_ID);
         assertThat(user.getLogin()).isEqualTo(DEFAULT_LOGIN);
         assertThat(user.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
@@ -587,7 +593,8 @@ public class UserResourceIntTest {
         assertThat(user.getCreatedDate()).isNotNull();
         assertThat(user.getLastModifiedBy()).isNull();
         assertThat(user.getLastModifiedDate()).isNotNull();
-        assertThat(user.getAuthorities()).extracting("name").containsExactly(AuthoritiesConstants.USER);
+        assertThat(user.getAuthorities()).extracting("name")
+            .containsExactly(AuthoritiesConstants.USER);
     }
 
     @Test
@@ -604,22 +611,22 @@ public class UserResourceIntTest {
         authorities.add(authority);
         user.setAuthorities(authorities);
 
-        UserDTO userDTO = userMapper.userToUserDTO(user);
+        UserDto userDto = userMapper.userToUserDTO(user);
 
-        assertThat(userDTO.getId()).isEqualTo(DEFAULT_ID);
-        assertThat(userDTO.getLogin()).isEqualTo(DEFAULT_LOGIN);
-        assertThat(userDTO.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
-        assertThat(userDTO.getLastName()).isEqualTo(DEFAULT_LASTNAME);
-        assertThat(userDTO.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(userDTO.isActivated()).isEqualTo(true);
-        assertThat(userDTO.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
-        assertThat(userDTO.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
-        assertThat(userDTO.getCreatedBy()).isEqualTo(DEFAULT_LOGIN);
-        assertThat(userDTO.getCreatedDate()).isEqualTo(user.getCreatedDate());
-        assertThat(userDTO.getLastModifiedBy()).isEqualTo(DEFAULT_LOGIN);
-        assertThat(userDTO.getLastModifiedDate()).isEqualTo(user.getLastModifiedDate());
-        assertThat(userDTO.getAuthorities()).containsExactly(AuthoritiesConstants.USER);
-        assertThat(userDTO.toString()).isNotNull();
+        assertThat(userDto.getId()).isEqualTo(DEFAULT_ID);
+        assertThat(userDto.getLogin()).isEqualTo(DEFAULT_LOGIN);
+        assertThat(userDto.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
+        assertThat(userDto.getLastName()).isEqualTo(DEFAULT_LASTNAME);
+        assertThat(userDto.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(userDto.isActivated()).isEqualTo(true);
+        assertThat(userDto.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
+        assertThat(userDto.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
+        assertThat(userDto.getCreatedBy()).isEqualTo(DEFAULT_LOGIN);
+        assertThat(userDto.getCreatedDate()).isEqualTo(user.getCreatedDate());
+        assertThat(userDto.getLastModifiedBy()).isEqualTo(DEFAULT_LOGIN);
+        assertThat(userDto.getLastModifiedDate()).isEqualTo(user.getLastModifiedDate());
+        assertThat(userDto.getAuthorities()).containsExactly(AuthoritiesConstants.USER);
+        assertThat(userDto.toString()).isNotNull();
     }
 
     @Test

@@ -1,10 +1,9 @@
 package com.kraluk.totoscheduler.web.rest;
 
 import com.kraluk.totoscheduler.TotoSchedulerApp;
-
 import com.kraluk.totoscheduler.domain.Child;
 import com.kraluk.totoscheduler.repository.ChildRepository;
-import com.kraluk.totoscheduler.service.dto.ChildDTO;
+import com.kraluk.totoscheduler.service.dto.ChildDto;
 import com.kraluk.totoscheduler.service.mapper.ChildMapper;
 import com.kraluk.totoscheduler.web.rest.errors.ExceptionTranslator;
 
@@ -22,13 +21,19 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the ChildResource REST controller.
@@ -105,10 +110,10 @@ public class ChildResourceIntTest {
         int databaseSizeBeforeCreate = childRepository.findAll().size();
 
         // Create the Child
-        ChildDTO childDTO = childMapper.toDto(child);
+        ChildDto childDto = childMapper.toDto(child);
         restChildMockMvc.perform(post("/api/children")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(childDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(childDto)))
             .andExpect(status().isCreated());
 
         // Validate the Child in the database
@@ -127,12 +132,12 @@ public class ChildResourceIntTest {
 
         // Create the Child with an existing ID
         child.setId(1L);
-        ChildDTO childDTO = childMapper.toDto(child);
+        ChildDto childDto = childMapper.toDto(child);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restChildMockMvc.perform(post("/api/children")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(childDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(childDto)))
             .andExpect(status().isBadRequest());
 
         // Validate the Alice in the database
@@ -148,11 +153,11 @@ public class ChildResourceIntTest {
         child.setRegisterNumber(null);
 
         // Create the Child, which fails.
-        ChildDTO childDTO = childMapper.toDto(child);
+        ChildDto childDto = childMapper.toDto(child);
 
         restChildMockMvc.perform(post("/api/children")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(childDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(childDto)))
             .andExpect(status().isBadRequest());
 
         List<Child> childList = childRepository.findAll();
@@ -167,11 +172,11 @@ public class ChildResourceIntTest {
         child.setName(null);
 
         // Create the Child, which fails.
-        ChildDTO childDTO = childMapper.toDto(child);
+        ChildDto childDto = childMapper.toDto(child);
 
         restChildMockMvc.perform(post("/api/children")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(childDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(childDto)))
             .andExpect(status().isBadRequest());
 
         List<Child> childList = childRepository.findAll();
@@ -189,7 +194,8 @@ public class ChildResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(child.getId().intValue())))
-            .andExpect(jsonPath("$.[*].registerNumber").value(hasItem(DEFAULT_REGISTER_NUMBER.toString())))
+            .andExpect(
+                jsonPath("$.[*].registerNumber").value(hasItem(DEFAULT_REGISTER_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT.toString())));
     }
@@ -231,11 +237,11 @@ public class ChildResourceIntTest {
             .registerNumber(UPDATED_REGISTER_NUMBER)
             .name(UPDATED_NAME)
             .comment(UPDATED_COMMENT);
-        ChildDTO childDTO = childMapper.toDto(updatedChild);
+        ChildDto childDto = childMapper.toDto(updatedChild);
 
         restChildMockMvc.perform(put("/api/children")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(childDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(childDto)))
             .andExpect(status().isOk());
 
         // Validate the Child in the database
@@ -253,12 +259,12 @@ public class ChildResourceIntTest {
         int databaseSizeBeforeUpdate = childRepository.findAll().size();
 
         // Create the Child
-        ChildDTO childDTO = childMapper.toDto(child);
+        ChildDto childDto = childMapper.toDto(child);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restChildMockMvc.perform(put("/api/children")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(childDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(childDto)))
             .andExpect(status().isCreated());
 
         // Validate the Child in the database
@@ -301,17 +307,17 @@ public class ChildResourceIntTest {
     @Test
     @Transactional
     public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(ChildDTO.class);
-        ChildDTO childDTO1 = new ChildDTO();
-        childDTO1.setId(1L);
-        ChildDTO childDTO2 = new ChildDTO();
-        assertThat(childDTO1).isNotEqualTo(childDTO2);
-        childDTO2.setId(childDTO1.getId());
-        assertThat(childDTO1).isEqualTo(childDTO2);
-        childDTO2.setId(2L);
-        assertThat(childDTO1).isNotEqualTo(childDTO2);
-        childDTO1.setId(null);
-        assertThat(childDTO1).isNotEqualTo(childDTO2);
+        TestUtil.equalsVerifier(ChildDto.class);
+        ChildDto childDto1 = new ChildDto();
+        childDto1.setId(1L);
+        ChildDto childDto2 = new ChildDto();
+        assertThat(childDto1).isNotEqualTo(childDto2);
+        childDto2.setId(childDto1.getId());
+        assertThat(childDto1).isEqualTo(childDto2);
+        childDto2.setId(2L);
+        assertThat(childDto1).isNotEqualTo(childDto2);
+        childDto1.setId(null);
+        assertThat(childDto1).isNotEqualTo(childDto2);
     }
 
     @Test

@@ -1,15 +1,16 @@
 package com.kraluk.totoscheduler.web.rest.vm;
 
-import com.kraluk.totoscheduler.service.dto.UserDTO;
-import javax.validation.constraints.Size;
+import com.kraluk.totoscheduler.service.dto.UserDto;
 
 import java.time.Instant;
 import java.util.Set;
 
+import javax.validation.constraints.Size;
+
 /**
- * View Model extending the UserDTO, which is meant to be used in the user management UI.
+ * View Model extending the UserDto, which is meant to be used in the user management UI.
  */
-public class ManagedUserVM extends UserDTO {
+public class ManagedUserVM extends UserDto {
 
     public static final int PASSWORD_MIN_LENGTH = 4;
 
@@ -24,11 +25,12 @@ public class ManagedUserVM extends UserDTO {
 
     public ManagedUserVM(Long id, String login, String password, String firstName, String lastName,
                          String email, boolean activated, String imageUrl, String langKey,
-                         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-                        Set<String> authorities) {
+                         String createdBy, Instant createdDate, String lastModifiedBy,
+                         Instant lastModifiedDate,
+                         Set<String> authorities) {
 
         super(id, login, firstName, lastName, email, activated, imageUrl, langKey,
-            createdBy, createdDate, lastModifiedBy, lastModifiedDate,  authorities);
+            createdBy, createdDate, lastModifiedBy, lastModifiedDate, authorities);
 
         this.password = password;
     }

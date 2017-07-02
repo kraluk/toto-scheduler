@@ -1,10 +1,9 @@
 package com.kraluk.totoscheduler.web.rest;
 
 import com.kraluk.totoscheduler.TotoSchedulerApp;
-
 import com.kraluk.totoscheduler.domain.TherapyEntry;
 import com.kraluk.totoscheduler.repository.TherapyEntryRepository;
-import com.kraluk.totoscheduler.service.dto.TherapyEntryDTO;
+import com.kraluk.totoscheduler.service.dto.TherapyEntryDto;
 import com.kraluk.totoscheduler.service.mapper.TherapyEntryMapper;
 import com.kraluk.totoscheduler.web.rest.errors.ExceptionTranslator;
 
@@ -22,13 +21,19 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the TherapyEntryResource REST controller.
@@ -67,7 +72,9 @@ public class TherapyEntryResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        TherapyEntryResource therapyEntryResource = new TherapyEntryResource(therapyEntryRepository, therapyEntryMapper);
+        TherapyEntryResource
+            therapyEntryResource =
+            new TherapyEntryResource(therapyEntryRepository, therapyEntryMapper);
         this.restTherapyEntryMockMvc = MockMvcBuilders.standaloneSetup(therapyEntryResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -97,10 +104,10 @@ public class TherapyEntryResourceIntTest {
         int databaseSizeBeforeCreate = therapyEntryRepository.findAll().size();
 
         // Create the TherapyEntry
-        TherapyEntryDTO therapyEntryDTO = therapyEntryMapper.toDto(therapyEntry);
+        TherapyEntryDto therapyEntryDto = therapyEntryMapper.toDto(therapyEntry);
         restTherapyEntryMockMvc.perform(post("/api/therapy-entries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(therapyEntryDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(therapyEntryDto)))
             .andExpect(status().isCreated());
 
         // Validate the TherapyEntry in the database
@@ -117,12 +124,12 @@ public class TherapyEntryResourceIntTest {
 
         // Create the TherapyEntry with an existing ID
         therapyEntry.setId(1L);
-        TherapyEntryDTO therapyEntryDTO = therapyEntryMapper.toDto(therapyEntry);
+        TherapyEntryDto therapyEntryDto = therapyEntryMapper.toDto(therapyEntry);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restTherapyEntryMockMvc.perform(post("/api/therapy-entries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(therapyEntryDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(therapyEntryDto)))
             .andExpect(status().isBadRequest());
 
         // Validate the Alice in the database
@@ -138,11 +145,11 @@ public class TherapyEntryResourceIntTest {
         therapyEntry.setName(null);
 
         // Create the TherapyEntry, which fails.
-        TherapyEntryDTO therapyEntryDTO = therapyEntryMapper.toDto(therapyEntry);
+        TherapyEntryDto therapyEntryDto = therapyEntryMapper.toDto(therapyEntry);
 
         restTherapyEntryMockMvc.perform(post("/api/therapy-entries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(therapyEntryDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(therapyEntryDto)))
             .andExpect(status().isBadRequest());
 
         List<TherapyEntry> therapyEntryList = therapyEntryRepository.findAll();
@@ -196,11 +203,11 @@ public class TherapyEntryResourceIntTest {
         TherapyEntry updatedTherapyEntry = therapyEntryRepository.findOne(therapyEntry.getId());
         updatedTherapyEntry
             .name(UPDATED_NAME);
-        TherapyEntryDTO therapyEntryDTO = therapyEntryMapper.toDto(updatedTherapyEntry);
+        TherapyEntryDto therapyEntryDto = therapyEntryMapper.toDto(updatedTherapyEntry);
 
         restTherapyEntryMockMvc.perform(put("/api/therapy-entries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(therapyEntryDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(therapyEntryDto)))
             .andExpect(status().isOk());
 
         // Validate the TherapyEntry in the database
@@ -216,12 +223,12 @@ public class TherapyEntryResourceIntTest {
         int databaseSizeBeforeUpdate = therapyEntryRepository.findAll().size();
 
         // Create the TherapyEntry
-        TherapyEntryDTO therapyEntryDTO = therapyEntryMapper.toDto(therapyEntry);
+        TherapyEntryDto therapyEntryDto = therapyEntryMapper.toDto(therapyEntry);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restTherapyEntryMockMvc.perform(put("/api/therapy-entries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(therapyEntryDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(therapyEntryDto)))
             .andExpect(status().isCreated());
 
         // Validate the TherapyEntry in the database
@@ -264,17 +271,17 @@ public class TherapyEntryResourceIntTest {
     @Test
     @Transactional
     public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(TherapyEntryDTO.class);
-        TherapyEntryDTO therapyEntryDTO1 = new TherapyEntryDTO();
-        therapyEntryDTO1.setId(1L);
-        TherapyEntryDTO therapyEntryDTO2 = new TherapyEntryDTO();
-        assertThat(therapyEntryDTO1).isNotEqualTo(therapyEntryDTO2);
-        therapyEntryDTO2.setId(therapyEntryDTO1.getId());
-        assertThat(therapyEntryDTO1).isEqualTo(therapyEntryDTO2);
-        therapyEntryDTO2.setId(2L);
-        assertThat(therapyEntryDTO1).isNotEqualTo(therapyEntryDTO2);
-        therapyEntryDTO1.setId(null);
-        assertThat(therapyEntryDTO1).isNotEqualTo(therapyEntryDTO2);
+        TestUtil.equalsVerifier(TherapyEntryDto.class);
+        TherapyEntryDto therapyEntryDto1 = new TherapyEntryDto();
+        therapyEntryDto1.setId(1L);
+        TherapyEntryDto therapyEntryDto2 = new TherapyEntryDto();
+        assertThat(therapyEntryDto1).isNotEqualTo(therapyEntryDto2);
+        therapyEntryDto2.setId(therapyEntryDto1.getId());
+        assertThat(therapyEntryDto1).isEqualTo(therapyEntryDto2);
+        therapyEntryDto2.setId(2L);
+        assertThat(therapyEntryDto1).isNotEqualTo(therapyEntryDto2);
+        therapyEntryDto1.setId(null);
+        assertThat(therapyEntryDto1).isNotEqualTo(therapyEntryDto2);
     }
 
     @Test

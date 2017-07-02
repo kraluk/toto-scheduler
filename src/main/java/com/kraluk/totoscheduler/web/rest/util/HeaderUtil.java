@@ -3,6 +3,7 @@ package com.kraluk.totoscheduler.web.rest.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+
 /**
  * Utility class for HTTP headers creation.
  */
@@ -34,7 +35,8 @@ public final class HeaderUtil {
         return createAlert(APPLICATION_NAME + "." + entityName + ".deleted", param);
     }
 
-    public static HttpHeaders createFailureAlert(String entityName, String errorKey, String defaultMessage) {
+    public static HttpHeaders createFailureAlert(String entityName, String errorKey,
+                                                 String defaultMessage) {
         log.error("Entity processing failed, {}", defaultMessage);
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-totoSchedulerApp-error", "error." + errorKey);

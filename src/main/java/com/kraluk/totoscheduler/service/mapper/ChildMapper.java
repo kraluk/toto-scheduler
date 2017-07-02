@@ -1,18 +1,20 @@
 package com.kraluk.totoscheduler.service.mapper;
 
-import com.kraluk.totoscheduler.domain.*;
-import com.kraluk.totoscheduler.service.dto.ChildDTO;
+import com.kraluk.totoscheduler.domain.Child;
+import com.kraluk.totoscheduler.service.dto.ChildDto;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
- * Mapper for the entity Child and its DTO ChildDTO.
+ * Mapper for the entity Child and its DTO ChildDto.
  */
 @Mapper(componentModel = "spring", uses = {})
-public interface ChildMapper extends EntityMapper <ChildDTO, Child> {
-    
+public interface ChildMapper extends EntityMapper<ChildDto, Child> {
+
     @Mapping(target = "therapies", ignore = true)
-    Child toEntity(ChildDTO childDTO); 
+    Child toEntity(ChildDto childDto);
+
     default Child fromId(Long id) {
         if (id == null) {
             return null;

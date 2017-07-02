@@ -7,7 +7,7 @@
         Added the constraints for entity Role.
     -->
     <changeSet id="20170702205728-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="role"
                                  constraintName="fk_role_user_id"

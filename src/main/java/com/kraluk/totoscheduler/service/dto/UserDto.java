@@ -1,22 +1,23 @@
 package com.kraluk.totoscheduler.service.dto;
 
 import com.kraluk.totoscheduler.config.Constants;
-
 import com.kraluk.totoscheduler.domain.Authority;
 import com.kraluk.totoscheduler.domain.User;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.*;
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * A DTO representing a user, with his authorities.
  */
-public class UserDTO {
+public class UserDto {
 
     private Long id;
 
@@ -53,22 +54,24 @@ public class UserDTO {
 
     private Set<String> authorities;
 
-    public UserDTO() {
+    public UserDto() {
         // Empty constructor needed for Jackson.
     }
 
-    public UserDTO(User user) {
+    public UserDto(User user) {
         this(user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(),
             user.getEmail(), user.getActivated(), user.getImageUrl(), user.getLangKey(),
-            user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
+            user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(),
+            user.getLastModifiedDate(),
             user.getAuthorities().stream().map(Authority::getName)
                 .collect(Collectors.toSet()));
     }
 
-    public UserDTO(Long id, String login, String firstName, String lastName,
-        String email, boolean activated, String imageUrl, String langKey,
-        String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-        Set<String> authorities) {
+    public UserDto(Long id, String login, String firstName, String lastName,
+                   String email, boolean activated, String imageUrl, String langKey,
+                   String createdBy, Instant createdDate, String lastModifiedBy,
+                   Instant lastModifiedDate,
+                   Set<String> authorities) {
 
         this.id = id;
         this.login = login;
@@ -151,7 +154,7 @@ public class UserDTO {
 
     @Override
     public String toString() {
-        return "UserDTO{" +
+        return "UserDto{" +
             "login='" + login + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +

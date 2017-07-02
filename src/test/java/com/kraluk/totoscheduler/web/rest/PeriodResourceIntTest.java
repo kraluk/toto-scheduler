@@ -1,10 +1,9 @@
 package com.kraluk.totoscheduler.web.rest;
 
 import com.kraluk.totoscheduler.TotoSchedulerApp;
-
 import com.kraluk.totoscheduler.domain.Period;
 import com.kraluk.totoscheduler.repository.PeriodRepository;
-import com.kraluk.totoscheduler.service.dto.PeriodDTO;
+import com.kraluk.totoscheduler.service.dto.PeriodDto;
 import com.kraluk.totoscheduler.service.mapper.PeriodMapper;
 import com.kraluk.totoscheduler.web.rest.errors.ExceptionTranslator;
 
@@ -22,15 +21,21 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the PeriodResource REST controller.
@@ -111,10 +116,10 @@ public class PeriodResourceIntTest {
         int databaseSizeBeforeCreate = periodRepository.findAll().size();
 
         // Create the Period
-        PeriodDTO periodDTO = periodMapper.toDto(period);
+        PeriodDto periodDto = periodMapper.toDto(period);
         restPeriodMockMvc.perform(post("/api/periods")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(periodDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(periodDto)))
             .andExpect(status().isCreated());
 
         // Validate the Period in the database
@@ -134,12 +139,12 @@ public class PeriodResourceIntTest {
 
         // Create the Period with an existing ID
         period.setId(1L);
-        PeriodDTO periodDTO = periodMapper.toDto(period);
+        PeriodDto periodDto = periodMapper.toDto(period);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restPeriodMockMvc.perform(post("/api/periods")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(periodDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(periodDto)))
             .andExpect(status().isBadRequest());
 
         // Validate the Alice in the database
@@ -155,11 +160,11 @@ public class PeriodResourceIntTest {
         period.setName(null);
 
         // Create the Period, which fails.
-        PeriodDTO periodDTO = periodMapper.toDto(period);
+        PeriodDto periodDto = periodMapper.toDto(period);
 
         restPeriodMockMvc.perform(post("/api/periods")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(periodDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(periodDto)))
             .andExpect(status().isBadRequest());
 
         List<Period> periodList = periodRepository.findAll();
@@ -174,11 +179,11 @@ public class PeriodResourceIntTest {
         period.setStartDate(null);
 
         // Create the Period, which fails.
-        PeriodDTO periodDTO = periodMapper.toDto(period);
+        PeriodDto periodDto = periodMapper.toDto(period);
 
         restPeriodMockMvc.perform(post("/api/periods")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(periodDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(periodDto)))
             .andExpect(status().isBadRequest());
 
         List<Period> periodList = periodRepository.findAll();
@@ -193,11 +198,11 @@ public class PeriodResourceIntTest {
         period.setEndDate(null);
 
         // Create the Period, which fails.
-        PeriodDTO periodDTO = periodMapper.toDto(period);
+        PeriodDto periodDto = periodMapper.toDto(period);
 
         restPeriodMockMvc.perform(post("/api/periods")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(periodDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(periodDto)))
             .andExpect(status().isBadRequest());
 
         List<Period> periodList = periodRepository.findAll();
@@ -260,11 +265,11 @@ public class PeriodResourceIntTest {
             .comment(UPDATED_COMMENT)
             .startDate(UPDATED_START_DATE)
             .endDate(UPDATED_END_DATE);
-        PeriodDTO periodDTO = periodMapper.toDto(updatedPeriod);
+        PeriodDto periodDto = periodMapper.toDto(updatedPeriod);
 
         restPeriodMockMvc.perform(put("/api/periods")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(periodDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(periodDto)))
             .andExpect(status().isOk());
 
         // Validate the Period in the database
@@ -283,12 +288,12 @@ public class PeriodResourceIntTest {
         int databaseSizeBeforeUpdate = periodRepository.findAll().size();
 
         // Create the Period
-        PeriodDTO periodDTO = periodMapper.toDto(period);
+        PeriodDto periodDto = periodMapper.toDto(period);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restPeriodMockMvc.perform(put("/api/periods")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(periodDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(periodDto)))
             .andExpect(status().isCreated());
 
         // Validate the Period in the database
@@ -331,17 +336,17 @@ public class PeriodResourceIntTest {
     @Test
     @Transactional
     public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(PeriodDTO.class);
-        PeriodDTO periodDTO1 = new PeriodDTO();
-        periodDTO1.setId(1L);
-        PeriodDTO periodDTO2 = new PeriodDTO();
-        assertThat(periodDTO1).isNotEqualTo(periodDTO2);
-        periodDTO2.setId(periodDTO1.getId());
-        assertThat(periodDTO1).isEqualTo(periodDTO2);
-        periodDTO2.setId(2L);
-        assertThat(periodDTO1).isNotEqualTo(periodDTO2);
-        periodDTO1.setId(null);
-        assertThat(periodDTO1).isNotEqualTo(periodDTO2);
+        TestUtil.equalsVerifier(PeriodDto.class);
+        PeriodDto periodDto1 = new PeriodDto();
+        periodDto1.setId(1L);
+        PeriodDto periodDto2 = new PeriodDto();
+        assertThat(periodDto1).isNotEqualTo(periodDto2);
+        periodDto2.setId(periodDto1.getId());
+        assertThat(periodDto1).isEqualTo(periodDto2);
+        periodDto2.setId(2L);
+        assertThat(periodDto1).isNotEqualTo(periodDto2);
+        periodDto1.setId(null);
+        assertThat(periodDto1).isNotEqualTo(periodDto2);
     }
 
     @Test

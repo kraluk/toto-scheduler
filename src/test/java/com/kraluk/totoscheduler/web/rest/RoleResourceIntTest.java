@@ -1,10 +1,9 @@
 package com.kraluk.totoscheduler.web.rest;
 
 import com.kraluk.totoscheduler.TotoSchedulerApp;
-
 import com.kraluk.totoscheduler.domain.Role;
 import com.kraluk.totoscheduler.repository.RoleRepository;
-import com.kraluk.totoscheduler.service.dto.RoleDTO;
+import com.kraluk.totoscheduler.service.dto.RoleDto;
 import com.kraluk.totoscheduler.service.mapper.RoleMapper;
 import com.kraluk.totoscheduler.web.rest.errors.ExceptionTranslator;
 
@@ -22,13 +21,19 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the RoleResource REST controller.
@@ -97,10 +102,10 @@ public class RoleResourceIntTest {
         int databaseSizeBeforeCreate = roleRepository.findAll().size();
 
         // Create the Role
-        RoleDTO roleDTO = roleMapper.toDto(role);
+        RoleDto roleDto = roleMapper.toDto(role);
         restRoleMockMvc.perform(post("/api/roles")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(roleDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(roleDto)))
             .andExpect(status().isCreated());
 
         // Validate the Role in the database
@@ -117,12 +122,12 @@ public class RoleResourceIntTest {
 
         // Create the Role with an existing ID
         role.setId(1L);
-        RoleDTO roleDTO = roleMapper.toDto(role);
+        RoleDto roleDto = roleMapper.toDto(role);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restRoleMockMvc.perform(post("/api/roles")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(roleDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(roleDto)))
             .andExpect(status().isBadRequest());
 
         // Validate the Alice in the database
@@ -138,11 +143,11 @@ public class RoleResourceIntTest {
         role.setName(null);
 
         // Create the Role, which fails.
-        RoleDTO roleDTO = roleMapper.toDto(role);
+        RoleDto roleDto = roleMapper.toDto(role);
 
         restRoleMockMvc.perform(post("/api/roles")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(roleDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(roleDto)))
             .andExpect(status().isBadRequest());
 
         List<Role> roleList = roleRepository.findAll();
@@ -196,11 +201,11 @@ public class RoleResourceIntTest {
         Role updatedRole = roleRepository.findOne(role.getId());
         updatedRole
             .name(UPDATED_NAME);
-        RoleDTO roleDTO = roleMapper.toDto(updatedRole);
+        RoleDto roleDto = roleMapper.toDto(updatedRole);
 
         restRoleMockMvc.perform(put("/api/roles")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(roleDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(roleDto)))
             .andExpect(status().isOk());
 
         // Validate the Role in the database
@@ -216,12 +221,12 @@ public class RoleResourceIntTest {
         int databaseSizeBeforeUpdate = roleRepository.findAll().size();
 
         // Create the Role
-        RoleDTO roleDTO = roleMapper.toDto(role);
+        RoleDto roleDto = roleMapper.toDto(role);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restRoleMockMvc.perform(put("/api/roles")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(roleDTO)))
+            .content(TestUtil.convertObjectToJsonBytes(roleDto)))
             .andExpect(status().isCreated());
 
         // Validate the Role in the database
@@ -264,17 +269,17 @@ public class RoleResourceIntTest {
     @Test
     @Transactional
     public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(RoleDTO.class);
-        RoleDTO roleDTO1 = new RoleDTO();
-        roleDTO1.setId(1L);
-        RoleDTO roleDTO2 = new RoleDTO();
-        assertThat(roleDTO1).isNotEqualTo(roleDTO2);
-        roleDTO2.setId(roleDTO1.getId());
-        assertThat(roleDTO1).isEqualTo(roleDTO2);
-        roleDTO2.setId(2L);
-        assertThat(roleDTO1).isNotEqualTo(roleDTO2);
-        roleDTO1.setId(null);
-        assertThat(roleDTO1).isNotEqualTo(roleDTO2);
+        TestUtil.equalsVerifier(RoleDto.class);
+        RoleDto roleDto1 = new RoleDto();
+        roleDto1.setId(1L);
+        RoleDto roleDto2 = new RoleDto();
+        assertThat(roleDto1).isNotEqualTo(roleDto2);
+        roleDto2.setId(roleDto1.getId());
+        assertThat(roleDto1).isEqualTo(roleDto2);
+        roleDto2.setId(2L);
+        assertThat(roleDto1).isNotEqualTo(roleDto2);
+        roleDto1.setId(null);
+        assertThat(roleDto1).isNotEqualTo(roleDto2);
     }
 
     @Test

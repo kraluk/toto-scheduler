@@ -1,17 +1,16 @@
 package com.kraluk.totoscheduler.service.dto;
 
 
-import java.time.ZonedDateTime;
-import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.ZonedDateTime;
 import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * A DTO for the Therapy entity.
  */
-public class TherapyDTO implements Serializable {
+public class TherapyDto implements Serializable {
 
     private Long id;
 
@@ -104,11 +103,11 @@ public class TherapyDTO implements Serializable {
             return false;
         }
 
-        TherapyDTO therapyDTO = (TherapyDTO) o;
-        if(therapyDTO.getId() == null || getId() == null) {
+        TherapyDto therapyDto = (TherapyDto) o;
+        if (therapyDto.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), therapyDTO.getId());
+        return Objects.equals(getId(), therapyDto.getId());
     }
 
     @Override
@@ -118,7 +117,7 @@ public class TherapyDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "TherapyDTO{" +
+        return "TherapyDto{" +
             "id=" + getId() +
             ", comment='" + getComment() + "'" +
             ", date='" + getDate() + "'" +

@@ -2,23 +2,31 @@ package com.kraluk.totoscheduler.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.kraluk.totoscheduler.domain.Role;
-
 import com.kraluk.totoscheduler.repository.RoleRepository;
-import com.kraluk.totoscheduler.web.rest.util.HeaderUtil;
-import com.kraluk.totoscheduler.service.dto.RoleDTO;
+import com.kraluk.totoscheduler.service.dto.RoleDto;
 import com.kraluk.totoscheduler.service.mapper.RoleMapper;
-import io.github.jhipster.web.util.ResponseUtil;
+import com.kraluk.totoscheduler.web.rest.util.HeaderUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
+
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing Role.
@@ -43,20 +51,23 @@ public class RoleResource {
     /**
      * POST  /roles : Create a new role.
      *
-     * @param roleDTO the roleDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new roleDTO, or with status 400 (Bad Request) if the role has already an ID
+     * @param roleDto the roleDto to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new roleDto, or with status 400 (Bad Request) if the role has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/roles")
     @Timed
-    public ResponseEntity<RoleDTO> createRole(@Valid @RequestBody RoleDTO roleDTO) throws URISyntaxException {
-        log.debug("REST request to save Role : {}", roleDTO);
-        if (roleDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new role cannot already have an ID")).body(null);
+    public ResponseEntity<RoleDto> createRole(@Valid @RequestBody RoleDto roleDto)
+        throws URISyntaxException {
+        log.debug("REST request to save Role : {}", roleDto);
+        if (roleDto.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil
+                .createFailureAlert(ENTITY_NAME, "idexists",
+                    "A new role cannot already have an ID")).body(null);
         }
-        Role role = roleMapper.toEntity(roleDTO);
+        Role role = roleMapper.toEntity(roleDto);
         role = roleRepository.save(role);
-        RoleDTO result = roleMapper.toDto(role);
+        RoleDto result = roleMapper.toDto(role);
         return ResponseEntity.created(new URI("/api/roles/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -65,24 +76,25 @@ public class RoleResource {
     /**
      * PUT  /roles : Updates an existing role.
      *
-     * @param roleDTO the roleDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated roleDTO,
-     * or with status 400 (Bad Request) if the roleDTO is not valid,
-     * or with status 500 (Internal Server Error) if the roleDTO couldn't be updated
+     * @param roleDto the roleDto to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated roleDto,
+     * or with status 400 (Bad Request) if the roleDto is not valid,
+     * or with status 500 (Internal Server Error) if the roleDto couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/roles")
     @Timed
-    public ResponseEntity<RoleDTO> updateRole(@Valid @RequestBody RoleDTO roleDTO) throws URISyntaxException {
-        log.debug("REST request to update Role : {}", roleDTO);
-        if (roleDTO.getId() == null) {
-            return createRole(roleDTO);
+    public ResponseEntity<RoleDto> updateRole(@Valid @RequestBody RoleDto roleDto)
+        throws URISyntaxException {
+        log.debug("REST request to update Role : {}", roleDto);
+        if (roleDto.getId() == null) {
+            return createRole(roleDto);
         }
-        Role role = roleMapper.toEntity(roleDTO);
+        Role role = roleMapper.toEntity(roleDto);
         role = roleRepository.save(role);
-        RoleDTO result = roleMapper.toDto(role);
+        RoleDto result = roleMapper.toDto(role);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, roleDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, roleDto.getId().toString()))
             .body(result);
     }
 
@@ -93,7 +105,7 @@ public class RoleResource {
      */
     @GetMapping("/roles")
     @Timed
-    public List<RoleDTO> getAllRoles() {
+    public List<RoleDto> getAllRoles() {
         log.debug("REST request to get all Roles");
         List<Role> roles = roleRepository.findAll();
         return roleMapper.toDto(roles);
@@ -107,11 +119,11 @@ public class RoleResource {
      */
     @GetMapping("/roles/{id}")
     @Timed
-    public ResponseEntity<RoleDTO> getRole(@PathVariable Long id) {
+    public ResponseEntity<RoleDto> getRole(@PathVariable Long id) {
         log.debug("REST request to get Role : {}", id);
         Role role = roleRepository.findOne(id);
-        RoleDTO roleDTO = roleMapper.toDto(role);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(roleDTO));
+        RoleDto roleDto = roleMapper.toDto(role);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(roleDto));
     }
 
     /**
@@ -125,6 +137,7 @@ public class RoleResource {
     public ResponseEntity<Void> deleteRole(@PathVariable Long id) {
         log.debug("REST request to delete Role : {}", id);
         roleRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

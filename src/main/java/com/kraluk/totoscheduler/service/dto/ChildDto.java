@@ -1,20 +1,28 @@
 package com.kraluk.totoscheduler.service.dto;
 
 
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
- * A DTO for the TherapyEntry entity.
+ * A DTO for the Child entity.
  */
-public class TherapyEntryDTO implements Serializable {
+public class ChildDto implements Serializable {
 
     private Long id;
 
     @NotNull
     @Size(min = 5)
+    private String registerNumber;
+
+    @NotNull
+    @Size(min = 5)
     private String name;
+
+    private String comment;
 
     public Long getId() {
         return id;
@@ -24,12 +32,28 @@ public class TherapyEntryDTO implements Serializable {
         this.id = id;
     }
 
+    public String getRegisterNumber() {
+        return registerNumber;
+    }
+
+    public void setRegisterNumber(String registerNumber) {
+        this.registerNumber = registerNumber;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     @Override
@@ -41,11 +65,11 @@ public class TherapyEntryDTO implements Serializable {
             return false;
         }
 
-        TherapyEntryDTO therapyEntryDTO = (TherapyEntryDTO) o;
-        if(therapyEntryDTO.getId() == null || getId() == null) {
+        ChildDto childDto = (ChildDto) o;
+        if (childDto.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), therapyEntryDTO.getId());
+        return Objects.equals(getId(), childDto.getId());
     }
 
     @Override
@@ -55,9 +79,11 @@ public class TherapyEntryDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "TherapyEntryDTO{" +
+        return "ChildDto{" +
             "id=" + getId() +
+            ", registerNumber='" + getRegisterNumber() + "'" +
             ", name='" + getName() + "'" +
+            ", comment='" + getComment() + "'" +
             "}";
     }
 }

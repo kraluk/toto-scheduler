@@ -1,7 +1,5 @@
 package com.kraluk.totoscheduler.web.rest.errors;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -14,7 +12,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.List;
 
 /**
  * Controller advice to translate the server side exceptions to client-friendly json structures.
@@ -47,7 +50,8 @@ public class ExceptionTranslator {
     @ExceptionHandler(CustomParameterizedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ParameterizedErrorVM processParameterizedValidationError(CustomParameterizedException ex) {
+    public ParameterizedErrorVM processParameterizedValidationError(
+        CustomParameterizedException ex) {
         return ex.getErrorVM();
     }
 
@@ -61,7 +65,8 @@ public class ExceptionTranslator {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public ErrorVM processMethodNotSupportedException(HttpRequestMethodNotSupportedException exception) {
+    public ErrorVM processMethodNotSupportedException(
+        HttpRequestMethodNotSupportedException exception) {
         return new ErrorVM(ErrorConstants.ERR_METHOD_NOT_SUPPORTED, exception.getMessage());
     }
 
@@ -74,13 +79,17 @@ public class ExceptionTranslator {
         }
         BodyBuilder builder;
         ErrorVM errorVM;
-        ResponseStatus responseStatus = AnnotationUtils.findAnnotation(ex.getClass(), ResponseStatus.class);
+        ResponseStatus
+            responseStatus =
+            AnnotationUtils.findAnnotation(ex.getClass(), ResponseStatus.class);
         if (responseStatus != null) {
             builder = ResponseEntity.status(responseStatus.value());
-            errorVM = new ErrorVM("error." + responseStatus.value().value(), responseStatus.reason());
+            errorVM =
+                new ErrorVM("error." + responseStatus.value().value(), responseStatus.reason());
         } else {
             builder = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
-            errorVM = new ErrorVM(ErrorConstants.ERR_INTERNAL_SERVER_ERROR, "Internal server error");
+            errorVM =
+                new ErrorVM(ErrorConstants.ERR_INTERNAL_SERVER_ERROR, "Internal server error");
         }
         return builder.body(errorVM);
     }

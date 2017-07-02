@@ -8,9 +8,10 @@ import com.kraluk.totoscheduler.repository.UserRepository;
 import com.kraluk.totoscheduler.security.AuthoritiesConstants;
 import com.kraluk.totoscheduler.service.MailService;
 import com.kraluk.totoscheduler.service.UserService;
-import com.kraluk.totoscheduler.service.dto.UserDTO;
+import com.kraluk.totoscheduler.service.dto.UserDto;
 import com.kraluk.totoscheduler.web.rest.vm.KeyAndPasswordVM;
 import com.kraluk.totoscheduler.web.rest.vm.ManagedUserVM;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,18 +30,20 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the AccountResource REST controller.
@@ -318,8 +321,13 @@ public class AccountResourceIntTest {
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
 
         // Duplicate login, different email
-        ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), validUser.getLogin(), validUser.getPassword(), validUser.getFirstName(), validUser.getLastName(),
-            "alicejr@example.com", true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities());
+        ManagedUserVM
+            duplicatedUser =
+            new ManagedUserVM(validUser.getId(), validUser.getLogin(), validUser.getPassword(),
+                validUser.getFirstName(), validUser.getLastName(),
+                "alicejr@example.com", true, validUser.getImageUrl(), validUser.getLangKey(),
+                validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(),
+                validUser.getLastModifiedDate(), validUser.getAuthorities());
 
         // Good user
         restMvc.perform(
@@ -360,8 +368,13 @@ public class AccountResourceIntTest {
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
 
         // Duplicate email, different login
-        ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
-            validUser.getEmail(), true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities());
+        ManagedUserVM
+            duplicatedUser =
+            new ManagedUserVM(validUser.getId(), "johnjr", validUser.getPassword(),
+                validUser.getLogin(), validUser.getLastName(),
+                validUser.getEmail(), true, validUser.getImageUrl(), validUser.getLangKey(),
+                validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(),
+                validUser.getLastModifiedDate(), validUser.getAuthorities());
 
         // Good user
         restMvc.perform(
@@ -451,7 +464,7 @@ public class AccountResourceIntTest {
 
         userRepository.saveAndFlush(user);
 
-        UserDTO userDTO = new UserDTO(
+        UserDto userDto = new UserDto(
             null,                   // id
             "not-used",          // login
             "firstname",                // firstName
@@ -470,16 +483,16 @@ public class AccountResourceIntTest {
         restMvc.perform(
             post("/api/account")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userDTO)))
+                .content(TestUtil.convertObjectToJsonBytes(userDto)))
             .andExpect(status().isOk());
 
         User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
-        assertThat(updatedUser.getFirstName()).isEqualTo(userDTO.getFirstName());
-        assertThat(updatedUser.getLastName()).isEqualTo(userDTO.getLastName());
-        assertThat(updatedUser.getEmail()).isEqualTo(userDTO.getEmail());
-        assertThat(updatedUser.getLangKey()).isEqualTo(userDTO.getLangKey());
+        assertThat(updatedUser.getFirstName()).isEqualTo(userDto.getFirstName());
+        assertThat(updatedUser.getLastName()).isEqualTo(userDto.getLastName());
+        assertThat(updatedUser.getEmail()).isEqualTo(userDto.getEmail());
+        assertThat(updatedUser.getLangKey()).isEqualTo(userDto.getLangKey());
         assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
-        assertThat(updatedUser.getImageUrl()).isEqualTo(userDTO.getImageUrl());
+        assertThat(updatedUser.getImageUrl()).isEqualTo(userDto.getImageUrl());
         assertThat(updatedUser.getActivated()).isEqualTo(true);
         assertThat(updatedUser.getAuthorities()).isEmpty();
     }
@@ -496,7 +509,7 @@ public class AccountResourceIntTest {
 
         userRepository.saveAndFlush(user);
 
-        UserDTO userDTO = new UserDTO(
+        UserDto userDto = new UserDto(
             null,                   // id
             "not-used",          // login
             "firstname",                // firstName
@@ -515,7 +528,7 @@ public class AccountResourceIntTest {
         restMvc.perform(
             post("/api/account")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userDTO)))
+                .content(TestUtil.convertObjectToJsonBytes(userDto)))
             .andExpect(status().isBadRequest());
 
         assertThat(userRepository.findOneByEmail("invalid email")).isNotPresent();
@@ -541,7 +554,7 @@ public class AccountResourceIntTest {
 
         userRepository.saveAndFlush(anotherUser);
 
-        UserDTO userDTO = new UserDTO(
+        UserDto userDto = new UserDto(
             null,                   // id
             "not-used",          // login
             "firstname",                // firstName
@@ -560,7 +573,7 @@ public class AccountResourceIntTest {
         restMvc.perform(
             post("/api/account")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userDTO)))
+                .content(TestUtil.convertObjectToJsonBytes(userDto)))
             .andExpect(status().isBadRequest());
 
         User updatedUser = userRepository.findOneByLogin("save-existing-email").orElse(null);
@@ -579,7 +592,7 @@ public class AccountResourceIntTest {
 
         userRepository.saveAndFlush(user);
 
-        UserDTO userDTO = new UserDTO(
+        UserDto userDto = new UserDto(
             null,                   // id
             "not-used",          // login
             "firstname",                // firstName
@@ -598,10 +611,12 @@ public class AccountResourceIntTest {
         restMvc.perform(
             post("/api/account")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(userDTO)))
+                .content(TestUtil.convertObjectToJsonBytes(userDto)))
             .andExpect(status().isOk());
 
-        User updatedUser = userRepository.findOneByLogin("save-existing-email-and-login").orElse(null);
+        User
+            updatedUser =
+            userRepository.findOneByLogin("save-existing-email-and-login").orElse(null);
         assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email-and-login@example.com");
     }
 
@@ -718,7 +733,9 @@ public class AccountResourceIntTest {
             .andExpect(status().isOk());
 
         User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
-        assertThat(passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword())).isTrue();
+        assertThat(
+            passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword()))
+            .isTrue();
     }
 
     @Test
@@ -743,7 +760,9 @@ public class AccountResourceIntTest {
             .andExpect(status().isBadRequest());
 
         User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
-        assertThat(passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword())).isFalse();
+        assertThat(
+            passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword()))
+            .isFalse();
     }
 
 

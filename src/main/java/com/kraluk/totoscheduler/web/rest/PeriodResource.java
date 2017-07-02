@@ -2,14 +2,12 @@ package com.kraluk.totoscheduler.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.kraluk.totoscheduler.domain.Period;
-
 import com.kraluk.totoscheduler.repository.PeriodRepository;
+import com.kraluk.totoscheduler.service.dto.PeriodDto;
+import com.kraluk.totoscheduler.service.mapper.PeriodMapper;
 import com.kraluk.totoscheduler.web.rest.util.HeaderUtil;
 import com.kraluk.totoscheduler.web.rest.util.PaginationUtil;
-import com.kraluk.totoscheduler.service.dto.PeriodDTO;
-import com.kraluk.totoscheduler.service.mapper.PeriodMapper;
-import io.swagger.annotations.ApiParam;
-import io.github.jhipster.web.util.ResponseUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,14 +15,24 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
+
+import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 
 /**
  * REST controller for managing Period.
@@ -49,20 +57,23 @@ public class PeriodResource {
     /**
      * POST  /periods : Create a new period.
      *
-     * @param periodDTO the periodDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new periodDTO, or with status 400 (Bad Request) if the period has already an ID
+     * @param periodDto the periodDto to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new periodDto, or with status 400 (Bad Request) if the period has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/periods")
     @Timed
-    public ResponseEntity<PeriodDTO> createPeriod(@Valid @RequestBody PeriodDTO periodDTO) throws URISyntaxException {
-        log.debug("REST request to save Period : {}", periodDTO);
-        if (periodDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new period cannot already have an ID")).body(null);
+    public ResponseEntity<PeriodDto> createPeriod(@Valid @RequestBody PeriodDto periodDto)
+        throws URISyntaxException {
+        log.debug("REST request to save Period : {}", periodDto);
+        if (periodDto.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil
+                .createFailureAlert(ENTITY_NAME, "idexists",
+                    "A new period cannot already have an ID")).body(null);
         }
-        Period period = periodMapper.toEntity(periodDTO);
+        Period period = periodMapper.toEntity(periodDto);
         period = periodRepository.save(period);
-        PeriodDTO result = periodMapper.toDto(period);
+        PeriodDto result = periodMapper.toDto(period);
         return ResponseEntity.created(new URI("/api/periods/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -71,24 +82,25 @@ public class PeriodResource {
     /**
      * PUT  /periods : Updates an existing period.
      *
-     * @param periodDTO the periodDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated periodDTO,
-     * or with status 400 (Bad Request) if the periodDTO is not valid,
-     * or with status 500 (Internal Server Error) if the periodDTO couldn't be updated
+     * @param periodDto the periodDto to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated periodDto,
+     * or with status 400 (Bad Request) if the periodDto is not valid,
+     * or with status 500 (Internal Server Error) if the periodDto couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/periods")
     @Timed
-    public ResponseEntity<PeriodDTO> updatePeriod(@Valid @RequestBody PeriodDTO periodDTO) throws URISyntaxException {
-        log.debug("REST request to update Period : {}", periodDTO);
-        if (periodDTO.getId() == null) {
-            return createPeriod(periodDTO);
+    public ResponseEntity<PeriodDto> updatePeriod(@Valid @RequestBody PeriodDto periodDto)
+        throws URISyntaxException {
+        log.debug("REST request to update Period : {}", periodDto);
+        if (periodDto.getId() == null) {
+            return createPeriod(periodDto);
         }
-        Period period = periodMapper.toEntity(periodDTO);
+        Period period = periodMapper.toEntity(periodDto);
         period = periodRepository.save(period);
-        PeriodDTO result = periodMapper.toDto(period);
+        PeriodDto result = periodMapper.toDto(period);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, periodDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, periodDto.getId().toString()))
             .body(result);
     }
 
@@ -100,7 +112,7 @@ public class PeriodResource {
      */
     @GetMapping("/periods")
     @Timed
-    public ResponseEntity<List<PeriodDTO>> getAllPeriods(@ApiParam Pageable pageable) {
+    public ResponseEntity<List<PeriodDto>> getAllPeriods(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Periods");
         Page<Period> page = periodRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/periods");
@@ -115,11 +127,11 @@ public class PeriodResource {
      */
     @GetMapping("/periods/{id}")
     @Timed
-    public ResponseEntity<PeriodDTO> getPeriod(@PathVariable Long id) {
+    public ResponseEntity<PeriodDto> getPeriod(@PathVariable Long id) {
         log.debug("REST request to get Period : {}", id);
         Period period = periodRepository.findOne(id);
-        PeriodDTO periodDTO = periodMapper.toDto(period);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(periodDTO));
+        PeriodDto periodDto = periodMapper.toDto(period);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(periodDto));
     }
 
     /**
@@ -133,6 +145,7 @@ public class PeriodResource {
     public ResponseEntity<Void> deletePeriod(@PathVariable Long id) {
         log.debug("REST request to delete Period : {}", id);
         periodRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

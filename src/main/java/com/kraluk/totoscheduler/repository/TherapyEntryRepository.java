@@ -1,9 +1,9 @@
 package com.kraluk.totoscheduler.repository;
 
 import com.kraluk.totoscheduler.domain.TherapyEntry;
-import org.springframework.stereotype.Repository;
 
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 
 /**
@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.*;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface TherapyEntryRepository extends JpaRepository<TherapyEntry,Long> {
-    
+public interface TherapyEntryRepository extends JpaRepository<TherapyEntry, Long> {
+
 }

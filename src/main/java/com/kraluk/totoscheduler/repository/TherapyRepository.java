@@ -1,9 +1,11 @@
 package com.kraluk.totoscheduler.repository;
 
 import com.kraluk.totoscheduler.domain.Therapy;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.data.jpa.repository.*;
 import java.util.List;
 
 /**
@@ -11,9 +13,9 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface TherapyRepository extends JpaRepository<Therapy,Long> {
+public interface TherapyRepository extends JpaRepository<Therapy, Long> {
 
     @Query("select therapy from Therapy therapy where therapy.user.login = ?#{principal.username}")
     List<Therapy> findByUserIsCurrentUser();
-    
+
 }

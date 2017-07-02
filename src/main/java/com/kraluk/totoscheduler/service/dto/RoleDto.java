@@ -1,16 +1,16 @@
 package com.kraluk.totoscheduler.service.dto;
 
 
-import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * A DTO for the Role entity.
  */
-public class RoleDTO implements Serializable {
+public class RoleDto implements Serializable {
 
     private Long id;
 
@@ -63,11 +63,11 @@ public class RoleDTO implements Serializable {
             return false;
         }
 
-        RoleDTO roleDTO = (RoleDTO) o;
-        if(roleDTO.getId() == null || getId() == null) {
+        RoleDto roleDto = (RoleDto) o;
+        if (roleDto.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), roleDTO.getId());
+        return Objects.equals(getId(), roleDto.getId());
     }
 
     @Override
@@ -77,7 +77,7 @@ public class RoleDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "RoleDTO{" +
+        return "RoleDto{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
             "}";

@@ -1,22 +1,24 @@
 package com.kraluk.totoscheduler.service.mapper;
 
-import com.kraluk.totoscheduler.domain.*;
-import com.kraluk.totoscheduler.service.dto.RoleDTO;
+import com.kraluk.totoscheduler.domain.Role;
+import com.kraluk.totoscheduler.service.dto.RoleDto;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
- * Mapper for the entity Role and its DTO RoleDTO.
+ * Mapper for the entity Role and its DTO RoleDto.
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class, })
-public interface RoleMapper extends EntityMapper <RoleDTO, Role> {
+@Mapper(componentModel = "spring", uses = {UserMapper.class,})
+public interface RoleMapper extends EntityMapper<RoleDto, Role> {
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "user.login", target = "userLogin")
-    RoleDTO toDto(Role role); 
+    RoleDto toDto(Role role);
 
     @Mapping(source = "userId", target = "user")
-    Role toEntity(RoleDTO roleDTO); 
+    Role toEntity(RoleDto roleDto);
+
     default Role fromId(Long id) {
         if (id == null) {
             return null;

@@ -1,15 +1,17 @@
 package com.kraluk.totoscheduler.service.mapper;
 
-import com.kraluk.totoscheduler.domain.*;
-import com.kraluk.totoscheduler.service.dto.TherapyDTO;
+import com.kraluk.totoscheduler.domain.Therapy;
+import com.kraluk.totoscheduler.service.dto.TherapyDto;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
- * Mapper for the entity Therapy and its DTO TherapyDTO.
+ * Mapper for the entity Therapy and its DTO TherapyDto.
  */
-@Mapper(componentModel = "spring", uses = {TherapyEntryMapper.class, UserMapper.class, PeriodMapper.class, ChildMapper.class, })
-public interface TherapyMapper extends EntityMapper <TherapyDTO, Therapy> {
+@Mapper(componentModel = "spring",
+    uses = {TherapyEntryMapper.class, UserMapper.class, PeriodMapper.class, ChildMapper.class,})
+public interface TherapyMapper extends EntityMapper<TherapyDto, Therapy> {
 
     @Mapping(source = "therapyEntry.id", target = "therapyEntryId")
 
@@ -19,7 +21,7 @@ public interface TherapyMapper extends EntityMapper <TherapyDTO, Therapy> {
     @Mapping(source = "period.id", target = "periodId")
 
     @Mapping(source = "child.id", target = "childId")
-    TherapyDTO toDto(Therapy therapy); 
+    TherapyDto toDto(Therapy therapy);
 
     @Mapping(source = "therapyEntryId", target = "therapyEntry")
 
@@ -28,7 +30,8 @@ public interface TherapyMapper extends EntityMapper <TherapyDTO, Therapy> {
     @Mapping(source = "periodId", target = "period")
 
     @Mapping(source = "childId", target = "child")
-    Therapy toEntity(TherapyDTO therapyDTO); 
+    Therapy toEntity(TherapyDto therapyDto);
+
     default Therapy fromId(Long id) {
         if (id == null) {
             return null;
