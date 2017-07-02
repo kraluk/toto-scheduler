@@ -35,7 +35,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api")
 public class TherapyEntryResource {
 
-    private final Logger log = LoggerFactory.getLogger(TherapyEntryResource.class);
+    private static final Logger log = LoggerFactory.getLogger(TherapyEntryResource.class);
 
     private static final String ENTITY_NAME = "therapyEntry";
 

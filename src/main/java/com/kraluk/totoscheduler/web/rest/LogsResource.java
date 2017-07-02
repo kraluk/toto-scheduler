@@ -1,7 +1,7 @@
 package com.kraluk.totoscheduler.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.kraluk.totoscheduler.web.rest.vm.LoggerVM;
+import com.kraluk.totoscheduler.web.rest.vm.LoggerVm;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -27,18 +27,18 @@ public class LogsResource {
 
     @GetMapping("/logs")
     @Timed
-    public List<LoggerVM> getList() {
+    public List<LoggerVm> getList() {
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
         return context.getLoggerList()
             .stream()
-            .map(LoggerVM::new)
+            .map(LoggerVm::new)
             .collect(Collectors.toList());
     }
 
     @PutMapping("/logs")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Timed
-    public void changeLevel(@RequestBody LoggerVM jsonLogger) {
+    public void changeLevel(@RequestBody LoggerVm jsonLogger) {
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
         context.getLogger(jsonLogger.getName()).setLevel(Level.valueOf(jsonLogger.getLevel()));
     }

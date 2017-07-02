@@ -25,22 +25,22 @@ import java.util.List;
 @ControllerAdvice
 public class ExceptionTranslator {
 
-    private final Logger log = LoggerFactory.getLogger(ExceptionTranslator.class);
+    private static final Logger log = LoggerFactory.getLogger(ExceptionTranslator.class);
 
     @ExceptionHandler(ConcurrencyFailureException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
-    public ErrorVM processConcurrencyError(ConcurrencyFailureException ex) {
-        return new ErrorVM(ErrorConstants.ERR_CONCURRENCY_FAILURE);
+    public ErrorVm processConcurrencyError(ConcurrencyFailureException ex) {
+        return new ErrorVm(ErrorConstants.ERR_CONCURRENCY_FAILURE);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorVM processValidationError(MethodArgumentNotValidException ex) {
+    public ErrorVm processValidationError(MethodArgumentNotValidException ex) {
         BindingResult result = ex.getBindingResult();
         List<FieldError> fieldErrors = result.getFieldErrors();
-        ErrorVM dto = new ErrorVM(ErrorConstants.ERR_VALIDATION);
+        ErrorVm dto = new ErrorVm(ErrorConstants.ERR_VALIDATION);
         for (FieldError fieldError : fieldErrors) {
             dto.add(fieldError.getObjectName(), fieldError.getField(), fieldError.getCode());
         }
@@ -50,7 +50,7 @@ public class ExceptionTranslator {
     @ExceptionHandler(CustomParameterizedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ParameterizedErrorVM processParameterizedValidationError(
+    public ParameterizedErrorVm processParameterizedValidationError(
         CustomParameterizedException ex) {
         return ex.getErrorVM();
     }
@@ -58,39 +58,39 @@ public class ExceptionTranslator {
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ResponseBody
-    public ErrorVM processAccessDeniedException(AccessDeniedException e) {
-        return new ErrorVM(ErrorConstants.ERR_ACCESS_DENIED, e.getMessage());
+    public ErrorVm processAccessDeniedException(AccessDeniedException e) {
+        return new ErrorVm(ErrorConstants.ERR_ACCESS_DENIED, e.getMessage());
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public ErrorVM processMethodNotSupportedException(
+    public ErrorVm processMethodNotSupportedException(
         HttpRequestMethodNotSupportedException exception) {
-        return new ErrorVM(ErrorConstants.ERR_METHOD_NOT_SUPPORTED, exception.getMessage());
+        return new ErrorVm(ErrorConstants.ERR_METHOD_NOT_SUPPORTED, exception.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorVM> processException(Exception ex) {
+    public ResponseEntity<ErrorVm> processException(Exception ex) {
         if (log.isDebugEnabled()) {
             log.debug("An unexpected error occurred: {}", ex.getMessage(), ex);
         } else {
             log.error("An unexpected error occurred: {}", ex.getMessage());
         }
         BodyBuilder builder;
-        ErrorVM errorVM;
+        ErrorVm errorVm;
         ResponseStatus
             responseStatus =
             AnnotationUtils.findAnnotation(ex.getClass(), ResponseStatus.class);
         if (responseStatus != null) {
             builder = ResponseEntity.status(responseStatus.value());
-            errorVM =
-                new ErrorVM("error." + responseStatus.value().value(), responseStatus.reason());
+            errorVm =
+                new ErrorVm("error." + responseStatus.value().value(), responseStatus.reason());
         } else {
             builder = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
-            errorVM =
-                new ErrorVM(ErrorConstants.ERR_INTERNAL_SERVER_ERROR, "Internal server error");
+            errorVm =
+                new ErrorVm(ErrorConstants.ERR_INTERNAL_SERVER_ERROR, "Internal server error");
         }
-        return builder.body(errorVM);
+        return builder.body(errorVm);
     }
 }

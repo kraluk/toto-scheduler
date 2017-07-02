@@ -8,8 +8,8 @@ import com.kraluk.totoscheduler.service.MailService;
 import com.kraluk.totoscheduler.service.UserService;
 import com.kraluk.totoscheduler.service.dto.UserDto;
 import com.kraluk.totoscheduler.web.rest.util.HeaderUtil;
-import com.kraluk.totoscheduler.web.rest.vm.KeyAndPasswordVM;
-import com.kraluk.totoscheduler.web.rest.vm.ManagedUserVM;
+import com.kraluk.totoscheduler.web.rest.vm.KeyAndPasswordVm;
+import com.kraluk.totoscheduler.web.rest.vm.ManagedUserVm;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ import javax.validation.Valid;
 @RequestMapping("/api")
 public class AccountResource {
 
-    private final Logger log = LoggerFactory.getLogger(AccountResource.class);
+    private static final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
     private final UserRepository userRepository;
 
@@ -58,31 +58,31 @@ public class AccountResource {
     /**
      * POST  /register : register the user.
      *
-     * @param managedUserVM the managed user View Model
+     * @param managedUserVm the managed user View Model
      * @return the ResponseEntity with status 201 (Created) if the user is registered or 400 (Bad Request) if the login or email is already in use
      */
     @PostMapping(path = "/register",
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Timed
-    public ResponseEntity registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
+    public ResponseEntity registerAccount(@Valid @RequestBody ManagedUserVm managedUserVm) {
 
         HttpHeaders textPlainHeaders = new HttpHeaders();
         textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
-        if (!checkPasswordLength(managedUserVM.getPassword())) {
+        if (!checkPasswordLength(managedUserVm.getPassword())) {
             return new ResponseEntity<>(CHECK_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
         }
-        return userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase())
+        return userRepository.findOneByLogin(managedUserVm.getLogin().toLowerCase())
             .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders,
                 HttpStatus.BAD_REQUEST))
-            .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
+            .orElseGet(() -> userRepository.findOneByEmail(managedUserVm.getEmail())
                 .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders,
                     HttpStatus.BAD_REQUEST))
                 .orElseGet(() -> {
                     User user = userService
-                        .createUser(managedUserVM.getLogin(), managedUserVM.getPassword(),
-                            managedUserVM.getFirstName(), managedUserVM.getLastName(),
-                            managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(),
-                            managedUserVM.getLangKey());
+                        .createUser(managedUserVm.getLogin(), managedUserVm.getPassword(),
+                            managedUserVm.getFirstName(), managedUserVm.getLastName(),
+                            managedUserVm.getEmail().toLowerCase(), managedUserVm.getImageUrl(),
+                            managedUserVm.getLangKey());
 
                     mailService.sendActivationEmail(user);
                     return new ResponseEntity<>(HttpStatus.CREATED);
@@ -203,7 +203,7 @@ public class AccountResource {
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
     public ResponseEntity<String> finishPasswordReset(
-        @RequestBody KeyAndPasswordVM keyAndPassword) {
+        @RequestBody KeyAndPasswordVm keyAndPassword) {
         if (!checkPasswordLength(keyAndPassword.getNewPassword())) {
             return new ResponseEntity<>(CHECK_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
         }
@@ -215,7 +215,7 @@ public class AccountResource {
 
     private boolean checkPasswordLength(String password) {
         return !StringUtils.isEmpty(password) &&
-            password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&
-            password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
+            password.length() >= ManagedUserVm.PASSWORD_MIN_LENGTH &&
+            password.length() <= ManagedUserVm.PASSWORD_MAX_LENGTH;
     }
 }

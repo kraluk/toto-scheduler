@@ -11,7 +11,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring", uses = {})
 public interface PeriodMapper extends EntityMapper<PeriodDto, Period> {
 
-
     default Period fromId(Long id) {
         if (id == null) {
             return null;

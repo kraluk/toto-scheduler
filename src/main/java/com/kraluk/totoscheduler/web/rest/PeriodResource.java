@@ -41,7 +41,7 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/api")
 public class PeriodResource {
 
-    private final Logger log = LoggerFactory.getLogger(PeriodResource.class);
+    private static final Logger log = LoggerFactory.getLogger(PeriodResource.class);
 
     private static final String ENTITY_NAME = "period";
 

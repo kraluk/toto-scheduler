@@ -22,7 +22,7 @@ import io.github.jhipster.config.JHipsterProperties;
 @EnableScheduling
 public class AsyncConfiguration implements AsyncConfigurer {
 
-    private final Logger log = LoggerFactory.getLogger(AsyncConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(AsyncConfiguration.class);
 
     private final JHipsterProperties jHipsterProperties;
 

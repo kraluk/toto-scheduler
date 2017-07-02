@@ -1,7 +1,7 @@
 package com.kraluk.totoscheduler.web.rest;
 
 import com.kraluk.totoscheduler.TotoSchedulerApp;
-import com.kraluk.totoscheduler.web.rest.vm.LoggerVM;
+import com.kraluk.totoscheduler.web.rest.vm.LoggerVm;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +53,7 @@ public class LogsResourceIntTest {
 
     @Test
     public void changeLogs() throws Exception {
-        LoggerVM logger = new LoggerVM();
+        LoggerVm logger = new LoggerVm();
         logger.setLevel("INFO");
         logger.setName("ROOT");
 

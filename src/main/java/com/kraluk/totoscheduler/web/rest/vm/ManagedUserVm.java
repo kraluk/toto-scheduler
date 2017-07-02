@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 /**
  * View Model extending the UserDto, which is meant to be used in the user management UI.
  */
-public class ManagedUserVM extends UserDto {
+public class ManagedUserVm extends UserDto {
 
     public static final int PASSWORD_MIN_LENGTH = 4;
 
@@ -19,11 +19,11 @@ public class ManagedUserVM extends UserDto {
     @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
     private String password;
 
-    public ManagedUserVM() {
+    public ManagedUserVm() {
         // Empty constructor needed for Jackson.
     }
 
-    public ManagedUserVM(Long id, String login, String password, String firstName, String lastName,
+    public ManagedUserVm(Long id, String login, String password, String firstName, String lastName,
                          String email, boolean activated, String imageUrl, String langKey,
                          String createdBy, Instant createdDate, String lastModifiedBy,
                          Instant lastModifiedDate,
@@ -41,7 +41,7 @@ public class ManagedUserVM extends UserDto {
 
     @Override
     public String toString() {
-        return "ManagedUserVM{" +
+        return "ManagedUserVm{" +
             "} " + super.toString();
     }
 }

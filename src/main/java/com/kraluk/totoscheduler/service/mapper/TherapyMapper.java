@@ -14,21 +14,15 @@ import org.mapstruct.Mapping;
 public interface TherapyMapper extends EntityMapper<TherapyDto, Therapy> {
 
     @Mapping(source = "therapyEntry.id", target = "therapyEntryId")
-
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "user.login", target = "userLogin")
-
     @Mapping(source = "period.id", target = "periodId")
-
     @Mapping(source = "child.id", target = "childId")
     TherapyDto toDto(Therapy therapy);
 
     @Mapping(source = "therapyEntryId", target = "therapyEntry")
-
     @Mapping(source = "userId", target = "user")
-
     @Mapping(source = "periodId", target = "period")
-
     @Mapping(source = "childId", target = "child")
     Therapy toEntity(TherapyDto therapyDto);
 

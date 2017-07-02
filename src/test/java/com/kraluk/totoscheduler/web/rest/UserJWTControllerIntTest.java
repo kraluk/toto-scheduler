@@ -4,7 +4,7 @@ import com.kraluk.totoscheduler.TotoSchedulerApp;
 import com.kraluk.totoscheduler.domain.User;
 import com.kraluk.totoscheduler.repository.UserRepository;
 import com.kraluk.totoscheduler.security.jwt.TokenProvider;
-import com.kraluk.totoscheduler.web.rest.vm.LoginVM;
+import com.kraluk.totoscheduler.web.rest.vm.LoginVm;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -65,7 +65,7 @@ public class UserJWTControllerIntTest {
 
         userRepository.saveAndFlush(user);
 
-        LoginVM login = new LoginVM();
+        LoginVm login = new LoginVm();
         login.setUsername("user-jwt-controller");
         login.setPassword("test");
         mockMvc.perform(post("/api/authenticate")
@@ -87,7 +87,7 @@ public class UserJWTControllerIntTest {
 
         userRepository.saveAndFlush(user);
 
-        LoginVM login = new LoginVM();
+        LoginVm login = new LoginVm();
         login.setUsername("user-jwt-controller-remember-me");
         login.setPassword("test");
         login.setRememberMe(true);
@@ -102,7 +102,7 @@ public class UserJWTControllerIntTest {
     @Test
     @Transactional
     public void testAuthorizeFails() throws Exception {
-        LoginVM login = new LoginVM();
+        LoginVm login = new LoginVm();
         login.setUsername("wrong-user");
         login.setPassword("wrong password");
         mockMvc.perform(post("/api/authenticate")

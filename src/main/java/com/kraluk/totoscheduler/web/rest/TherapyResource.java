@@ -41,7 +41,7 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/api")
 public class TherapyResource {
 
-    private final Logger log = LoggerFactory.getLogger(TherapyResource.class);
+    private static final Logger log = LoggerFactory.getLogger(TherapyResource.class);
 
     private static final String ENTITY_NAME = "therapy";
 

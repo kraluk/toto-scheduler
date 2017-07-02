@@ -2,7 +2,7 @@ package com.kraluk.totoscheduler.web.rest.errors;
 
 import java.io.Serializable;
 
-public class FieldErrorVM implements Serializable {
+public class FieldErrorVm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -12,7 +12,7 @@ public class FieldErrorVM implements Serializable {
 
     private final String message;
 
-    public FieldErrorVM(String dto, String field, String message) {
+    public FieldErrorVm(String dto, String field, String message) {
         this.objectName = dto;
         this.field = field;
         this.message = message;

@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 /**
  * View Model object for storing a user's credentials.
  */
-public class LoginVM {
+public class LoginVm {
 
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @NotNull
@@ -17,7 +17,7 @@ public class LoginVM {
     private String username;
 
     @NotNull
-    @Size(min = ManagedUserVM.PASSWORD_MIN_LENGTH, max = ManagedUserVM.PASSWORD_MAX_LENGTH)
+    @Size(min = ManagedUserVm.PASSWORD_MIN_LENGTH, max = ManagedUserVm.PASSWORD_MAX_LENGTH)
     private String password;
 
     private Boolean rememberMe;
@@ -48,7 +48,7 @@ public class LoginVM {
 
     @Override
     public String toString() {
-        return "LoginVM{" +
+        return "LoginVm{" +
             "username='" + username + '\'' +
             ", rememberMe=" + rememberMe +
             '}';

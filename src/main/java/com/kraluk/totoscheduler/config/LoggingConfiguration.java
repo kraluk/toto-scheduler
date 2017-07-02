@@ -18,7 +18,7 @@ import io.github.jhipster.config.JHipsterProperties;
 @Configuration
 public class LoggingConfiguration {
 
-    private final Logger log = LoggerFactory.getLogger(LoggingConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(LoggingConfiguration.class);
 
     private LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
 

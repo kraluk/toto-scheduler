@@ -5,18 +5,18 @@ import ch.qos.logback.classic.Logger;
 /**
  * View Model object for storing a Logback logger.
  */
-public class LoggerVM {
+public class LoggerVm {
 
     private String name;
 
     private String level;
 
-    public LoggerVM(Logger logger) {
+    public LoggerVm(Logger logger) {
         this.name = logger.getName();
         this.level = logger.getEffectiveLevel().toString();
     }
 
-    public LoggerVM() {
+    public LoggerVm() {
         // Empty public constructor used by Jackson.
     }
 
@@ -38,7 +38,7 @@ public class LoggerVM {
 
     @Override
     public String toString() {
-        return "LoggerVM{" +
+        return "LoggerVm{" +
             "name='" + name + '\'' +
             ", level='" + level + '\'' +
             '}';

@@ -12,7 +12,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 public class ThymeleafConfiguration {
 
     @SuppressWarnings("unused")
-    private final Logger log = LoggerFactory.getLogger(ThymeleafConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(ThymeleafConfiguration.class);
 
     @Bean
     @Description("Thymeleaf template resolver serving HTML 5 emails")

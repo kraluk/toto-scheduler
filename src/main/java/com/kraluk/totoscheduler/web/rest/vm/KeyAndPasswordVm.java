@@ -3,7 +3,7 @@ package com.kraluk.totoscheduler.web.rest.vm;
 /**
  * View Model object for storing the user's key and password.
  */
-public class KeyAndPasswordVM {
+public class KeyAndPasswordVm {
 
     private String key;
 

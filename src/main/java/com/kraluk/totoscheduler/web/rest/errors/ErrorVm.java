@@ -7,25 +7,25 @@ import java.util.List;
 /**
  * View Model for transferring error message with a list of field errors.
  */
-public class ErrorVM implements Serializable {
+public class ErrorVm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private final String message;
     private final String description;
 
-    private List<FieldErrorVM> fieldErrors;
+    private List<FieldErrorVm> fieldErrors;
 
-    public ErrorVM(String message) {
+    public ErrorVm(String message) {
         this(message, null);
     }
 
-    public ErrorVM(String message, String description) {
+    public ErrorVm(String message, String description) {
         this.message = message;
         this.description = description;
     }
 
-    public ErrorVM(String message, String description, List<FieldErrorVM> fieldErrors) {
+    public ErrorVm(String message, String description, List<FieldErrorVm> fieldErrors) {
         this.message = message;
         this.description = description;
         this.fieldErrors = fieldErrors;
@@ -35,7 +35,7 @@ public class ErrorVM implements Serializable {
         if (fieldErrors == null) {
             fieldErrors = new ArrayList<>();
         }
-        fieldErrors.add(new FieldErrorVM(objectName, field, message));
+        fieldErrors.add(new FieldErrorVm(objectName, field, message));
     }
 
     public String getMessage() {
@@ -46,7 +46,7 @@ public class ErrorVM implements Serializable {
         return description;
     }
 
-    public List<FieldErrorVM> getFieldErrors() {
+    public List<FieldErrorVm> getFieldErrors() {
         return fieldErrors;
     }
 }

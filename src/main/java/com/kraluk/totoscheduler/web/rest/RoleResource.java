@@ -35,7 +35,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api")
 public class RoleResource {
 
-    private final Logger log = LoggerFactory.getLogger(RoleResource.class);
+    private static final Logger log = LoggerFactory.getLogger(RoleResource.class);
 
     private static final String ENTITY_NAME = "role";
 

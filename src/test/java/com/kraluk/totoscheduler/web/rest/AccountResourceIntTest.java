@@ -9,8 +9,8 @@ import com.kraluk.totoscheduler.security.AuthoritiesConstants;
 import com.kraluk.totoscheduler.service.MailService;
 import com.kraluk.totoscheduler.service.UserService;
 import com.kraluk.totoscheduler.service.dto.UserDto;
-import com.kraluk.totoscheduler.web.rest.vm.KeyAndPasswordVM;
-import com.kraluk.totoscheduler.web.rest.vm.ManagedUserVM;
+import com.kraluk.totoscheduler.web.rest.vm.KeyAndPasswordVm;
+import com.kraluk.totoscheduler.web.rest.vm.ManagedUserVm;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -158,7 +158,7 @@ public class AccountResourceIntTest {
     @Test
     @Transactional
     public void testRegisterValid() throws Exception {
-        ManagedUserVM validUser = new ManagedUserVM(
+        ManagedUserVm validUser = new ManagedUserVm(
             null,                   // id
             "joe",                  // login
             "password",             // password
@@ -187,7 +187,7 @@ public class AccountResourceIntTest {
     @Test
     @Transactional
     public void testRegisterInvalidLogin() throws Exception {
-        ManagedUserVM invalidUser = new ManagedUserVM(
+        ManagedUserVm invalidUser = new ManagedUserVm(
             null,                   // id
             "funky-log!n",          // login <-- invalid
             "password",             // password
@@ -216,7 +216,7 @@ public class AccountResourceIntTest {
     @Test
     @Transactional
     public void testRegisterInvalidEmail() throws Exception {
-        ManagedUserVM invalidUser = new ManagedUserVM(
+        ManagedUserVm invalidUser = new ManagedUserVm(
             null,               // id
             "bob",              // login
             "password",         // password
@@ -245,7 +245,7 @@ public class AccountResourceIntTest {
     @Test
     @Transactional
     public void testRegisterInvalidPassword() throws Exception {
-        ManagedUserVM invalidUser = new ManagedUserVM(
+        ManagedUserVm invalidUser = new ManagedUserVm(
             null,               // id
             "bob",              // login
             "123",              // password with only 3 digits
@@ -274,7 +274,7 @@ public class AccountResourceIntTest {
     @Test
     @Transactional
     public void testRegisterNullPassword() throws Exception {
-        ManagedUserVM invalidUser = new ManagedUserVM(
+        ManagedUserVm invalidUser = new ManagedUserVm(
             null,               // id
             "bob",              // login
             null,               // invalid null password
@@ -304,7 +304,7 @@ public class AccountResourceIntTest {
     @Transactional
     public void testRegisterDuplicateLogin() throws Exception {
         // Good
-        ManagedUserVM validUser = new ManagedUserVM(
+        ManagedUserVm validUser = new ManagedUserVm(
             null,                   // id
             "alice",                // login
             "password",             // password
@@ -321,9 +321,9 @@ public class AccountResourceIntTest {
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
 
         // Duplicate login, different email
-        ManagedUserVM
+        ManagedUserVm
             duplicatedUser =
-            new ManagedUserVM(validUser.getId(), validUser.getLogin(), validUser.getPassword(),
+            new ManagedUserVm(validUser.getId(), validUser.getLogin(), validUser.getPassword(),
                 validUser.getFirstName(), validUser.getLastName(),
                 "alicejr@example.com", true, validUser.getImageUrl(), validUser.getLangKey(),
                 validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(),
@@ -351,7 +351,7 @@ public class AccountResourceIntTest {
     @Transactional
     public void testRegisterDuplicateEmail() throws Exception {
         // Good
-        ManagedUserVM validUser = new ManagedUserVM(
+        ManagedUserVm validUser = new ManagedUserVm(
             null,                   // id
             "john",                 // login
             "password",             // password
@@ -368,9 +368,9 @@ public class AccountResourceIntTest {
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)));
 
         // Duplicate email, different login
-        ManagedUserVM
+        ManagedUserVm
             duplicatedUser =
-            new ManagedUserVM(validUser.getId(), "johnjr", validUser.getPassword(),
+            new ManagedUserVm(validUser.getId(), "johnjr", validUser.getPassword(),
                 validUser.getLogin(), validUser.getLastName(),
                 validUser.getEmail(), true, validUser.getImageUrl(), validUser.getLangKey(),
                 validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(),
@@ -397,7 +397,7 @@ public class AccountResourceIntTest {
     @Test
     @Transactional
     public void testRegisterAdminIsIgnored() throws Exception {
-        ManagedUserVM validUser = new ManagedUserVM(
+        ManagedUserVm validUser = new ManagedUserVm(
             null,                   // id
             "badguy",               // login
             "password",             // password
@@ -722,7 +722,7 @@ public class AccountResourceIntTest {
         user.setResetKey("reset key");
         userRepository.saveAndFlush(user);
 
-        KeyAndPasswordVM keyAndPassword = new KeyAndPasswordVM();
+        KeyAndPasswordVm keyAndPassword = new KeyAndPasswordVm();
         keyAndPassword.setKey(user.getResetKey());
         keyAndPassword.setNewPassword("new password");
 
@@ -749,7 +749,7 @@ public class AccountResourceIntTest {
         user.setResetKey("reset key too small");
         userRepository.saveAndFlush(user);
 
-        KeyAndPasswordVM keyAndPassword = new KeyAndPasswordVM();
+        KeyAndPasswordVm keyAndPassword = new KeyAndPasswordVm();
         keyAndPassword.setKey(user.getResetKey());
         keyAndPassword.setNewPassword("foo");
 
@@ -769,7 +769,7 @@ public class AccountResourceIntTest {
     @Test
     @Transactional
     public void testFinishPasswordResetWrongKey() throws Exception {
-        KeyAndPasswordVM keyAndPassword = new KeyAndPasswordVM();
+        KeyAndPasswordVm keyAndPassword = new KeyAndPasswordVm();
         keyAndPassword.setKey("wrong reset key");
         keyAndPassword.setNewPassword("new password");
 

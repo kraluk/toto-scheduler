@@ -4,7 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kraluk.totoscheduler.security.jwt.JWTConfigurer;
 import com.kraluk.totoscheduler.security.jwt.TokenProvider;
-import com.kraluk.totoscheduler.web.rest.vm.LoginVM;
+import com.kraluk.totoscheduler.web.rest.vm.LoginVm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ import javax.validation.Valid;
 @RequestMapping("/api")
 public class UserJWTController {
 
-    private final Logger log = LoggerFactory.getLogger(UserJWTController.class);
+    private static final Logger log = LoggerFactory.getLogger(UserJWTController.class);
 
     private final TokenProvider tokenProvider;
 
@@ -46,18 +46,18 @@ public class UserJWTController {
 
     @PostMapping("/authenticate")
     @Timed
-    public ResponseEntity authorize(@Valid @RequestBody LoginVM loginVM,
+    public ResponseEntity authorize(@Valid @RequestBody LoginVm loginVm,
                                     HttpServletResponse response) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
+            new UsernamePasswordAuthenticationToken(loginVm.getUsername(), loginVm.getPassword());
 
         try {
             Authentication
                 authentication =
                 this.authenticationManager.authenticate(authenticationToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
+            boolean rememberMe = (loginVm.isRememberMe() == null) ? false : loginVm.isRememberMe();
             String jwt = tokenProvider.createToken(authentication, rememberMe);
             response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
             return ResponseEntity.ok(new JWTToken(jwt));

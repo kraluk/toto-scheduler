@@ -10,7 +10,7 @@ import com.kraluk.totoscheduler.service.UserService;
 import com.kraluk.totoscheduler.service.dto.UserDto;
 import com.kraluk.totoscheduler.service.mapper.UserMapper;
 import com.kraluk.totoscheduler.web.rest.errors.ExceptionTranslator;
-import com.kraluk.totoscheduler.web.rest.vm.ManagedUserVM;
+import com.kraluk.totoscheduler.web.rest.vm.ManagedUserVm;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -150,7 +150,7 @@ public class UserResourceIntTest {
         // Create the User
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
+        ManagedUserVm managedUserVm = new ManagedUserVm(
             null,
             DEFAULT_LOGIN,
             DEFAULT_PASSWORD,
@@ -168,7 +168,7 @@ public class UserResourceIntTest {
 
         restUserMockMvc.perform(post("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+            .content(TestUtil.convertObjectToJsonBytes(managedUserVm)))
             .andExpect(status().isCreated());
 
         // Validate the User in the database
@@ -190,7 +190,7 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
+        ManagedUserVm managedUserVm = new ManagedUserVm(
             1L,
             DEFAULT_LOGIN,
             DEFAULT_PASSWORD,
@@ -209,7 +209,7 @@ public class UserResourceIntTest {
         // An entity with an existing ID cannot be created, so this API call must fail
         restUserMockMvc.perform(post("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+            .content(TestUtil.convertObjectToJsonBytes(managedUserVm)))
             .andExpect(status().isBadRequest());
 
         // Validate the User in the database
@@ -226,7 +226,7 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
+        ManagedUserVm managedUserVm = new ManagedUserVm(
             null,
             DEFAULT_LOGIN, // this login should already be used
             DEFAULT_PASSWORD,
@@ -245,7 +245,7 @@ public class UserResourceIntTest {
         // Create the User
         restUserMockMvc.perform(post("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+            .content(TestUtil.convertObjectToJsonBytes(managedUserVm)))
             .andExpect(status().isBadRequest());
 
         // Validate the User in the database
@@ -262,7 +262,7 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
+        ManagedUserVm managedUserVm = new ManagedUserVm(
             null,
             "anotherlogin",
             DEFAULT_PASSWORD,
@@ -281,7 +281,7 @@ public class UserResourceIntTest {
         // Create the User
         restUserMockMvc.perform(post("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+            .content(TestUtil.convertObjectToJsonBytes(managedUserVm)))
             .andExpect(status().isBadRequest());
 
         // Validate the User in the database
@@ -345,7 +345,7 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
+        ManagedUserVm managedUserVm = new ManagedUserVm(
             updatedUser.getId(),
             updatedUser.getLogin(),
             UPDATED_PASSWORD,
@@ -363,7 +363,7 @@ public class UserResourceIntTest {
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+            .content(TestUtil.convertObjectToJsonBytes(managedUserVm)))
             .andExpect(status().isOk());
 
         // Validate the User in the database
@@ -389,7 +389,7 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
+        ManagedUserVm managedUserVm = new ManagedUserVm(
             updatedUser.getId(),
             UPDATED_LOGIN,
             UPDATED_PASSWORD,
@@ -407,7 +407,7 @@ public class UserResourceIntTest {
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+            .content(TestUtil.convertObjectToJsonBytes(managedUserVm)))
             .andExpect(status().isOk());
 
         // Validate the User in the database
@@ -444,7 +444,7 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
+        ManagedUserVm managedUserVm = new ManagedUserVm(
             updatedUser.getId(),
             updatedUser.getLogin(),
             updatedUser.getPassword(),
@@ -462,7 +462,7 @@ public class UserResourceIntTest {
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+            .content(TestUtil.convertObjectToJsonBytes(managedUserVm)))
             .andExpect(status().isBadRequest());
     }
 
@@ -488,7 +488,7 @@ public class UserResourceIntTest {
 
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        ManagedUserVM managedUserVM = new ManagedUserVM(
+        ManagedUserVm managedUserVm = new ManagedUserVm(
             updatedUser.getId(),
             "jhipster", // this login should already be used by anotherUser
             updatedUser.getPassword(),
@@ -506,7 +506,7 @@ public class UserResourceIntTest {
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+            .content(TestUtil.convertObjectToJsonBytes(managedUserVm)))
             .andExpect(status().isBadRequest());
     }
 

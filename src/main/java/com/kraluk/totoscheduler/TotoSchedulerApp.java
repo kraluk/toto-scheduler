@@ -28,13 +28,12 @@ import io.github.jhipster.config.JHipsterConstants;
     exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 public class TotoSchedulerApp {
-
     private static final Logger log = LoggerFactory.getLogger(TotoSchedulerApp.class);
 
-    private final Environment env;
+    private final Environment environment;
 
-    public TotoSchedulerApp(Environment env) {
-        this.env = env;
+    public TotoSchedulerApp(Environment environment) {
+        this.environment = environment;
     }
 
     /**
@@ -46,7 +45,7 @@ public class TotoSchedulerApp {
      */
     @PostConstruct
     public void initApplication() {
-        Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
+        Collection<String> activeProfiles = Arrays.asList(environment.getActiveProfiles());
         if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles
             .contains(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
             log.error("You have misconfigured your application! It should not run " +
