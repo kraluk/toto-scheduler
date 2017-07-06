@@ -41,24 +41,19 @@ export class ChildDialogComponent implements OnInit {
         this.isSaving = true;
         if (this.child.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.childService.update(this.child), false);
+                this.childService.update(this.child));
         } else {
             this.subscribeToSaveResponse(
-                this.childService.create(this.child), true);
+                this.childService.create(this.child));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Child>, isCreated: boolean) {
+    private subscribeToSaveResponse(result: Observable<Child>) {
         result.subscribe((res: Child) =>
-            this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: Child, isCreated: boolean) {
-        this.alertService.success(
-            isCreated ? 'totoSchedulerApp.child.created'
-            : 'totoSchedulerApp.child.updated',
-            { param : result.id }, null);
-
+    private onSaveSuccess(result: Child) {
         this.eventManager.broadcast({ name: 'childListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);

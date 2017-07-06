@@ -1,5 +1,5 @@
-var dataCacheName = '"TotoScheduler-v1';
-var cacheName = '"TotoScheduler-1';
+var dataCacheName = 'TotoScheduler-v1';
+var cacheName = 'TotoScheduler-1';
 var filesToCache = [
     '/',
     '/index.html'

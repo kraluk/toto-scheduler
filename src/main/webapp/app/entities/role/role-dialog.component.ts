@@ -48,24 +48,19 @@ export class RoleDialogComponent implements OnInit {
         this.isSaving = true;
         if (this.role.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.roleService.update(this.role), false);
+                this.roleService.update(this.role));
         } else {
             this.subscribeToSaveResponse(
-                this.roleService.create(this.role), true);
+                this.roleService.create(this.role));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Role>, isCreated: boolean) {
+    private subscribeToSaveResponse(result: Observable<Role>) {
         result.subscribe((res: Role) =>
-            this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: Role, isCreated: boolean) {
-        this.alertService.success(
-            isCreated ? 'totoSchedulerApp.role.created'
-            : 'totoSchedulerApp.role.updated',
-            { param : result.id }, null);
-
+    private onSaveSuccess(result: Role) {
         this.eventManager.broadcast({ name: 'roleListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);
