@@ -1,0 +1,24 @@
+{
+    "totoSchedulerApp": {
+        "period" : {
+            "home": {
+                "title": "Periods",
+                "createLabel": "Dodaj Period",
+                "createOrEditLabel": "Dodaj lub edytuj: Period"
+            },
+            "created": "Utworzono nowy Period z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Period z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Period z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Period {{ id }}?"
+            },
+            "detail": {
+                "title": "Period"
+            },
+            "name": "Name",
+            "comment": "Comment",
+            "startDate": "Start Date",
+            "endDate": "End Date"
+        }
+    }
+}

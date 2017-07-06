@@ -1,0 +1,37 @@
+
+<div *ngIf="period">
+    <h2><span jhiTranslate="totoSchedulerApp.period.detail.title">Period</span> {{period.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="totoSchedulerApp.period.name">Name</span></dt>
+        <dd>
+            <span>{{period.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.period.comment">Comment</span></dt>
+        <dd>
+            <span>{{period.comment}}</span>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.period.startDate">Start Date</span></dt>
+        <dd>
+            <span>{{period.startDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.period.endDate">End Date</span></dt>
+        <dd>
+            <span>{{period.endDate | date:'mediumDate'}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'period/'+ period.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

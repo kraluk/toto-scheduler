@@ -1,0 +1,51 @@
+
+<div *ngIf="therapy">
+    <h2><span jhiTranslate="totoSchedulerApp.therapy.detail.title">Therapy</span> {{therapy.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="totoSchedulerApp.therapy.comment">Comment</span></dt>
+        <dd>
+            <span>{{therapy.comment}}</span>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.therapy.date">Date</span></dt>
+        <dd>
+            <span>{{therapy.date | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.therapy.therapyEntry">Therapy Entry</span></dt>
+        <dd>
+            <div *ngIf="therapy.therapyEntryId">
+                <a [routerLink]="['/therapy-entry', therapy.therapyEntryId]">{{therapy.therapyEntryId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.therapy.user">User</span></dt>
+        <dd>
+            {{therapy.userLogin}}
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.therapy.period">Period</span></dt>
+        <dd>
+            <div *ngIf="therapy.periodId">
+                <a [routerLink]="['/period', therapy.periodId]">{{therapy.periodId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.therapy.child">Child</span></dt>
+        <dd>
+            <div *ngIf="therapy.childId">
+                <a [routerLink]="['/child', therapy.childId]">{{therapy.childId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'therapy/'+ therapy.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
