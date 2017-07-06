@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
 
 import { Therapy } from './therapy.model';
 import { TherapyPopupService } from './therapy-popup.service';
@@ -19,7 +19,6 @@ export class TherapyDeleteDialogComponent {
     constructor(
         private therapyService: TherapyService,
         public activeModal: NgbActiveModal,
-        private alertService: JhiAlertService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -36,7 +35,6 @@ export class TherapyDeleteDialogComponent {
             });
             this.activeModal.dismiss(true);
         });
-        this.alertService.success('totoSchedulerApp.therapy.deleted', { param : id }, null);
     }
 }
 

@@ -4,7 +4,7 @@
       "packageName": "com.kraluk.totoscheduler",
       "nativeLanguage": "pl"
     },
-    "jhipsterVersion": "4.5.6",
+    "jhipsterVersion": "4.6.0",
     "baseName": "TotoScheduler",
     "packageName": "com.kraluk.totoscheduler",
     "packageFolder": "com/kraluk/totoscheduler",
@@ -22,7 +22,7 @@
     "buildTool": "gradle",
     "enableSocialSignIn": false,
     "jwtSecretKey": "7c4d9aa9725ea6b95f0b8a94c4cd62aeab2e3b14",
-    "clientFramework": "angular2",
+    "clientFramework": "angularX",
     "useSass": false,
     "clientPackageManager": "yarn",
     "applicationType": "monolith",

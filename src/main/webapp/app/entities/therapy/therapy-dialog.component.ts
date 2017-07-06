@@ -77,24 +77,19 @@ export class TherapyDialogComponent implements OnInit {
         this.isSaving = true;
         if (this.therapy.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.therapyService.update(this.therapy), false);
+                this.therapyService.update(this.therapy));
         } else {
             this.subscribeToSaveResponse(
-                this.therapyService.create(this.therapy), true);
+                this.therapyService.create(this.therapy));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Therapy>, isCreated: boolean) {
+    private subscribeToSaveResponse(result: Observable<Therapy>) {
         result.subscribe((res: Therapy) =>
-            this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: Therapy, isCreated: boolean) {
-        this.alertService.success(
-            isCreated ? 'totoSchedulerApp.therapy.created'
-            : 'totoSchedulerApp.therapy.updated',
-            { param : result.id }, null);
-
+    private onSaveSuccess(result: Therapy) {
         this.eventManager.broadcast({ name: 'therapyListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);

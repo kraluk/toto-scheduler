@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
 
 import { Child } from './child.model';
 import { ChildPopupService } from './child-popup.service';
@@ -19,7 +19,6 @@ export class ChildDeleteDialogComponent {
     constructor(
         private childService: ChildService,
         public activeModal: NgbActiveModal,
-        private alertService: JhiAlertService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -36,7 +35,6 @@ export class ChildDeleteDialogComponent {
             });
             this.activeModal.dismiss(true);
         });
-        this.alertService.success('totoSchedulerApp.child.deleted', { param : id }, null);
     }
 }
 

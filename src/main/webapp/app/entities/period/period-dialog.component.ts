@@ -43,24 +43,19 @@ export class PeriodDialogComponent implements OnInit {
         this.isSaving = true;
         if (this.period.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.periodService.update(this.period), false);
+                this.periodService.update(this.period));
         } else {
             this.subscribeToSaveResponse(
-                this.periodService.create(this.period), true);
+                this.periodService.create(this.period));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Period>, isCreated: boolean) {
+    private subscribeToSaveResponse(result: Observable<Period>) {
         result.subscribe((res: Period) =>
-            this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: Period, isCreated: boolean) {
-        this.alertService.success(
-            isCreated ? 'totoSchedulerApp.period.created'
-            : 'totoSchedulerApp.period.updated',
-            { param : result.id }, null);
-
+    private onSaveSuccess(result: Period) {
         this.eventManager.broadcast({ name: 'periodListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);
