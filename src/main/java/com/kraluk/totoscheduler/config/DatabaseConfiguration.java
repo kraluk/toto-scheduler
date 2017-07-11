@@ -27,13 +27,12 @@ import liquibase.integration.spring.SpringLiquibase;
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 public class DatabaseConfiguration {
+    private static final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
 
-    private final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
+    private final Environment environment;
 
-    private final Environment env;
-
-    public DatabaseConfiguration(Environment env) {
-        this.env = env;
+    public DatabaseConfiguration(Environment environment) {
+        this.environment = environment;
     }
 
     /**
@@ -45,7 +44,9 @@ public class DatabaseConfiguration {
     @Bean(initMethod = "start", destroyMethod = "stop")
     @Profile(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)
     public Server h2TCPServer() throws SQLException {
-        return Server.createTcpServer("-tcp", "-tcpAllowOthers");
+        Server server = Server.createTcpServer("-tcp", "-tcpAllowOthers");
+        log.info("H2 database URL '{}'", server.getURL());
+        return server;
     }
 
     @Bean
@@ -54,13 +55,13 @@ public class DatabaseConfiguration {
                                      LiquibaseProperties liquibaseProperties) {
 
         // Use liquibase.integration.spring.SpringLiquibase if you don't want Liquibase to start asynchronously
-        SpringLiquibase liquibase = new AsyncSpringLiquibase(taskExecutor, env);
+        SpringLiquibase liquibase = new AsyncSpringLiquibase(taskExecutor, environment);
         liquibase.setDataSource(dataSource);
         liquibase.setChangeLog("classpath:config/liquibase/master.xml");
         liquibase.setContexts(liquibaseProperties.getContexts());
         liquibase.setDefaultSchema(liquibaseProperties.getDefaultSchema());
         liquibase.setDropFirst(liquibaseProperties.isDropFirst());
-        if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_NO_LIQUIBASE)) {
+        if (environment.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_NO_LIQUIBASE)) {
             liquibase.setShouldRun(false);
         } else {
             liquibase.setShouldRun(liquibaseProperties.isEnabled());
