@@ -3,48 +3,39 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "therapyEntry",
-            "otherEntityName": "therapyEntry",
+            "relationshipName": "therapyType",
+            "otherEntityName": "therapyType",
             "otherEntityField": "id",
             "ownerSide": true,
             "otherEntityRelationshipName": "therapy"
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "user",
-            "otherEntityName": "user",
-            "otherEntityField": "login"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "period",
-            "otherEntityName": "period",
+            "relationshipName": "therapist",
+            "otherEntityName": "therapist",
             "otherEntityField": "id"
         },
         {
-            "relationshipName": "child",
-            "otherEntityName": "child",
             "relationshipType": "many-to-one",
+            "relationshipName": "timeTable",
+            "otherEntityName": "timeTable",
             "otherEntityField": "id"
         }
     ],
     "fields": [
-        {
-            "fieldName": "comment",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
         {
             "fieldName": "date",
             "fieldType": "ZonedDateTime",
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "comment",
+            "fieldType": "String"
         }
     ],
-    "changelogDate": "20170702205730",
+    "changelogDate": "20170711214714",
     "entityTableName": "therapy",
     "dto": "mapstruct",
     "pagination": "infinite-scroll",

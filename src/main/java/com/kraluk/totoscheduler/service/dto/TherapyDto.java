@@ -1,7 +1,5 @@
 package com.kraluk.totoscheduler.service.dto;
 
-import com.google.common.base.MoreObjects;
-
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -16,20 +14,15 @@ public class TherapyDto implements Serializable {
     private Long id;
 
     @NotNull
-    private String comment;
-
-    @NotNull
     private ZonedDateTime date;
 
-    private Long therapyEntryId;
+    private String comment;
 
-    private Long userId;
+    private Long therapyTypeId;
 
-    private String userLogin;
+    private Long therapistId;
 
-    private Long periodId;
-
-    private Long childId;
+    private Long timeTableId;
 
     public Long getId() {
         return id;
@@ -37,14 +30,6 @@ public class TherapyDto implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     public ZonedDateTime getDate() {
@@ -55,44 +40,36 @@ public class TherapyDto implements Serializable {
         this.date = date;
     }
 
-    public Long getTherapyEntryId() {
-        return therapyEntryId;
+    public String getComment() {
+        return comment;
     }
 
-    public void setTherapyEntryId(Long therapyEntryId) {
-        this.therapyEntryId = therapyEntryId;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getTherapyTypeId() {
+        return therapyTypeId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setTherapyTypeId(Long therapyTypeId) {
+        this.therapyTypeId = therapyTypeId;
     }
 
-    public String getUserLogin() {
-        return userLogin;
+    public Long getTherapistId() {
+        return therapistId;
     }
 
-    public void setUserLogin(String userLogin) {
-        this.userLogin = userLogin;
+    public void setTherapistId(Long therapistId) {
+        this.therapistId = therapistId;
     }
 
-    public Long getPeriodId() {
-        return periodId;
+    public Long getTimeTableId() {
+        return timeTableId;
     }
 
-    public void setPeriodId(Long periodId) {
-        this.periodId = periodId;
-    }
-
-    public Long getChildId() {
-        return childId;
-    }
-
-    public void setChildId(Long childId) {
-        this.childId = childId;
+    public void setTimeTableId(Long timeTableId) {
+        this.timeTableId = timeTableId;
     }
 
     @Override
@@ -118,15 +95,10 @@ public class TherapyDto implements Serializable {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-            .add("id", id)
-            .add("comment", comment)
-            .add("date", date)
-            .add("therapyEntryId", therapyEntryId)
-            .add("userId", userId)
-            .add("userLogin", userLogin)
-            .add("periodId", periodId)
-            .add("childId", childId)
-            .toString();
+        return "TherapyDto{" +
+            "id=" + getId() +
+            ", date='" + getDate() + "'" +
+            ", comment='" + getComment() + "'" +
+            "}";
     }
 }

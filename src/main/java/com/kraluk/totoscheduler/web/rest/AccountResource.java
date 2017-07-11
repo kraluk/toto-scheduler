@@ -36,7 +36,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api")
 public class AccountResource {
-
     private static final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
     private final UserRepository userRepository;

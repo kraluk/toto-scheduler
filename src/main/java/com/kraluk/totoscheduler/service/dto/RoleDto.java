@@ -1,7 +1,5 @@
 package com.kraluk.totoscheduler.service.dto;
 
-import com.google.common.base.MoreObjects;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -19,9 +17,9 @@ public class RoleDto implements Serializable {
     @Size(min = 5)
     private String name;
 
-    private Long userId;
+    private String comment;
 
-    private String userLogin;
+    private Long therapistId;
 
     public Long getId() {
         return id;
@@ -39,20 +37,20 @@ public class RoleDto implements Serializable {
         this.name = name;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getComment() {
+        return comment;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public String getUserLogin() {
-        return userLogin;
+    public Long getTherapistId() {
+        return therapistId;
     }
 
-    public void setUserLogin(String userLogin) {
-        this.userLogin = userLogin;
+    public void setTherapistId(Long therapistId) {
+        this.therapistId = therapistId;
     }
 
     @Override
@@ -78,11 +76,10 @@ public class RoleDto implements Serializable {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-            .add("id", id)
-            .add("name", name)
-            .add("userId", userId)
-            .add("userLogin", userLogin)
-            .toString();
+        return "RoleDto{" +
+            "id=" + getId() +
+            ", name='" + getName() + "'" +
+            ", comment='" + getComment() + "'" +
+            "}";
     }
 }

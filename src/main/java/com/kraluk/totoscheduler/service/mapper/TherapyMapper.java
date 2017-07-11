@@ -10,20 +10,21 @@ import org.mapstruct.Mapping;
  * Mapper for the entity Therapy and its DTO TherapyDto.
  */
 @Mapper(componentModel = "spring",
-    uses = {TherapyEntryMapper.class, UserMapper.class, PeriodMapper.class, ChildMapper.class,})
+    uses = {TherapyTypeMapper.class, TherapistMapper.class, TimeTableMapper.class,})
 public interface TherapyMapper extends EntityMapper<TherapyDto, Therapy> {
 
-    @Mapping(source = "therapyEntry.id", target = "therapyEntryId")
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "user.login", target = "userLogin")
-    @Mapping(source = "period.id", target = "periodId")
-    @Mapping(source = "child.id", target = "childId")
+    @Mapping(source = "therapyType.id", target = "therapyTypeId")
+
+    @Mapping(source = "therapist.id", target = "therapistId")
+
+    @Mapping(source = "timeTable.id", target = "timeTableId")
     TherapyDto toDto(Therapy therapy);
 
-    @Mapping(source = "therapyEntryId", target = "therapyEntry")
-    @Mapping(source = "userId", target = "user")
-    @Mapping(source = "periodId", target = "period")
-    @Mapping(source = "childId", target = "child")
+    @Mapping(source = "therapyTypeId", target = "therapyType")
+
+    @Mapping(source = "therapistId", target = "therapist")
+
+    @Mapping(source = "timeTableId", target = "timeTable")
     Therapy toEntity(TherapyDto therapyDto);
 
     default Therapy fromId(Long id) {

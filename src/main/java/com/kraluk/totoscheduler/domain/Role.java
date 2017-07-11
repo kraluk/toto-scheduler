@@ -1,8 +1,5 @@
 package com.kraluk.totoscheduler.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -22,7 +19,6 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "role")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,8 +33,11 @@ public class Role implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "jhi_comment")
+    private String comment;
+
     @ManyToOne
-    private User user;
+    private Therapist therapist;
 
     public Long getId() {
         return id;
@@ -61,17 +60,30 @@ public class Role implements Serializable {
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
+    public String getComment() {
+        return comment;
     }
 
-    public Role user(User user) {
-        this.user = user;
+    public Role comment(String comment) {
+        this.comment = comment;
         return this;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Therapist getTherapist() {
+        return therapist;
+    }
+
+    public Role therapist(Therapist therapist) {
+        this.therapist = therapist;
+        return this;
+    }
+
+    public void setTherapist(Therapist therapist) {
+        this.therapist = therapist;
     }
 
     @Override
@@ -99,6 +111,7 @@ public class Role implements Serializable {
         return "Role{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", comment='" + getComment() + "'" +
             "}";
     }
 }

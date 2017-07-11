@@ -47,6 +47,9 @@ public class RoleResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_COMMENT = "AAAAAAAAAA";
+    private static final String UPDATED_COMMENT = "BBBBBBBBBB";
+
     @Autowired
     private RoleRepository roleRepository;
 
@@ -87,7 +90,8 @@ public class RoleResourceIntTest {
      */
     public static Role createEntity(EntityManager em) {
         Role role = new Role()
-            .name(DEFAULT_NAME);
+            .name(DEFAULT_NAME)
+            .comment(DEFAULT_COMMENT);
         return role;
     }
 
@@ -113,6 +117,7 @@ public class RoleResourceIntTest {
         assertThat(roleList).hasSize(databaseSizeBeforeCreate + 1);
         Role testRole = roleList.get(roleList.size() - 1);
         assertThat(testRole.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testRole.getComment()).isEqualTo(DEFAULT_COMMENT);
     }
 
     @Test
@@ -165,7 +170,8 @@ public class RoleResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(role.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT.toString())));
     }
 
     @Test
@@ -179,7 +185,8 @@ public class RoleResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(role.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.comment").value(DEFAULT_COMMENT.toString()));
     }
 
     @Test
@@ -200,7 +207,8 @@ public class RoleResourceIntTest {
         // Update the role
         Role updatedRole = roleRepository.findOne(role.getId());
         updatedRole
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .comment(UPDATED_COMMENT);
         RoleDto roleDto = roleMapper.toDto(updatedRole);
 
         restRoleMockMvc.perform(put("/api/roles")
@@ -213,6 +221,7 @@ public class RoleResourceIntTest {
         assertThat(roleList).hasSize(databaseSizeBeforeUpdate);
         Role testRole = roleList.get(roleList.size() - 1);
         assertThat(testRole.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testRole.getComment()).isEqualTo(UPDATED_COMMENT);
     }
 
     @Test

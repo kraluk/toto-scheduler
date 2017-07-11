@@ -1,19 +1,21 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { TotoSchedulerRoleModule } from './role/role.module';
-import { TotoSchedulerPeriodModule } from './period/period.module';
+import { TotoSchedulerTimeTableModule } from './time-table/time-table.module';
 import { TotoSchedulerTherapyModule } from './therapy/therapy.module';
-import { TotoSchedulerTherapyEntryModule } from './therapy-entry/therapy-entry.module';
+import { TotoSchedulerTherapyTypeModule } from './therapy-type/therapy-type.module';
 import { TotoSchedulerChildModule } from './child/child.module';
+import { TotoSchedulerTherapistModule } from './therapist/therapist.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
     imports: [
         TotoSchedulerRoleModule,
-        TotoSchedulerPeriodModule,
+        TotoSchedulerTimeTableModule,
         TotoSchedulerTherapyModule,
-        TotoSchedulerTherapyEntryModule,
+        TotoSchedulerTherapyTypeModule,
         TotoSchedulerChildModule,
+        TotoSchedulerTherapistModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

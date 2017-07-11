@@ -28,7 +28,7 @@ import liquibase.integration.spring.SpringLiquibase;
 @EnableTransactionManagement
 public class DatabaseConfiguration {
 
-    private static final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
+    private final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
 
     private final Environment env;
 

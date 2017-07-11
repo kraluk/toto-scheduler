@@ -35,7 +35,7 @@ public class SecurityUtilsUnitTest {
         securityContext
             .setAuthentication(new UsernamePasswordAuthenticationToken("admin", "token"));
         SecurityContextHolder.setContext(securityContext);
-        String jwt = SecurityUtils.getCurrentUserJWT();
+        String jwt = SecurityUtils.getCurrentUserJwt();
         assertThat(jwt).isEqualTo("token");
     }
 

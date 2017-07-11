@@ -1,7 +1,7 @@
 package com.kraluk.totoscheduler.config;
 
 import com.kraluk.totoscheduler.security.AuthoritiesConstants;
-import com.kraluk.totoscheduler.security.jwt.JWTConfigurer;
+import com.kraluk.totoscheduler.security.jwt.JwtConfigurer;
 import com.kraluk.totoscheduler.security.jwt.TokenProvider;
 
 import org.springframework.beans.factory.BeanInitializationException;
@@ -117,8 +117,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     }
 
-    private JWTConfigurer securityConfigurerAdapter() {
-        return new JWTConfigurer(tokenProvider);
+    private JwtConfigurer securityConfigurerAdapter() {
+        return new JwtConfigurer(tokenProvider);
     }
 
     @Bean

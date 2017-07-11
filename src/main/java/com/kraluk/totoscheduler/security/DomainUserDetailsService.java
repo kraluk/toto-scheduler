@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
  */
 @Component("userDetailsService")
 public class DomainUserDetailsService implements UserDetailsService {
-
     private static final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
     private final UserRepository userRepository;

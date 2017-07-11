@@ -17,36 +17,32 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="comment"><span jhiTranslate="totoSchedulerApp.therapy.comment">Comment</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="date"><span jhiTranslate="totoSchedulerApp.therapy.date">Date</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="therapyEntryId"><span jhiTranslate="totoSchedulerApp.therapy.therapyEntry">Therapy Entry</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="userLogin"><span jhiTranslate="totoSchedulerApp.therapy.user">User</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="periodId"><span jhiTranslate="totoSchedulerApp.therapy.period">Period</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="childId"><span jhiTranslate="totoSchedulerApp.therapy.child">Child</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="comment"><span jhiTranslate="totoSchedulerApp.therapy.comment">Comment</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="therapyTypeId"><span jhiTranslate="totoSchedulerApp.therapy.therapyType">Therapy Type</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="therapistId"><span jhiTranslate="totoSchedulerApp.therapy.therapist">Therapist</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="timeTableId"><span jhiTranslate="totoSchedulerApp.therapy.timeTable">Time Table</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let therapy of therapies ;trackBy: trackId">
                 <td><a [routerLink]="['../therapy', therapy.id ]">{{therapy.id}}</a></td>
-                <td>{{therapy.comment}}</td>
                 <td>{{therapy.date | date:'medium'}}</td>
+                <td>{{therapy.comment}}</td>
                 <td>
-                    <div *ngIf="therapy.therapyEntryId">
-                        <a [routerLink]="['../therapy-entry', therapy.therapyEntryId  ]" >{{therapy.therapyEntryId}}</a>
+                    <div *ngIf="therapy.therapyTypeId">
+                        <a [routerLink]="['../therapy-type', therapy.therapyTypeId  ]" >{{therapy.therapyTypeId}}</a>
                     </div>
                 </td>
                 <td>
-                    {{therapy.userLogin}}
-                </td>
-                <td>
-                    <div *ngIf="therapy.periodId">
-                        <a [routerLink]="['../period', therapy.periodId  ]" >{{therapy.periodId}}</a>
+                    <div *ngIf="therapy.therapistId">
+                        <a [routerLink]="['../therapist', therapy.therapistId  ]" >{{therapy.therapistId}}</a>
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="therapy.childId">
-                        <a [routerLink]="['../child', therapy.childId  ]" >{{therapy.childId}}</a>
+                    <div *ngIf="therapy.timeTableId">
+                        <a [routerLink]="['../time-table', therapy.timeTableId  ]" >{{therapy.timeTableId}}</a>
                     </div>
                 </td>
                 <td class="text-right">

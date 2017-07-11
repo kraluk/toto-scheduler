@@ -4,7 +4,8 @@ export class Role implements BaseEntity {
     constructor(
         public id?: number,
         public name?: string,
-        public userId?: number,
+        public comment?: string,
+        public therapistId?: number,
     ) {
     }
 }

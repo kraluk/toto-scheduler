@@ -66,7 +66,6 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @RequestMapping("/api")
 public class UserResource {
-
     private static final Logger log = LoggerFactory.getLogger(UserResource.class);
 
     private static final String ENTITY_NAME = "userManagement";

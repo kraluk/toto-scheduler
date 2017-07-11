@@ -14,7 +14,6 @@ import io.github.jhipster.config.JHipsterConstants;
 @Configuration
 @Profile(JHipsterConstants.SPRING_PROFILE_CLOUD)
 public class CloudDatabaseConfiguration extends AbstractCloudConfig {
-
     private static final Logger log = LoggerFactory.getLogger(CloudDatabaseConfiguration.class);
 
     @Bean

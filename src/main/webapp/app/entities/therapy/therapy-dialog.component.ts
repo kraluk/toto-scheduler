@@ -9,10 +9,9 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Therapy } from './therapy.model';
 import { TherapyPopupService } from './therapy-popup.service';
 import { TherapyService } from './therapy.service';
-import { TherapyEntry, TherapyEntryService } from '../therapy-entry';
-import { User, UserService } from '../../shared';
-import { Period, PeriodService } from '../period';
-import { Child, ChildService } from '../child';
+import { TherapyType, TherapyTypeService } from '../therapy-type';
+import { Therapist, TherapistService } from '../therapist';
+import { TimeTable, TimeTableService } from '../time-table';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -25,22 +24,19 @@ export class TherapyDialogComponent implements OnInit {
     authorities: any[];
     isSaving: boolean;
 
-    therapyentries: TherapyEntry[];
+    therapytypes: TherapyType[];
 
-    users: User[];
+    therapists: Therapist[];
 
-    periods: Period[];
-
-    children: Child[];
+    timetables: TimeTable[];
 
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private therapyService: TherapyService,
-        private therapyEntryService: TherapyEntryService,
-        private userService: UserService,
-        private periodService: PeriodService,
-        private childService: ChildService,
+        private therapyTypeService: TherapyTypeService,
+        private therapistService: TherapistService,
+        private timeTableService: TimeTableService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -48,25 +44,23 @@ export class TherapyDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
-        this.therapyEntryService
+        this.therapyTypeService
             .query({filter: 'therapy-is-null'})
             .subscribe((res: ResponseWrapper) => {
-                if (!this.therapy.therapyEntryId) {
-                    this.therapyentries = res.json;
+                if (!this.therapy.therapyTypeId) {
+                    this.therapytypes = res.json;
                 } else {
-                    this.therapyEntryService
-                        .find(this.therapy.therapyEntryId)
-                        .subscribe((subRes: TherapyEntry) => {
-                            this.therapyentries = [subRes].concat(res.json);
+                    this.therapyTypeService
+                        .find(this.therapy.therapyTypeId)
+                        .subscribe((subRes: TherapyType) => {
+                            this.therapytypes = [subRes].concat(res.json);
                         }, (subRes: ResponseWrapper) => this.onError(subRes.json));
                 }
             }, (res: ResponseWrapper) => this.onError(res.json));
-        this.userService.query()
-            .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.periodService.query()
-            .subscribe((res: ResponseWrapper) => { this.periods = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.childService.query()
-            .subscribe((res: ResponseWrapper) => { this.children = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.therapistService.query()
+            .subscribe((res: ResponseWrapper) => { this.therapists = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.timeTableService.query()
+            .subscribe((res: ResponseWrapper) => { this.timetables = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -109,19 +103,15 @@ export class TherapyDialogComponent implements OnInit {
         this.alertService.error(error.message, null, null);
     }
 
-    trackTherapyEntryById(index: number, item: TherapyEntry) {
+    trackTherapyTypeById(index: number, item: TherapyType) {
         return item.id;
     }
 
-    trackUserById(index: number, item: User) {
+    trackTherapistById(index: number, item: Therapist) {
         return item.id;
     }
 
-    trackPeriodById(index: number, item: Period) {
-        return item.id;
-    }
-
-    trackChildById(index: number, item: Child) {
+    trackTimeTableById(index: number, item: TimeTable) {
         return item.id;
     }
 }

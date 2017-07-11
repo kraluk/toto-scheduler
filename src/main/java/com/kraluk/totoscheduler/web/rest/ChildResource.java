@@ -34,7 +34,6 @@ import io.github.jhipster.web.util.ResponseUtil;
 @RestController
 @RequestMapping("/api")
 public class ChildResource {
-
     private static final Logger log = LoggerFactory.getLogger(ChildResource.class);
 
     private static final String ENTITY_NAME = "child";

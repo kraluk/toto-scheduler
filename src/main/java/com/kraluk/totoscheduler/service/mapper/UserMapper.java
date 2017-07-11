@@ -59,7 +59,7 @@ public class UserMapper {
             .collect(Collectors.toList());
     }
 
-    public User userFromId(Long id) {
+    public User fromId(Long id) {
         if (id == null) {
             return null;
         }
@@ -68,11 +68,11 @@ public class UserMapper {
         return user;
     }
 
-    private Set<Authority> authoritiesFromStrings(Set<String> strings) {
+    public Set<Authority> authoritiesFromStrings(Set<String> strings) {
         return strings.stream().map(string -> {
-            Authority auth = new Authority();
-            auth.setName(string);
-            return auth;
+            Authority authority = new Authority();
+            authority.setName(string);
+            return authority;
         }).collect(Collectors.toSet());
     }
 }

@@ -8,9 +8,15 @@
         <dd>
             <span>{{role.name}}</span>
         </dd>
-        <dt><span jhiTranslate="totoSchedulerApp.role.user">User</span></dt>
+        <dt><span jhiTranslate="totoSchedulerApp.role.comment">Comment</span></dt>
         <dd>
-            {{role.userLogin}}
+            <span>{{role.comment}}</span>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.role.therapist">Therapist</span></dt>
+        <dd>
+            <div *ngIf="role.therapistId">
+                <a [routerLink]="['/therapist', role.therapistId]">{{role.therapistId}}</a>
+            </div>
         </dd>
     </dl>
 

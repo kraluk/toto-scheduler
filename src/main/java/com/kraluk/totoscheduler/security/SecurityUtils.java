@@ -38,7 +38,7 @@ public final class SecurityUtils {
      *
      * @return the JWT of the current user
      */
-    public static String getCurrentUserJWT() {
+    public static String getCurrentUserJwt() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         if (authentication != null && authentication.getCredentials() instanceof String) {

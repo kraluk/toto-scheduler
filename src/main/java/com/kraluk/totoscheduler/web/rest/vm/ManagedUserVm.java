@@ -1,6 +1,5 @@
 package com.kraluk.totoscheduler.web.rest.vm;
 
-import com.google.common.base.MoreObjects;
 import com.kraluk.totoscheduler.service.dto.UserDto;
 
 import java.time.Instant;
@@ -42,8 +41,7 @@ public class ManagedUserVm extends UserDto {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-            .add("password", password)
-            .toString();
+        return "ManagedUserVm{" +
+            "} " + super.toString();
     }
 }

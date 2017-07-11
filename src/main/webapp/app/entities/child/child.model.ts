@@ -6,7 +6,7 @@ export class Child implements BaseEntity {
         public registerNumber?: string,
         public name?: string,
         public comment?: string,
-        public therapies?: BaseEntity[],
+        public timeTables?: BaseEntity[],
     ) {
     }
 }

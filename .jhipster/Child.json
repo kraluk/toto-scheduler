@@ -3,8 +3,8 @@
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "therapy",
-            "otherEntityName": "therapy",
+            "relationshipName": "timeTable",
+            "otherEntityName": "timeTable",
             "otherEntityRelationshipName": "child"
         }
     ],
@@ -32,7 +32,7 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20170702205732",
+    "changelogDate": "20170711214716",
     "entityTableName": "child",
     "dto": "mapstruct",
     "pagination": "no",

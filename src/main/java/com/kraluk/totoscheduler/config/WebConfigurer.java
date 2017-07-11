@@ -40,35 +40,34 @@ import io.undertow.UndertowOptions;
 @Configuration
 public class WebConfigurer
     implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
-
     private static final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
 
-    private final Environment env;
+    private final Environment environment;
 
     private final JHipsterProperties jHipsterProperties;
 
     private MetricRegistry metricRegistry;
 
-    public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties) {
+    public WebConfigurer(Environment environment, JHipsterProperties jHipsterProperties) {
 
-        this.env = env;
+        this.environment = environment;
         this.jHipsterProperties = jHipsterProperties;
     }
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-        if (env.getActiveProfiles().length != 0) {
+        if (environment.getActiveProfiles().length != 0) {
             log.info("Web application configuration, using profiles: {}",
-                (Object[]) env.getActiveProfiles());
+                (Object[]) environment.getActiveProfiles());
         }
         EnumSet<DispatcherType>
             disps =
             EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.ASYNC);
         initMetrics(servletContext, disps);
-        if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
+        if (environment.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
             initCachingHttpHeadersFilter(servletContext, disps);
         }
-        if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
+        if (environment.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
             initH2Console(servletContext);
         }
         log.info("Web application fully configured");

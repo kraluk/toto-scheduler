@@ -2,10 +2,10 @@
     "fluentMethods": true,
     "relationships": [
         {
+            "relationshipName": "therapist",
+            "otherEntityName": "therapist",
             "relationshipType": "many-to-one",
-            "relationshipName": "user",
-            "otherEntityName": "user",
-            "otherEntityField": "login"
+            "otherEntityField": "id"
         }
     ],
     "fields": [
@@ -17,9 +17,13 @@
                 "minlength"
             ],
             "fieldValidateRulesMinlength": 5
+        },
+        {
+            "fieldName": "comment",
+            "fieldType": "String"
         }
     ],
-    "changelogDate": "20170702205728",
+    "changelogDate": "20170711214712",
     "entityTableName": "role",
     "dto": "mapstruct",
     "pagination": "no",

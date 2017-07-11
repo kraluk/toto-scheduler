@@ -13,17 +13,6 @@
                    [(ngModel)]="therapy.id" readonly />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="totoSchedulerApp.therapy.comment" for="field_comment">Comment</label>
-            <input type="text" class="form-control" name="comment" id="field_comment"
-                [(ngModel)]="therapy.comment" required />
-            <div [hidden]="!(editForm.controls.comment?.dirty && editForm.controls.comment?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.comment?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-            </div>
-        </div>
-        <div class="form-group">
             <label class="form-control-label" jhiTranslate="totoSchedulerApp.therapy.date" for="field_date">Date</label>
             <div class="d-flex">
                 <input id="field_date" type="datetime-local" class="form-control" name="date" [(ngModel)]="therapy.date"
@@ -40,33 +29,31 @@
                 </small>
             </div>
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="totoSchedulerApp.therapy.comment" for="field_comment">Comment</label>
+            <input type="text" class="form-control" name="comment" id="field_comment"
+                [(ngModel)]="therapy.comment"  />
+        </div>
 
         <div class="form-group">
-            <label jhiTranslate="totoSchedulerApp.therapy.therapyEntry" for="field_therapyEntry">Therapy Entry</label>
-            <select class="form-control" id="field_therapyEntry" name="therapyEntry" [(ngModel)]="therapy.therapyEntryId">
+            <label jhiTranslate="totoSchedulerApp.therapy.therapyType" for="field_therapyType">Therapy Type</label>
+            <select class="form-control" id="field_therapyType" name="therapyType" [(ngModel)]="therapy.therapyTypeId">
                 <option [ngValue]="null"></option>
-                <option [ngValue]="therapyEntryOption.id" *ngFor="let therapyEntryOption of therapyentries; trackBy: trackTherapyEntryById">{{therapyEntryOption.id}}</option>
+                <option [ngValue]="therapyTypeOption.id" *ngFor="let therapyTypeOption of therapytypes; trackBy: trackTherapyTypeById">{{therapyTypeOption.id}}</option>
             </select>
         </div>
         <div class="form-group">
-            <label jhiTranslate="totoSchedulerApp.therapy.user" for="field_user">User</label>
-            <select class="form-control" id="field_user" name="user" [(ngModel)]="therapy.userId" >
+            <label jhiTranslate="totoSchedulerApp.therapy.therapist" for="field_therapist">Therapist</label>
+            <select class="form-control" id="field_therapist" name="therapist" [(ngModel)]="therapy.therapistId" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+                <option [ngValue]="therapistOption.id" *ngFor="let therapistOption of therapists; trackBy: trackTherapistById">{{therapistOption.id}}</option>
             </select>
         </div>
         <div class="form-group">
-            <label jhiTranslate="totoSchedulerApp.therapy.period" for="field_period">Period</label>
-            <select class="form-control" id="field_period" name="period" [(ngModel)]="therapy.periodId" >
+            <label jhiTranslate="totoSchedulerApp.therapy.timeTable" for="field_timeTable">Time Table</label>
+            <select class="form-control" id="field_timeTable" name="timeTable" [(ngModel)]="therapy.timeTableId" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="periodOption.id" *ngFor="let periodOption of periods; trackBy: trackPeriodById">{{periodOption.id}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label jhiTranslate="totoSchedulerApp.therapy.child" for="field_child">Child</label>
-            <select class="form-control" id="field_child" name="child" [(ngModel)]="therapy.childId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="childOption.id" *ngFor="let childOption of children; trackBy: trackChildById">{{childOption.id}}</option>
+                <option [ngValue]="timeTableOption.id" *ngFor="let timeTableOption of timetables; trackBy: trackTimeTableById">{{timeTableOption.id}}</option>
             </select>
         </div>
     </div>

@@ -12,7 +12,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {})
 public interface ChildMapper extends EntityMapper<ChildDto, Child> {
 
-    @Mapping(target = "therapies", ignore = true)
+    @Mapping(target = "timeTables", ignore = true)
     Child toEntity(ChildDto childDto);
 
     default Child fromId(Long id) {

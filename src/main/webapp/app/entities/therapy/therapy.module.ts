@@ -2,7 +2,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { TotoSchedulerSharedModule } from '../../shared';
-import { TotoSchedulerAdminModule } from '../../admin/admin.module';
 import {
     TherapyService,
     TherapyPopupService,
@@ -24,7 +23,6 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         TotoSchedulerSharedModule,
-        TotoSchedulerAdminModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [

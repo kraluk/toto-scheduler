@@ -20,18 +20,18 @@ import io.github.jhipster.config.JHipsterProperties;
 @RequestMapping("/api")
 public class ProfileInfoResource {
 
-    private final Environment env;
+    private final Environment environment;
 
     private final JHipsterProperties jHipsterProperties;
 
-    public ProfileInfoResource(Environment env, JHipsterProperties jHipsterProperties) {
-        this.env = env;
+    public ProfileInfoResource(Environment environment, JHipsterProperties jHipsterProperties) {
+        this.environment = environment;
         this.jHipsterProperties = jHipsterProperties;
     }
 
     @GetMapping("/profile-info")
     public ProfileInfoVM getActiveProfiles() {
-        String[] activeProfiles = DefaultProfileUtil.getActiveProfiles(env);
+        String[] activeProfiles = DefaultProfileUtil.getActiveProfiles(environment);
         return new ProfileInfoVM(activeProfiles, getRibbonEnv(activeProfiles));
     }
 

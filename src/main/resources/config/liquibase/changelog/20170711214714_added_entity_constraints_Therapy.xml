@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Therapy.
+    -->
+    <changeSet id="20170711214714-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="therapy_type_id"
+                                 baseTableName="therapy"
+                                 constraintName="fk_therapy_therapy_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="therapy_type"/>
+
+        <addForeignKeyConstraint baseColumnNames="therapist_id"
+                                 baseTableName="therapy"
+                                 constraintName="fk_therapy_therapist_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="therapist"/>
+
+        <addForeignKeyConstraint baseColumnNames="time_table_id"
+                                 baseTableName="therapy"
+                                 constraintName="fk_therapy_time_table_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="time_table"/>
+
+    </changeSet>
+</databaseChangeLog>

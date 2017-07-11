@@ -24,7 +24,6 @@ import java.util.List;
  */
 @ControllerAdvice
 public class ExceptionTranslator {
-
     private static final Logger log = LoggerFactory.getLogger(ExceptionTranslator.class);
 
     @ExceptionHandler(ConcurrencyFailureException.class)

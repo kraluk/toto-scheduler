@@ -1,43 +1,53 @@
 entity Role {
 	name String required minlength(5),
+	comment String
 }
 
-entity Period {
+entity TimeTable {
 	name String required minlength(5),
-	comment String,
 	startDate LocalDate required,
-    endDate LocalDate required
+	endDate LocalDate required,
+	comment String
 }
 
 entity Therapy {
-	comment String required,
-    date ZonedDateTime required
+	date ZonedDateTime required,
+	comment String
 }
 
-entity TherapyEntry {
-	name String required minlength(5)
+entity TherapyType {
+	name String required minlength(5),
+	comment String
 }
 
 entity Child {
 	registerNumber String required minlength(5),
-    name String required minlength(5),
-    comment String
+	name String required minlength(5),
+	comment String
+}
+
+entity Therapist {
+	title String,
+	comment String
 }
 
 relationship OneToOne {
-	Therapy{therapyEntry} to TherapyEntry
+	Therapy{therapyType} to TherapyType,
+	Therapist{user(login)} to User{therapist}
 }
 
 relationship OneToMany {
-	Child{therapy} to Therapy
+	Child to TimeTable{child},
+	Therapist{role} to Role,
+	TimeTable{therapy} to Therapy{timeTable}
 }
 
 relationship ManyToOne {
-	Therapy{user(login)} to User{therapy},
-    Therapy{period} to Period,
-    Role{user(login)} to User
+	Therapy{therapist} to Therapist{therapy}
 }
 
-dto Role, Period, Therapy, TherapyEntry, Child with mapstruct
+dto * with mapstruct
 
-paginate Therapy, Period with infinite-scroll
+paginate Therapy, TimeTable with infinite-scroll
+
+service TimeTable with serviceClass

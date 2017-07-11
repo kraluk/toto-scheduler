@@ -1,7 +1,5 @@
 package com.kraluk.totoscheduler.web.rest.vm;
 
-import com.google.common.base.MoreObjects;
-
 import ch.qos.logback.classic.Logger;
 
 /**
@@ -40,9 +38,9 @@ public class LoggerVm {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-            .add("name", name)
-            .add("level", level)
-            .toString();
+        return "LoggerVm{" +
+            "name='" + name + '\'' +
+            ", level='" + level + '\'' +
+            '}';
     }
 }

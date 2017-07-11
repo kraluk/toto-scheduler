@@ -77,7 +77,6 @@ out/
 ######################
 .gradle/
 /build/
-.gradletasknamecache
 
 ######################
 # Package Files
@@ -132,6 +131,7 @@ Desktop.ini
 # Gradle Wrapper
 ######################
 !gradle/wrapper/gradle-wrapper.jar
+.gradletasknamecache
 
 ######################
 # Maven Wrapper

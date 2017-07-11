@@ -9,7 +9,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Role } from './role.model';
 import { RolePopupService } from './role-popup.service';
 import { RoleService } from './role.service';
-import { User, UserService } from '../../shared';
+import { Therapist, TherapistService } from '../therapist';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -22,13 +22,13 @@ export class RoleDialogComponent implements OnInit {
     authorities: any[];
     isSaving: boolean;
 
-    users: User[];
+    therapists: Therapist[];
 
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private roleService: RoleService,
-        private userService: UserService,
+        private therapistService: TherapistService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -36,8 +36,8 @@ export class RoleDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
-        this.userService.query()
-            .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.therapistService.query()
+            .subscribe((res: ResponseWrapper) => { this.therapists = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     clear() {
@@ -80,7 +80,7 @@ export class RoleDialogComponent implements OnInit {
         this.alertService.error(error.message, null, null);
     }
 
-    trackUserById(index: number, item: User) {
+    trackTherapistById(index: number, item: Therapist) {
         return item.id;
     }
 }

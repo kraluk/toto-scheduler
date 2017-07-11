@@ -27,7 +27,6 @@ import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class TokenProvider {
-
     private static final Logger log = LoggerFactory.getLogger(TokenProvider.class);
 
     private static final String AUTHORITIES_KEY = "auth";

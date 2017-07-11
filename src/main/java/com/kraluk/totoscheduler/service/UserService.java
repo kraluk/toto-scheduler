@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class UserService {
-
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;

@@ -18,7 +18,8 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="totoSchedulerApp.role.name">Name</span></th>
-            <th><span jhiTranslate="totoSchedulerApp.role.user">User</span></th>
+            <th><span jhiTranslate="totoSchedulerApp.role.comment">Comment</span></th>
+            <th><span jhiTranslate="totoSchedulerApp.role.therapist">Therapist</span></th>
             <th></th>
             </tr>
             </thead>
@@ -26,8 +27,11 @@
             <tr *ngFor="let role of roles ;trackBy: trackId">
                 <td><a [routerLink]="['../role', role.id ]">{{role.id}}</a></td>
                 <td>{{role.name}}</td>
+                <td>{{role.comment}}</td>
                 <td>
-                    {{role.userLogin}}
+                    <div *ngIf="role.therapistId">
+                        <a [routerLink]="['../therapist', role.therapistId  ]" >{{role.therapistId}}</a>
+                    </div>
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">

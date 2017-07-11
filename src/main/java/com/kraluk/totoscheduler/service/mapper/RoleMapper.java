@@ -9,14 +9,13 @@ import org.mapstruct.Mapping;
 /**
  * Mapper for the entity Role and its DTO RoleDto.
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class,})
+@Mapper(componentModel = "spring", uses = {TherapistMapper.class,})
 public interface RoleMapper extends EntityMapper<RoleDto, Role> {
 
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "user.login", target = "userLogin")
+    @Mapping(source = "therapist.id", target = "therapistId")
     RoleDto toDto(Role role);
 
-    @Mapping(source = "userId", target = "user")
+    @Mapping(source = "therapistId", target = "therapist")
     Role toEntity(RoleDto roleDto);
 
     default Role fromId(Long id) {

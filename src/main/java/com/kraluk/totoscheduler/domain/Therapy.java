@@ -1,8 +1,5 @@
 package com.kraluk.totoscheduler.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -24,8 +21,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "therapy")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Therapy implements Serializable {
+public class Therapy extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,25 +31,21 @@ public class Therapy implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "jhi_comment", nullable = false)
-    private String comment;
-
-    @NotNull
     @Column(name = "jhi_date", nullable = false)
     private ZonedDateTime date;
 
+    @Column(name = "jhi_comment")
+    private String comment;
+
     @OneToOne
     @JoinColumn(unique = true)
-    private TherapyEntry therapyEntry;
+    private TherapyType therapyType;
 
     @ManyToOne
-    private User user;
+    private Therapist therapist;
 
     @ManyToOne
-    private Period period;
-
-    @ManyToOne
-    private Child child;
+    private TimeTable timeTable;
 
     public Long getId() {
         return id;
@@ -61,19 +53,6 @@ public class Therapy implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public Therapy comment(String comment) {
-        this.comment = comment;
-        return this;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     public ZonedDateTime getDate() {
@@ -89,56 +68,56 @@ public class Therapy implements Serializable {
         this.date = date;
     }
 
-    public TherapyEntry getTherapyEntry() {
-        return therapyEntry;
+    public String getComment() {
+        return comment;
     }
 
-    public Therapy therapyEntry(TherapyEntry therapyEntry) {
-        this.therapyEntry = therapyEntry;
+    public Therapy comment(String comment) {
+        this.comment = comment;
         return this;
     }
 
-    public void setTherapyEntry(TherapyEntry therapyEntry) {
-        this.therapyEntry = therapyEntry;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public User getUser() {
-        return user;
+    public TherapyType getTherapyType() {
+        return therapyType;
     }
 
-    public Therapy user(User user) {
-        this.user = user;
+    public Therapy therapyType(TherapyType therapyType) {
+        this.therapyType = therapyType;
         return this;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setTherapyType(TherapyType therapyType) {
+        this.therapyType = therapyType;
     }
 
-    public Period getPeriod() {
-        return period;
+    public Therapist getTherapist() {
+        return therapist;
     }
 
-    public Therapy period(Period period) {
-        this.period = period;
+    public Therapy therapist(Therapist therapist) {
+        this.therapist = therapist;
         return this;
     }
 
-    public void setPeriod(Period period) {
-        this.period = period;
+    public void setTherapist(Therapist therapist) {
+        this.therapist = therapist;
     }
 
-    public Child getChild() {
-        return child;
+    public TimeTable getTimeTable() {
+        return timeTable;
     }
 
-    public Therapy child(Child child) {
-        this.child = child;
+    public Therapy timeTable(TimeTable timeTable) {
+        this.timeTable = timeTable;
         return this;
     }
 
-    public void setChild(Child child) {
-        this.child = child;
+    public void setTimeTable(TimeTable timeTable) {
+        this.timeTable = timeTable;
     }
 
     @Override
@@ -165,8 +144,8 @@ public class Therapy implements Serializable {
     public String toString() {
         return "Therapy{" +
             "id=" + getId() +
-            ", comment='" + getComment() + "'" +
             ", date='" + getDate() + "'" +
+            ", comment='" + getComment() + "'" +
             "}";
     }
 }

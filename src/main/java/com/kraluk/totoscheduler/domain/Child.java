@@ -2,9 +2,6 @@ package com.kraluk.totoscheduler.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -26,7 +23,6 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "child")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Child implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,8 +47,7 @@ public class Child implements Serializable {
 
     @OneToMany(mappedBy = "child")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Therapy> therapies = new HashSet<>();
+    private Set<TimeTable> timeTables = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -101,29 +96,29 @@ public class Child implements Serializable {
         this.comment = comment;
     }
 
-    public Set<Therapy> getTherapies() {
-        return therapies;
+    public Set<TimeTable> getTimeTables() {
+        return timeTables;
     }
 
-    public Child therapies(Set<Therapy> therapies) {
-        this.therapies = therapies;
+    public Child timeTables(Set<TimeTable> timeTables) {
+        this.timeTables = timeTables;
         return this;
     }
 
-    public Child addTherapy(Therapy therapy) {
-        this.therapies.add(therapy);
-        therapy.setChild(this);
+    public Child addTimeTable(TimeTable timeTable) {
+        this.timeTables.add(timeTable);
+        timeTable.setChild(this);
         return this;
     }
 
-    public Child removeTherapy(Therapy therapy) {
-        this.therapies.remove(therapy);
-        therapy.setChild(null);
+    public Child removeTimeTable(TimeTable timeTable) {
+        this.timeTables.remove(timeTable);
+        timeTable.setChild(null);
         return this;
     }
 
-    public void setTherapies(Set<Therapy> therapies) {
-        this.therapies = therapies;
+    public void setTimeTables(Set<TimeTable> timeTables) {
+        this.timeTables = timeTables;
     }
 
     @Override

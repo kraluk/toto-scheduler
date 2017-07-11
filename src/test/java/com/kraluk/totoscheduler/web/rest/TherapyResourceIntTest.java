@@ -49,15 +49,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = TotoSchedulerApp.class)
 public class TherapyResourceIntTest {
 
-    private static final String DEFAULT_COMMENT = "AAAAAAAAAA";
-    private static final String UPDATED_COMMENT = "BBBBBBBBBB";
-
     private static final ZonedDateTime
         DEFAULT_DATE =
         ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime
         UPDATED_DATE =
         ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+
+    private static final String DEFAULT_COMMENT = "AAAAAAAAAA";
+    private static final String UPDATED_COMMENT = "BBBBBBBBBB";
 
     @Autowired
     private TherapyRepository therapyRepository;
@@ -99,8 +99,8 @@ public class TherapyResourceIntTest {
      */
     public static Therapy createEntity(EntityManager em) {
         Therapy therapy = new Therapy()
-            .comment(DEFAULT_COMMENT)
-            .date(DEFAULT_DATE);
+            .date(DEFAULT_DATE)
+            .comment(DEFAULT_COMMENT);
         return therapy;
     }
 
@@ -125,8 +125,8 @@ public class TherapyResourceIntTest {
         List<Therapy> therapyList = therapyRepository.findAll();
         assertThat(therapyList).hasSize(databaseSizeBeforeCreate + 1);
         Therapy testTherapy = therapyList.get(therapyList.size() - 1);
-        assertThat(testTherapy.getComment()).isEqualTo(DEFAULT_COMMENT);
         assertThat(testTherapy.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testTherapy.getComment()).isEqualTo(DEFAULT_COMMENT);
     }
 
     @Test
@@ -147,25 +147,6 @@ public class TherapyResourceIntTest {
         // Validate the Alice in the database
         List<Therapy> therapyList = therapyRepository.findAll();
         assertThat(therapyList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    public void checkCommentIsRequired() throws Exception {
-        int databaseSizeBeforeTest = therapyRepository.findAll().size();
-        // set the field null
-        therapy.setComment(null);
-
-        // Create the Therapy, which fails.
-        TherapyDto therapyDto = therapyMapper.toDto(therapy);
-
-        restTherapyMockMvc.perform(post("/api/therapies")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(therapyDto)))
-            .andExpect(status().isBadRequest());
-
-        List<Therapy> therapyList = therapyRepository.findAll();
-        assertThat(therapyList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -198,8 +179,8 @@ public class TherapyResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(therapy.getId().intValue())))
-            .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT.toString())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(sameInstant(DEFAULT_DATE))));
+            .andExpect(jsonPath("$.[*].date").value(hasItem(sameInstant(DEFAULT_DATE))))
+            .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT.toString())));
     }
 
     @Test
@@ -213,8 +194,8 @@ public class TherapyResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(therapy.getId().intValue()))
-            .andExpect(jsonPath("$.comment").value(DEFAULT_COMMENT.toString()))
-            .andExpect(jsonPath("$.date").value(sameInstant(DEFAULT_DATE)));
+            .andExpect(jsonPath("$.date").value(sameInstant(DEFAULT_DATE)))
+            .andExpect(jsonPath("$.comment").value(DEFAULT_COMMENT.toString()));
     }
 
     @Test
@@ -235,8 +216,8 @@ public class TherapyResourceIntTest {
         // Update the therapy
         Therapy updatedTherapy = therapyRepository.findOne(therapy.getId());
         updatedTherapy
-            .comment(UPDATED_COMMENT)
-            .date(UPDATED_DATE);
+            .date(UPDATED_DATE)
+            .comment(UPDATED_COMMENT);
         TherapyDto therapyDto = therapyMapper.toDto(updatedTherapy);
 
         restTherapyMockMvc.perform(put("/api/therapies")
@@ -248,8 +229,8 @@ public class TherapyResourceIntTest {
         List<Therapy> therapyList = therapyRepository.findAll();
         assertThat(therapyList).hasSize(databaseSizeBeforeUpdate);
         Therapy testTherapy = therapyList.get(therapyList.size() - 1);
-        assertThat(testTherapy.getComment()).isEqualTo(UPDATED_COMMENT);
         assertThat(testTherapy.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testTherapy.getComment()).isEqualTo(UPDATED_COMMENT);
     }
 
     @Test

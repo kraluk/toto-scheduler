@@ -15,12 +15,11 @@
             "detail": {
                 "title": "Therapy"
             },
-            "comment": "Comment",
             "date": "Date",
-            "therapyEntry": "Therapy Entry",
-            "user": "User",
-            "period": "Period",
-            "child": "Child"
+            "comment": "Comment",
+            "therapyType": "Therapy Type",
+            "therapist": "Therapist",
+            "timeTable": "Time Table"
         }
     }
 }
