@@ -1,0 +1,41 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "therapist"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "therapy",
+            "otherEntityName": "therapy",
+            "otherEntityRelationshipName": "therapist"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "role",
+            "otherEntityName": "role",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "therapist"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "comment",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20171011203946",
+    "entityTableName": "therapist",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass"
+}

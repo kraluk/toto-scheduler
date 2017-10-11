@@ -38,17 +38,20 @@ relationship OneToOne {
 
 relationship OneToMany {
 	Child to TimeTable{child},
-	Therapist{role} to Role,
 	TimeTable{therapy} to Therapy{timeTable}
 }
 
 relationship ManyToOne {
-	Therapy{therapist} to Therapist{therapy},
-	Role to Therapist{role}
+	Therapy{therapist} to Therapist{therapy}
+	
+}
+
+relationship ManyToMany {
+  	Role{therapist} to Therapist{role}
 }
 
 dto * with mapstruct
 
 paginate Therapy, TimeTable with infinite-scroll
 
-service TimeTable with serviceClass
+service all with serviceClass

@@ -1,0 +1,23 @@
+{
+    "totoSchedulerApp": {
+        "therapyType" : {
+            "home": {
+                "title": "Therapy Types",
+                "createLabel": "Dodaj Therapy Type",
+                "createOrEditLabel": "Dodaj lub edytuj: Therapy Type",
+                "search": "Szukaj Therapy Type"
+            },
+            "created": "Utworzono nowy Therapy Type z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Therapy Type z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Therapy Type z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Therapy Type {{ id }}?"
+            },
+            "detail": {
+                "title": "Therapy Type"
+            },
+            "name": "Name",
+            "comment": "Comment"
+        }
+    }
+}

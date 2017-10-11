@@ -7,6 +7,12 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Encje",
+                "role": "Role",
+                "timeTable": "Time Table",
+                "therapy": "Therapy",
+                "therapyType": "Therapy Type",
+                "child": "Child",
+                "therapist": "Therapist",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

@@ -5,6 +5,16 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171011203941_added_entity_Role.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171011203942_added_entity_TimeTable.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171011203943_added_entity_Therapy.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171011203944_added_entity_TherapyType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171011203945_added_entity_Child.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171011203946_added_entity_Therapist.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20171011203941_added_entity_constraints_Role.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171011203942_added_entity_constraints_TimeTable.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171011203943_added_entity_constraints_Therapy.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20171011203946_added_entity_constraints_Therapist.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

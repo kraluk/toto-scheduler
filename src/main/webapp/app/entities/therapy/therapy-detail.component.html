@@ -1,0 +1,47 @@
+
+<div *ngIf="therapy">
+    <h2><span jhiTranslate="totoSchedulerApp.therapy.detail.title">Therapy</span> {{therapy.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="totoSchedulerApp.therapy.date">Date</span></dt>
+        <dd>
+            <span>{{therapy.date | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.therapy.comment">Comment</span></dt>
+        <dd>
+            <span>{{therapy.comment}}</span>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.therapy.therapyType">Therapy Type</span></dt>
+        <dd>
+            <div *ngIf="therapy.therapyTypeId">
+                <a [routerLink]="['/therapy-type', therapy.therapyTypeId]">{{therapy.therapyTypeId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.therapy.therapist">Therapist</span></dt>
+        <dd>
+            <div *ngIf="therapy.therapistId">
+                <a [routerLink]="['/therapist', therapy.therapistId]">{{therapy.therapistId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.therapy.timeTable">Time Table</span></dt>
+        <dd>
+            <div *ngIf="therapy.timeTableId">
+                <a [routerLink]="['/time-table', therapy.timeTableId]">{{therapy.timeTableId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'therapy/'+ therapy.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

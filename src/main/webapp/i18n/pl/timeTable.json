@@ -1,0 +1,27 @@
+{
+    "totoSchedulerApp": {
+        "timeTable" : {
+            "home": {
+                "title": "Time Tables",
+                "createLabel": "Dodaj Time Table",
+                "createOrEditLabel": "Dodaj lub edytuj: Time Table",
+                "search": "Szukaj Time Table"
+            },
+            "created": "Utworzono nowy Time Table z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Time Table z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Time Table z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Time Table {{ id }}?"
+            },
+            "detail": {
+                "title": "Time Table"
+            },
+            "name": "Name",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "comment": "Comment",
+            "therapy": "Therapy",
+            "child": "Child"
+        }
+    }
+}

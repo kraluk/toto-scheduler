@@ -1,0 +1,43 @@
+
+<div *ngIf="timeTable">
+    <h2><span jhiTranslate="totoSchedulerApp.timeTable.detail.title">Time Table</span> {{timeTable.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="totoSchedulerApp.timeTable.name">Name</span></dt>
+        <dd>
+            <span>{{timeTable.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.timeTable.startDate">Start Date</span></dt>
+        <dd>
+            <span>{{timeTable.startDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.timeTable.endDate">End Date</span></dt>
+        <dd>
+            <span>{{timeTable.endDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.timeTable.comment">Comment</span></dt>
+        <dd>
+            <span>{{timeTable.comment}}</span>
+        </dd>
+        <dt><span jhiTranslate="totoSchedulerApp.timeTable.child">Child</span></dt>
+        <dd>
+            <div *ngIf="timeTable.childId">
+                <a [routerLink]="['/child', timeTable.childId]">{{timeTable.childId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'time-table/'+ timeTable.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

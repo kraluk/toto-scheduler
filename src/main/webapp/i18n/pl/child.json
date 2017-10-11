@@ -1,0 +1,25 @@
+{
+    "totoSchedulerApp": {
+        "child" : {
+            "home": {
+                "title": "Children",
+                "createLabel": "Dodaj Child",
+                "createOrEditLabel": "Dodaj lub edytuj: Child",
+                "search": "Szukaj Child"
+            },
+            "created": "Utworzono nowy Child z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Child z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Child z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Child {{ id }}?"
+            },
+            "detail": {
+                "title": "Child"
+            },
+            "registerNumber": "Register Number",
+            "name": "Name",
+            "comment": "Comment",
+            "timeTable": "Time Table"
+        }
+    }
+}
