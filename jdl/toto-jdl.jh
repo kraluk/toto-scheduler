@@ -43,7 +43,8 @@ relationship OneToMany {
 }
 
 relationship ManyToOne {
-	Therapy{therapist} to Therapist{therapy}
+	Therapy{therapist} to Therapist{therapy},
+	Role to Therapist{role}
 }
 
 dto * with mapstruct
