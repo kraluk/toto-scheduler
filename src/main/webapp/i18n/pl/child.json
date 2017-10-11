@@ -2,25 +2,25 @@
     "totoSchedulerApp": {
         "child" : {
             "home": {
-                "title": "Children",
-                "createLabel": "Dodaj Child",
-                "createOrEditLabel": "Dodaj lub edytuj: Child",
-                "search": "Szukaj Child"
+                "title": "Dziecko",
+                "createLabel": "Dodaj Dziecko",
+                "createOrEditLabel": "Dodaj lub edytuj: Dziecko",
+                "search": "Szukaj Dziecka"
             },
-            "created": "Utworzono nowy Child z identyfikatorem {{ param }}",
-            "updated": "Uaktualniono Child z identyfikatorem {{ param }}",
-            "deleted": "Usunięto Child z identyfikatorem {{ param }}",
+            "created": "Utworzono nowe Dziecko z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Dziecko z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Dziecko z identyfikatorem {{ param }}",
             "delete": {
-                "question": "Czy na pewno chcesz usunąć Child {{ id }}?"
+                "question": "Czy na pewno chcesz usunąć Dziecko {{ id }}?"
             },
             "detail": {
-                "title": "Child"
+                "title": "Dziecko"
             },
-            "registerNumber": "Register Number",
-            "firstName": "First Name",
-            "lastName": "Last Name",
-            "comment": "Comment",
-            "timeTable": "Time Table"
+            "registerNumber": "Numer w rejestrze",
+            "firstName": "Imię",
+            "lastName": "Nazwisko",
+            "comment": "Komentarz",
+            "timeTable": "Harmonogram"
         }
     }
 }

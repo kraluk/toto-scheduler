@@ -2,23 +2,23 @@
     "totoSchedulerApp": {
         "role" : {
             "home": {
-                "title": "Roles",
-                "createLabel": "Dodaj Role",
-                "createOrEditLabel": "Dodaj lub edytuj: Role",
-                "search": "Szukaj Role"
+                "title": "Role",
+                "createLabel": "Dodaj Rolę",
+                "createOrEditLabel": "Dodaj lub edytuj: Rolę",
+                "search": "Szukaj Rolo"
             },
-            "created": "Utworzono nowy Role z identyfikatorem {{ param }}",
-            "updated": "Uaktualniono Role z identyfikatorem {{ param }}",
-            "deleted": "Usunięto Role z identyfikatorem {{ param }}",
+            "created": "Utworzono nowy Rolę z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Rolę z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Rolę z identyfikatorem {{ param }}",
             "delete": {
-                "question": "Czy na pewno chcesz usunąć Role {{ id }}?"
+                "question": "Czy na pewno chcesz usunąć Rolę {{ id }}?"
             },
             "detail": {
-                "title": "Role"
+                "title": "Rola"
             },
-            "name": "Name",
-            "comment": "Comment",
-            "therapist": "Therapist"
+            "name": "Nazwa",
+            "comment": "Komentarz",
+            "therapist": "Terapeuta"
         }
     }
 }

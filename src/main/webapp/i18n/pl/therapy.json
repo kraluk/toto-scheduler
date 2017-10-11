@@ -2,25 +2,25 @@
     "totoSchedulerApp": {
         "therapy" : {
             "home": {
-                "title": "Therapies",
-                "createLabel": "Dodaj Therapy",
-                "createOrEditLabel": "Dodaj lub edytuj: Therapy",
-                "search": "Szukaj Therapy"
+                "title": "Terapia",
+                "createLabel": "Dodaj Terapię",
+                "createOrEditLabel": "Dodaj lub edytuj: Terapię",
+                "search": "Szukaj Terapii"
             },
-            "created": "Utworzono nowy Therapy z identyfikatorem {{ param }}",
-            "updated": "Uaktualniono Therapy z identyfikatorem {{ param }}",
-            "deleted": "Usunięto Therapy z identyfikatorem {{ param }}",
+            "created": "Utworzono nową Terapię z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Terapię z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Terapię z identyfikatorem {{ param }}",
             "delete": {
-                "question": "Czy na pewno chcesz usunąć Therapy {{ id }}?"
+                "question": "Czy na pewno chcesz usunąć Terapię {{ id }}?"
             },
             "detail": {
-                "title": "Therapy"
+                "title": "Terapia"
             },
-            "date": "Date",
-            "comment": "Comment",
-            "therapyType": "Therapy Type",
-            "therapist": "Therapist",
-            "timeTable": "Time Table"
+            "date": "Data",
+            "comment": "Komentarz",
+            "therapyType": "Typ terapii",
+            "therapist": "Terapeuta",
+            "timeTable": "Harmonogram"
         }
     }
 }

@@ -8,11 +8,11 @@
             "entities": {
                 "main": "Encje",
                 "role": "Role",
-                "timeTable": "Time Table",
-                "therapy": "Therapy",
-                "therapyType": "Therapy Type",
-                "child": "Child",
-                "therapist": "Therapist",
+                "timeTable": "Harmonogramy",
+                "therapy": "Terapie",
+                "therapyType": "Typy terapii",
+                "child": "Dzieci",
+                "therapist": "Terapeuci",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -134,5 +134,5 @@
         "emailexists": "Użytkownik z takim adresem email już istnieje!",
         "idexists": "Nowy {{entityName}} nie może jeszcze mieć przypisanego ID"
     },
-    "footer": "To jest stopka"
+    "footer": "&copy; 2017 TotoScheduler"
 }

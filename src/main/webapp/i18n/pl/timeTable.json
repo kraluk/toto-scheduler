@@ -2,26 +2,26 @@
     "totoSchedulerApp": {
         "timeTable" : {
             "home": {
-                "title": "Time Tables",
-                "createLabel": "Dodaj Time Table",
-                "createOrEditLabel": "Dodaj lub edytuj: Time Table",
-                "search": "Szukaj Time Table"
+                "title": "Harmonogramy",
+                "createLabel": "Dodaj Harmonogram",
+                "createOrEditLabel": "Dodaj lub edytuj: Harmonogram",
+                "search": "Szukaj Harmonogramu"
             },
-            "created": "Utworzono nowy Time Table z identyfikatorem {{ param }}",
-            "updated": "Uaktualniono Time Table z identyfikatorem {{ param }}",
-            "deleted": "Usunięto Time Table z identyfikatorem {{ param }}",
+            "created": "Utworzono nowy Harmonogram z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Harmonogram z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Harmonogram z identyfikatorem {{ param }}",
             "delete": {
-                "question": "Czy na pewno chcesz usunąć Time Table {{ id }}?"
+                "question": "Czy na pewno chcesz usunąć Harmonogram {{ id }}?"
             },
             "detail": {
-                "title": "Time Table"
+                "title": "Harmonogram"
             },
-            "name": "Name",
-            "startDate": "Start Date",
-            "endDate": "End Date",
-            "comment": "Comment",
-            "therapy": "Therapy",
-            "child": "Child"
+            "name": "Nazwa",
+            "startDate": "Data początku obowiązywania",
+            "endDate": "Data końca obowiązywania",
+            "comment": "Komentarz",
+            "therapy": "Terapia",
+            "child": "Dziecko"
         }
     }
 }

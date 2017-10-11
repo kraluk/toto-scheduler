@@ -2,25 +2,25 @@
     "totoSchedulerApp": {
         "therapist" : {
             "home": {
-                "title": "Therapists",
-                "createLabel": "Dodaj Therapist",
-                "createOrEditLabel": "Dodaj lub edytuj: Therapist",
-                "search": "Szukaj Therapist"
+                "title": "Terapeuta",
+                "createLabel": "Dodaj Terapeutę",
+                "createOrEditLabel": "Dodaj lub edytuj: Terapeutę",
+                "search": "Szukaj Terapeuty"
             },
-            "created": "Utworzono nowy Therapist z identyfikatorem {{ param }}",
-            "updated": "Uaktualniono Therapist z identyfikatorem {{ param }}",
-            "deleted": "Usunięto Therapist z identyfikatorem {{ param }}",
+            "created": "Utworzono nowego Terapeutę z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Terapeutę z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Terapeutę z identyfikatorem {{ param }}",
             "delete": {
-                "question": "Czy na pewno chcesz usunąć Therapist {{ id }}?"
+                "question": "Czy na pewno chcesz usunąć Terapeutę {{ id }}?"
             },
             "detail": {
-                "title": "Therapist"
+                "title": "Terapeuta"
             },
-            "title": "Title",
-            "comment": "Comment",
-            "user": "User",
-            "therapy": "Therapy",
-            "role": "Role"
+            "title": "Tytuł",
+            "comment": "Komentarz",
+            "user": "Użytkownik",
+            "therapy": "Terapia",
+            "role": "Rola"
         }
     }
 }
