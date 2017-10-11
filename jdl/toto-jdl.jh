@@ -22,7 +22,8 @@ entity TherapyType {
 
 entity Child {
 	registerNumber String required minlength(5),
-	name String required minlength(5),
+	firstName String required minlength(3),
+	lastName String required minlength(2),
 	comment String
 }
 

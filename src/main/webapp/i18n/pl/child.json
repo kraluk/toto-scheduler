@@ -17,7 +17,8 @@
                 "title": "Child"
             },
             "registerNumber": "Register Number",
-            "name": "Name",
+            "firstName": "First Name",
+            "lastName": "Last Name",
             "comment": "Comment",
             "timeTable": "Time Table"
         }

@@ -19,8 +19,12 @@ public class ChildDTO implements Serializable {
     private String registerNumber;
 
     @NotNull
-    @Size(min = 5)
-    private String name;
+    @Size(min = 3)
+    private String firstName;
+
+    @NotNull
+    @Size(min = 2)
+    private String lastName;
 
     private String comment;
 
@@ -40,12 +44,20 @@ public class ChildDTO implements Serializable {
         this.registerNumber = registerNumber;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getComment() {
@@ -82,7 +94,8 @@ public class ChildDTO implements Serializable {
         return "ChildDTO{" +
             "id=" + getId() +
             ", registerNumber='" + getRegisterNumber() + "'" +
-            ", name='" + getName() + "'" +
+            ", firstName='" + getFirstName() + "'" +
+            ", lastName='" + getLastName() + "'" +
             ", comment='" + getComment() + "'" +
             "}";
     }

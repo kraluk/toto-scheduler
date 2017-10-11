@@ -49,8 +49,11 @@ public class ChildResourceIntTest {
     private static final String DEFAULT_REGISTER_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_REGISTER_NUMBER = "BBBBBBBBBB";
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_COMMENT = "AAAAAAAAAA";
     private static final String UPDATED_COMMENT = "BBBBBBBBBB";
@@ -102,7 +105,8 @@ public class ChildResourceIntTest {
     public static Child createEntity(EntityManager em) {
         Child child = new Child()
             .registerNumber(DEFAULT_REGISTER_NUMBER)
-            .name(DEFAULT_NAME)
+            .firstName(DEFAULT_FIRST_NAME)
+            .lastName(DEFAULT_LAST_NAME)
             .comment(DEFAULT_COMMENT);
         return child;
     }
@@ -130,7 +134,8 @@ public class ChildResourceIntTest {
         assertThat(childList).hasSize(databaseSizeBeforeCreate + 1);
         Child testChild = childList.get(childList.size() - 1);
         assertThat(testChild.getRegisterNumber()).isEqualTo(DEFAULT_REGISTER_NUMBER);
-        assertThat(testChild.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testChild.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
+        assertThat(testChild.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
         assertThat(testChild.getComment()).isEqualTo(DEFAULT_COMMENT);
 
         // Validate the Child in Elasticsearch
@@ -179,10 +184,29 @@ public class ChildResourceIntTest {
 
     @Test
     @Transactional
-    public void checkNameIsRequired() throws Exception {
+    public void checkFirstNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = childRepository.findAll().size();
         // set the field null
-        child.setName(null);
+        child.setFirstName(null);
+
+        // Create the Child, which fails.
+        ChildDTO childDTO = childMapper.toDto(child);
+
+        restChildMockMvc.perform(post("/api/children")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(childDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Child> childList = childRepository.findAll();
+        assertThat(childList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkLastNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = childRepository.findAll().size();
+        // set the field null
+        child.setLastName(null);
 
         // Create the Child, which fails.
         ChildDTO childDTO = childMapper.toDto(child);
@@ -209,7 +233,8 @@ public class ChildResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(child.getId().intValue())))
             .andExpect(
                 jsonPath("$.[*].registerNumber").value(hasItem(DEFAULT_REGISTER_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
             .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT.toString())));
     }
 
@@ -225,7 +250,8 @@ public class ChildResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(child.getId().intValue()))
             .andExpect(jsonPath("$.registerNumber").value(DEFAULT_REGISTER_NUMBER.toString()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME.toString()))
+            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
             .andExpect(jsonPath("$.comment").value(DEFAULT_COMMENT.toString()));
     }
 
@@ -249,7 +275,8 @@ public class ChildResourceIntTest {
         Child updatedChild = childRepository.findOne(child.getId());
         updatedChild
             .registerNumber(UPDATED_REGISTER_NUMBER)
-            .name(UPDATED_NAME)
+            .firstName(UPDATED_FIRST_NAME)
+            .lastName(UPDATED_LAST_NAME)
             .comment(UPDATED_COMMENT);
         ChildDTO childDTO = childMapper.toDto(updatedChild);
 
@@ -263,7 +290,8 @@ public class ChildResourceIntTest {
         assertThat(childList).hasSize(databaseSizeBeforeUpdate);
         Child testChild = childList.get(childList.size() - 1);
         assertThat(testChild.getRegisterNumber()).isEqualTo(UPDATED_REGISTER_NUMBER);
-        assertThat(testChild.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testChild.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
+        assertThat(testChild.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testChild.getComment()).isEqualTo(UPDATED_COMMENT);
 
         // Validate the Child in Elasticsearch
@@ -326,7 +354,8 @@ public class ChildResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(child.getId().intValue())))
             .andExpect(
                 jsonPath("$.[*].registerNumber").value(hasItem(DEFAULT_REGISTER_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
             .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT.toString())));
     }
 

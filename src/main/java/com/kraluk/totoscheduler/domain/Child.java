@@ -41,9 +41,14 @@ public class Child implements Serializable {
     private String registerNumber;
 
     @NotNull
-    @Size(min = 5)
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Size(min = 3)
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @NotNull
+    @Size(min = 2)
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
     @Column(name = "jhi_comment")
     private String comment;
@@ -74,17 +79,30 @@ public class Child implements Serializable {
         this.registerNumber = registerNumber;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public Child name(String name) {
-        this.name = name;
+    public Child firstName(String firstName) {
+        this.firstName = firstName;
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Child lastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getComment() {
@@ -151,7 +169,8 @@ public class Child implements Serializable {
         return "Child{" +
             "id=" + getId() +
             ", registerNumber='" + getRegisterNumber() + "'" +
-            ", name='" + getName() + "'" +
+            ", firstName='" + getFirstName() + "'" +
+            ", lastName='" + getLastName() + "'" +
             ", comment='" + getComment() + "'" +
             "}";
     }
