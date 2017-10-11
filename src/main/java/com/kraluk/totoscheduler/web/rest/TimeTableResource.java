@@ -2,11 +2,13 @@ package com.kraluk.totoscheduler.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.kraluk.totoscheduler.service.TimeTableService;
+import com.kraluk.totoscheduler.service.dto.TimeTableDTO;
 import com.kraluk.totoscheduler.web.rest.util.HeaderUtil;
 import com.kraluk.totoscheduler.web.rest.util.PaginationUtil;
-import com.kraluk.totoscheduler.service.dto.TimeTableDTO;
-import io.swagger.annotations.ApiParam;
+
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -14,17 +16,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import javax.validation.Valid;
 
 /**
  * REST controller for managing TimeTable.
@@ -52,10 +59,13 @@ public class TimeTableResource {
      */
     @PostMapping("/time-tables")
     @Timed
-    public ResponseEntity<TimeTableDTO> createTimeTable(@Valid @RequestBody TimeTableDTO timeTableDTO) throws URISyntaxException {
+    public ResponseEntity<TimeTableDTO> createTimeTable(
+        @Valid @RequestBody TimeTableDTO timeTableDTO) throws URISyntaxException {
         log.debug("REST request to save TimeTable : {}", timeTableDTO);
         if (timeTableDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new timeTable cannot already have an ID")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil
+                .createFailureAlert(ENTITY_NAME, "idexists",
+                    "A new timeTable cannot already have an ID")).body(null);
         }
         TimeTableDTO result = timeTableService.save(timeTableDTO);
         return ResponseEntity.created(new URI("/api/time-tables/" + result.getId()))
@@ -74,14 +84,16 @@ public class TimeTableResource {
      */
     @PutMapping("/time-tables")
     @Timed
-    public ResponseEntity<TimeTableDTO> updateTimeTable(@Valid @RequestBody TimeTableDTO timeTableDTO) throws URISyntaxException {
+    public ResponseEntity<TimeTableDTO> updateTimeTable(
+        @Valid @RequestBody TimeTableDTO timeTableDTO) throws URISyntaxException {
         log.debug("REST request to update TimeTable : {}", timeTableDTO);
         if (timeTableDTO.getId() == null) {
             return createTimeTable(timeTableDTO);
         }
         TimeTableDTO result = timeTableService.save(timeTableDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, timeTableDTO.getId().toString()))
+            .headers(
+                HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, timeTableDTO.getId().toString()))
             .body(result);
     }
 
@@ -96,7 +108,9 @@ public class TimeTableResource {
     public ResponseEntity<List<TimeTableDTO>> getAllTimeTables(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of TimeTables");
         Page<TimeTableDTO> page = timeTableService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/time-tables");
+        HttpHeaders
+            headers =
+            PaginationUtil.generatePaginationHttpHeaders(page, "/api/time-tables");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -125,23 +139,28 @@ public class TimeTableResource {
     public ResponseEntity<Void> deleteTimeTable(@PathVariable Long id) {
         log.debug("REST request to delete TimeTable : {}", id);
         timeTableService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
     /**
      * SEARCH  /_search/time-tables?query=:query : search for the timeTable corresponding
      * to the query.
      *
-     * @param query the query of the timeTable search
+     * @param query    the query of the timeTable search
      * @param pageable the pagination information
      * @return the result of the search
      */
     @GetMapping("/_search/time-tables")
     @Timed
-    public ResponseEntity<List<TimeTableDTO>> searchTimeTables(@RequestParam String query, @ApiParam Pageable pageable) {
+    public ResponseEntity<List<TimeTableDTO>> searchTimeTables(@RequestParam String query,
+                                                               @ApiParam Pageable pageable) {
         log.debug("REST request to search for a page of TimeTables for query {}", query);
         Page<TimeTableDTO> page = timeTableService.search(query, pageable);
-        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/time-tables");
+        HttpHeaders
+            headers =
+            PaginationUtil
+                .generateSearchPaginationHttpHeaders(query, page, "/api/_search/time-tables");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 

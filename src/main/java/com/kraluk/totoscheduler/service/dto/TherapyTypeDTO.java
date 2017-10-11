@@ -1,9 +1,11 @@
 package com.kraluk.totoscheduler.service.dto;
 
 
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * A DTO for the TherapyType entity.
@@ -52,7 +54,7 @@ public class TherapyTypeDTO implements Serializable {
         }
 
         TherapyTypeDTO therapyTypeDTO = (TherapyTypeDTO) o;
-        if(therapyTypeDTO.getId() == null || getId() == null) {
+        if (therapyTypeDTO.getId() == null || getId() == null) {
             return false;
         }
         return Objects.equals(getId(), therapyTypeDTO.getId());

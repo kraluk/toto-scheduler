@@ -1,12 +1,12 @@
 package com.kraluk.totoscheduler.service.dto;
 
 
-import java.time.LocalDate;
-import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
 import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * A DTO for the TimeTable entity.
@@ -87,7 +87,7 @@ public class TimeTableDTO implements Serializable {
         }
 
         TimeTableDTO timeTableDTO = (TimeTableDTO) o;
-        if(timeTableDTO.getId() == null || getId() == null) {
+        if (timeTableDTO.getId() == null || getId() == null) {
             return false;
         }
         return Objects.equals(getId(), timeTableDTO.getId());

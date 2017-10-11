@@ -2,6 +2,7 @@ package com.kraluk.totoscheduler.service;
 
 import com.kraluk.totoscheduler.config.audit.AuditEventConverter;
 import com.kraluk.totoscheduler.repository.PersistenceAuditEventRepository;
+
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,7 +39,8 @@ public class AuditEventService {
     }
 
     public Page<AuditEvent> findByDates(Instant fromDate, Instant toDate, Pageable pageable) {
-        return persistenceAuditEventRepository.findAllByAuditEventDateBetween(fromDate, toDate, pageable)
+        return persistenceAuditEventRepository
+            .findAllByAuditEventDateBetween(fromDate, toDate, pageable)
             .map(auditEventConverter::convertToAuditEvent);
     }
 

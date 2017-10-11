@@ -32,7 +32,8 @@ public class CustomParameterizedException extends AbstractThrowableProblem {
     }
 
     public CustomParameterizedException(String message, Map<String, Object> paramMap) {
-        super(ErrorConstants.PARAMETERIZED_TYPE, "Parameterized Exception", BAD_REQUEST, null, null, null, toProblemParameters(message, paramMap));
+        super(ErrorConstants.PARAMETERIZED_TYPE, "Parameterized Exception", BAD_REQUEST, null, null,
+            null, toProblemParameters(message, paramMap));
     }
 
     public static Map<String, Object> toParamMap(String... params) {
@@ -45,7 +46,8 @@ public class CustomParameterizedException extends AbstractThrowableProblem {
         return paramMap;
     }
 
-    public static Map<String, Object> toProblemParameters(String message, Map<String, Object> paramMap) {
+    public static Map<String, Object> toProblemParameters(String message,
+                                                          Map<String, Object> paramMap) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("message", message);
         parameters.put("params", paramMap);

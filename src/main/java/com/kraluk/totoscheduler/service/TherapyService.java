@@ -5,6 +5,7 @@ import com.kraluk.totoscheduler.repository.TherapyRepository;
 import com.kraluk.totoscheduler.repository.search.TherapySearchRepository;
 import com.kraluk.totoscheduler.service.dto.TherapyDTO;
 import com.kraluk.totoscheduler.service.mapper.TherapyMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -12,8 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * Service Implementation for managing Therapy.
@@ -30,7 +30,8 @@ public class TherapyService {
 
     private final TherapySearchRepository therapySearchRepository;
 
-    public TherapyService(TherapyRepository therapyRepository, TherapyMapper therapyMapper, TherapySearchRepository therapySearchRepository) {
+    public TherapyService(TherapyRepository therapyRepository, TherapyMapper therapyMapper,
+                          TherapySearchRepository therapySearchRepository) {
         this.therapyRepository = therapyRepository;
         this.therapyMapper = therapyMapper;
         this.therapySearchRepository = therapySearchRepository;
@@ -52,10 +53,10 @@ public class TherapyService {
     }
 
     /**
-     *  Get all the therapies.
+     * Get all the therapies.
      *
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public Page<TherapyDTO> findAll(Pageable pageable) {
@@ -65,10 +66,10 @@ public class TherapyService {
     }
 
     /**
-     *  Get one therapy by id.
+     * Get one therapy by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Transactional(readOnly = true)
     public TherapyDTO findOne(Long id) {
@@ -78,9 +79,9 @@ public class TherapyService {
     }
 
     /**
-     *  Delete the  therapy by id.
+     * Delete the  therapy by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     public void delete(Long id) {
         log.debug("Request to delete Therapy : {}", id);
@@ -91,9 +92,9 @@ public class TherapyService {
     /**
      * Search for the therapy corresponding to the query.
      *
-     *  @param query the query of the search
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param query    the query of the search
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public Page<TherapyDTO> search(String query, Pageable pageable) {

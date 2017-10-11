@@ -5,6 +5,7 @@ import com.kraluk.totoscheduler.repository.TimeTableRepository;
 import com.kraluk.totoscheduler.repository.search.TimeTableSearchRepository;
 import com.kraluk.totoscheduler.service.dto.TimeTableDTO;
 import com.kraluk.totoscheduler.service.mapper.TimeTableMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -12,8 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * Service Implementation for managing TimeTable.
@@ -30,7 +30,9 @@ public class TimeTableService {
 
     private final TimeTableSearchRepository timeTableSearchRepository;
 
-    public TimeTableService(TimeTableRepository timeTableRepository, TimeTableMapper timeTableMapper, TimeTableSearchRepository timeTableSearchRepository) {
+    public TimeTableService(TimeTableRepository timeTableRepository,
+                            TimeTableMapper timeTableMapper,
+                            TimeTableSearchRepository timeTableSearchRepository) {
         this.timeTableRepository = timeTableRepository;
         this.timeTableMapper = timeTableMapper;
         this.timeTableSearchRepository = timeTableSearchRepository;
@@ -52,10 +54,10 @@ public class TimeTableService {
     }
 
     /**
-     *  Get all the timeTables.
+     * Get all the timeTables.
      *
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public Page<TimeTableDTO> findAll(Pageable pageable) {
@@ -65,10 +67,10 @@ public class TimeTableService {
     }
 
     /**
-     *  Get one timeTable by id.
+     * Get one timeTable by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Transactional(readOnly = true)
     public TimeTableDTO findOne(Long id) {
@@ -78,9 +80,9 @@ public class TimeTableService {
     }
 
     /**
-     *  Delete the  timeTable by id.
+     * Delete the  timeTable by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     public void delete(Long id) {
         log.debug("Request to delete TimeTable : {}", id);
@@ -91,14 +93,16 @@ public class TimeTableService {
     /**
      * Search for the timeTable corresponding to the query.
      *
-     *  @param query the query of the search
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param query    the query of the search
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public Page<TimeTableDTO> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of TimeTables for query {}", query);
-        Page<TimeTable> result = timeTableSearchRepository.search(queryStringQuery(query), pageable);
+        Page<TimeTable>
+            result =
+            timeTableSearchRepository.search(queryStringQuery(query), pageable);
         return result.map(timeTableMapper::toDto);
     }
 }

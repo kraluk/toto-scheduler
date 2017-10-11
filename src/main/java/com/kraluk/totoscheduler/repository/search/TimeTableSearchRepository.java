@@ -1,6 +1,7 @@
 package com.kraluk.totoscheduler.repository.search;
 
 import com.kraluk.totoscheduler.domain.TimeTable;
+
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**

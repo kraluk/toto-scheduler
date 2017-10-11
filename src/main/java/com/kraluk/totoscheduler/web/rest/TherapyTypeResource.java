@@ -2,23 +2,30 @@ package com.kraluk.totoscheduler.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.kraluk.totoscheduler.service.TherapyTypeService;
-import com.kraluk.totoscheduler.web.rest.util.HeaderUtil;
 import com.kraluk.totoscheduler.service.dto.TherapyTypeDTO;
+import com.kraluk.totoscheduler.web.rest.util.HeaderUtil;
+
 import io.github.jhipster.web.util.ResponseUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import javax.validation.Valid;
 
 /**
  * REST controller for managing TherapyType.
@@ -46,10 +53,13 @@ public class TherapyTypeResource {
      */
     @PostMapping("/therapy-types")
     @Timed
-    public ResponseEntity<TherapyTypeDTO> createTherapyType(@Valid @RequestBody TherapyTypeDTO therapyTypeDTO) throws URISyntaxException {
+    public ResponseEntity<TherapyTypeDTO> createTherapyType(
+        @Valid @RequestBody TherapyTypeDTO therapyTypeDTO) throws URISyntaxException {
         log.debug("REST request to save TherapyType : {}", therapyTypeDTO);
         if (therapyTypeDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new therapyType cannot already have an ID")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil
+                .createFailureAlert(ENTITY_NAME, "idexists",
+                    "A new therapyType cannot already have an ID")).body(null);
         }
         TherapyTypeDTO result = therapyTypeService.save(therapyTypeDTO);
         return ResponseEntity.created(new URI("/api/therapy-types/" + result.getId()))
@@ -68,14 +78,16 @@ public class TherapyTypeResource {
      */
     @PutMapping("/therapy-types")
     @Timed
-    public ResponseEntity<TherapyTypeDTO> updateTherapyType(@Valid @RequestBody TherapyTypeDTO therapyTypeDTO) throws URISyntaxException {
+    public ResponseEntity<TherapyTypeDTO> updateTherapyType(
+        @Valid @RequestBody TherapyTypeDTO therapyTypeDTO) throws URISyntaxException {
         log.debug("REST request to update TherapyType : {}", therapyTypeDTO);
         if (therapyTypeDTO.getId() == null) {
             return createTherapyType(therapyTypeDTO);
         }
         TherapyTypeDTO result = therapyTypeService.save(therapyTypeDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, therapyTypeDTO.getId().toString()))
+            .headers(
+                HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, therapyTypeDTO.getId().toString()))
             .body(result);
     }
 
@@ -89,7 +101,7 @@ public class TherapyTypeResource {
     public List<TherapyTypeDTO> getAllTherapyTypes() {
         log.debug("REST request to get all TherapyTypes");
         return therapyTypeService.findAll();
-        }
+    }
 
     /**
      * GET  /therapy-types/:id : get the "id" therapyType.
@@ -116,7 +128,8 @@ public class TherapyTypeResource {
     public ResponseEntity<Void> deleteTherapyType(@PathVariable Long id) {
         log.debug("REST request to delete TherapyType : {}", id);
         therapyTypeService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
     /**

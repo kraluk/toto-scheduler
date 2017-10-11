@@ -25,11 +25,15 @@ public final class PaginationUtil {
         headers.add("X-Total-Count", Long.toString(page.getTotalElements()));
         String link = "";
         if ((page.getNumber() + 1) < page.getTotalPages()) {
-            link = "<" + generateUri(baseUrl, page.getNumber() + 1, page.getSize()) + ">; rel=\"next\",";
+            link =
+                "<" + generateUri(baseUrl, page.getNumber() + 1, page.getSize())
+                    + ">; rel=\"next\",";
         }
         // prev link
         if ((page.getNumber()) > 0) {
-            link += "<" + generateUri(baseUrl, page.getNumber() - 1, page.getSize()) + ">; rel=\"prev\",";
+            link +=
+                "<" + generateUri(baseUrl, page.getNumber() - 1, page.getSize())
+                    + ">; rel=\"prev\",";
         }
         // last and first link
         int lastPage = 0;
@@ -43,10 +47,12 @@ public final class PaginationUtil {
     }
 
     private static String generateUri(String baseUrl, int page, int size) {
-        return UriComponentsBuilder.fromUriString(baseUrl).queryParam("page", page).queryParam("size", size).toUriString();
+        return UriComponentsBuilder.fromUriString(baseUrl).queryParam("page", page)
+            .queryParam("size", size).toUriString();
     }
 
-    public static HttpHeaders generateSearchPaginationHttpHeaders(String query, Page page, String baseUrl) {
+    public static HttpHeaders generateSearchPaginationHttpHeaders(String query, Page page,
+                                                                  String baseUrl) {
         String escapedQuery;
         try {
             escapedQuery = URLEncoder.encode(query, "UTF-8");
@@ -57,19 +63,27 @@ public final class PaginationUtil {
         headers.add("X-Total-Count", Long.toString(page.getTotalElements()));
         String link = "";
         if ((page.getNumber() + 1) < page.getTotalPages()) {
-            link = "<" + generateUri(baseUrl, page.getNumber() + 1, page.getSize()) + "&query=" + escapedQuery + ">; rel=\"next\",";
+            link =
+                "<" + generateUri(baseUrl, page.getNumber() + 1, page.getSize()) + "&query="
+                    + escapedQuery + ">; rel=\"next\",";
         }
         // prev link
         if ((page.getNumber()) > 0) {
-            link += "<" + generateUri(baseUrl, page.getNumber() - 1, page.getSize()) + "&query=" + escapedQuery + ">; rel=\"prev\",";
+            link +=
+                "<" + generateUri(baseUrl, page.getNumber() - 1, page.getSize()) + "&query="
+                    + escapedQuery + ">; rel=\"prev\",";
         }
         // last and first link
         int lastPage = 0;
         if (page.getTotalPages() > 0) {
             lastPage = page.getTotalPages() - 1;
         }
-        link += "<" + generateUri(baseUrl, lastPage, page.getSize()) + "&query=" + escapedQuery + ">; rel=\"last\",";
-        link += "<" + generateUri(baseUrl, 0, page.getSize()) + "&query=" + escapedQuery + ">; rel=\"first\"";
+        link +=
+            "<" + generateUri(baseUrl, lastPage, page.getSize()) + "&query=" + escapedQuery
+                + ">; rel=\"last\",";
+        link +=
+            "<" + generateUri(baseUrl, 0, page.getSize()) + "&query=" + escapedQuery
+                + ">; rel=\"first\"";
         headers.add(HttpHeaders.LINK, link);
         return headers;
     }

@@ -1,9 +1,11 @@
 package com.kraluk.totoscheduler.security.jwt;
 
 import com.kraluk.totoscheduler.security.AuthoritiesConstants;
+
 import io.github.jhipster.config.JHipsterProperties;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

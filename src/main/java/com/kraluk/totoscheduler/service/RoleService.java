@@ -5,6 +5,7 @@ import com.kraluk.totoscheduler.repository.RoleRepository;
 import com.kraluk.totoscheduler.repository.search.RoleSearchRepository;
 import com.kraluk.totoscheduler.service.dto.RoleDTO;
 import com.kraluk.totoscheduler.service.mapper.RoleMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * Service Implementation for managing Role.
@@ -32,7 +33,8 @@ public class RoleService {
 
     private final RoleSearchRepository roleSearchRepository;
 
-    public RoleService(RoleRepository roleRepository, RoleMapper roleMapper, RoleSearchRepository roleSearchRepository) {
+    public RoleService(RoleRepository roleRepository, RoleMapper roleMapper,
+                       RoleSearchRepository roleSearchRepository) {
         this.roleRepository = roleRepository;
         this.roleMapper = roleMapper;
         this.roleSearchRepository = roleSearchRepository;
@@ -54,9 +56,9 @@ public class RoleService {
     }
 
     /**
-     *  Get all the roles.
+     * Get all the roles.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public List<RoleDTO> findAll() {
@@ -67,10 +69,10 @@ public class RoleService {
     }
 
     /**
-     *  Get one role by id.
+     * Get one role by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Transactional(readOnly = true)
     public RoleDTO findOne(Long id) {
@@ -80,9 +82,9 @@ public class RoleService {
     }
 
     /**
-     *  Delete the  role by id.
+     * Delete the  role by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     public void delete(Long id) {
         log.debug("Request to delete Role : {}", id);
@@ -93,8 +95,8 @@ public class RoleService {
     /**
      * Search for the role corresponding to the query.
      *
-     *  @param query the query of the search
-     *  @return the list of entities
+     * @param query the query of the search
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public List<RoleDTO> search(String query) {

@@ -4,13 +4,18 @@ import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class ExceptionTranslatorTestController {
@@ -26,7 +31,8 @@ public class ExceptionTranslatorTestController {
 
     @GetMapping("/test/parameterized-error")
     public void parameterizedError() {
-        throw new CustomParameterizedException("test parameterized error", "param0_value", "param1_value");
+        throw new CustomParameterizedException("test parameterized error", "param0_value",
+            "param1_value");
     }
 
     @GetMapping("/test/parameterized-error2")
@@ -44,7 +50,8 @@ public class ExceptionTranslatorTestController {
 
     @GetMapping("/test/missing-servlet-request-parameter")
     public void missingServletRequestParameterException() throws Exception {
-        throw new MissingServletRequestParameterException("missing Servlet request parameter", "parameter type");
+        throw new MissingServletRequestParameterException("missing Servlet request parameter",
+            "parameter type");
     }
 
     @GetMapping("/test/access-denied")

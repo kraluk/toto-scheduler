@@ -2,8 +2,6 @@ package com.kraluk.totoscheduler.service.dto;
 
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -71,7 +69,7 @@ public class TherapistDTO implements Serializable {
         }
 
         TherapistDTO therapistDTO = (TherapistDTO) o;
-        if(therapistDTO.getId() == null || getId() == null) {
+        if (therapistDTO.getId() == null || getId() == null) {
             return false;
         }
         return Objects.equals(getId(), therapistDTO.getId());

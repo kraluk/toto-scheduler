@@ -5,6 +5,7 @@ import com.kraluk.totoscheduler.repository.TherapistRepository;
 import com.kraluk.totoscheduler.repository.search.TherapistSearchRepository;
 import com.kraluk.totoscheduler.service.dto.TherapistDTO;
 import com.kraluk.totoscheduler.service.mapper.TherapistMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * Service Implementation for managing Therapist.
@@ -32,7 +33,9 @@ public class TherapistService {
 
     private final TherapistSearchRepository therapistSearchRepository;
 
-    public TherapistService(TherapistRepository therapistRepository, TherapistMapper therapistMapper, TherapistSearchRepository therapistSearchRepository) {
+    public TherapistService(TherapistRepository therapistRepository,
+                            TherapistMapper therapistMapper,
+                            TherapistSearchRepository therapistSearchRepository) {
         this.therapistRepository = therapistRepository;
         this.therapistMapper = therapistMapper;
         this.therapistSearchRepository = therapistSearchRepository;
@@ -54,9 +57,9 @@ public class TherapistService {
     }
 
     /**
-     *  Get all the therapists.
+     * Get all the therapists.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public List<TherapistDTO> findAll() {
@@ -67,10 +70,10 @@ public class TherapistService {
     }
 
     /**
-     *  Get one therapist by id.
+     * Get one therapist by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Transactional(readOnly = true)
     public TherapistDTO findOne(Long id) {
@@ -80,9 +83,9 @@ public class TherapistService {
     }
 
     /**
-     *  Delete the  therapist by id.
+     * Delete the  therapist by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     public void delete(Long id) {
         log.debug("Request to delete Therapist : {}", id);
@@ -93,8 +96,8 @@ public class TherapistService {
     /**
      * Search for the therapist corresponding to the query.
      *
-     *  @param query the query of the search
-     *  @return the list of entities
+     * @param query the query of the search
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public List<TherapistDTO> search(String query) {

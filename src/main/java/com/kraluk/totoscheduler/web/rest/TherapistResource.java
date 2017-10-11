@@ -2,22 +2,28 @@ package com.kraluk.totoscheduler.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.kraluk.totoscheduler.service.TherapistService;
-import com.kraluk.totoscheduler.web.rest.util.HeaderUtil;
 import com.kraluk.totoscheduler.service.dto.TherapistDTO;
+import com.kraluk.totoscheduler.web.rest.util.HeaderUtil;
+
 import io.github.jhipster.web.util.ResponseUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Therapist.
@@ -45,10 +51,13 @@ public class TherapistResource {
      */
     @PostMapping("/therapists")
     @Timed
-    public ResponseEntity<TherapistDTO> createTherapist(@RequestBody TherapistDTO therapistDTO) throws URISyntaxException {
+    public ResponseEntity<TherapistDTO> createTherapist(@RequestBody TherapistDTO therapistDTO)
+        throws URISyntaxException {
         log.debug("REST request to save Therapist : {}", therapistDTO);
         if (therapistDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new therapist cannot already have an ID")).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil
+                .createFailureAlert(ENTITY_NAME, "idexists",
+                    "A new therapist cannot already have an ID")).body(null);
         }
         TherapistDTO result = therapistService.save(therapistDTO);
         return ResponseEntity.created(new URI("/api/therapists/" + result.getId()))
@@ -67,14 +76,16 @@ public class TherapistResource {
      */
     @PutMapping("/therapists")
     @Timed
-    public ResponseEntity<TherapistDTO> updateTherapist(@RequestBody TherapistDTO therapistDTO) throws URISyntaxException {
+    public ResponseEntity<TherapistDTO> updateTherapist(@RequestBody TherapistDTO therapistDTO)
+        throws URISyntaxException {
         log.debug("REST request to update Therapist : {}", therapistDTO);
         if (therapistDTO.getId() == null) {
             return createTherapist(therapistDTO);
         }
         TherapistDTO result = therapistService.save(therapistDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, therapistDTO.getId().toString()))
+            .headers(
+                HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, therapistDTO.getId().toString()))
             .body(result);
     }
 
@@ -88,7 +99,7 @@ public class TherapistResource {
     public List<TherapistDTO> getAllTherapists() {
         log.debug("REST request to get all Therapists");
         return therapistService.findAll();
-        }
+    }
 
     /**
      * GET  /therapists/:id : get the "id" therapist.
@@ -115,7 +126,8 @@ public class TherapistResource {
     public ResponseEntity<Void> deleteTherapist(@PathVariable Long id) {
         log.debug("REST request to delete Therapist : {}", id);
         therapistService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
     /**

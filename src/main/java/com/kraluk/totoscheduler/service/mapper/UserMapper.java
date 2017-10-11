@@ -6,7 +6,9 @@ import com.kraluk.totoscheduler.service.dto.UserDTO;
 
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -43,7 +45,7 @@ public class UserMapper {
             user.setActivated(userDTO.isActivated());
             user.setLangKey(userDTO.getLangKey());
             Set<Authority> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
-            if(authorities != null) {
+            if (authorities != null) {
                 user.setAuthorities(authorities);
             }
             return user;

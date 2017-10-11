@@ -5,6 +5,7 @@ import com.kraluk.totoscheduler.domain.User;
 import com.kraluk.totoscheduler.repository.UserRepository;
 import com.kraluk.totoscheduler.security.jwt.TokenProvider;
 import com.kraluk.totoscheduler.web.rest.vm.LoginVM;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,7 +47,9 @@ public class UserJWTControllerIntTest {
 
     @Before
     public void setup() {
-        UserJWTController userJWTController = new UserJWTController(tokenProvider, authenticationManager);
+        UserJWTController
+            userJWTController =
+            new UserJWTController(tokenProvider, authenticationManager);
         this.mockMvc = MockMvcBuilders.standaloneSetup(userJWTController)
             .build();
     }

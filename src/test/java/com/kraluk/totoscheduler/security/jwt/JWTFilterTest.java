@@ -1,7 +1,9 @@
 package com.kraluk.totoscheduler.security.jwt;
 
 import com.kraluk.totoscheduler.security.AuthoritiesConstants;
+
 import io.github.jhipster.config.JHipsterProperties;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
@@ -36,11 +38,13 @@ public class JWTFilterTest {
 
     @Test
     public void testJWTFilter() throws Exception {
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-            "test-user",
-            "test-password",
-            Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER))
-        );
+        UsernamePasswordAuthenticationToken
+            authentication =
+            new UsernamePasswordAuthenticationToken(
+                "test-user",
+                "test-password",
+                Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER))
+            );
         String jwt = tokenProvider.createToken(authentication, false);
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
@@ -49,8 +53,11 @@ public class JWTFilterTest {
         MockFilterChain filterChain = new MockFilterChain();
         jwtFilter.doFilter(request, response, filterChain);
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(SecurityContextHolder.getContext().getAuthentication().getName()).isEqualTo("test-user");
-        assertThat(SecurityContextHolder.getContext().getAuthentication().getCredentials().toString()).isEqualTo(jwt);
+        assertThat(SecurityContextHolder.getContext().getAuthentication().getName())
+            .isEqualTo("test-user");
+        assertThat(
+            SecurityContextHolder.getContext().getAuthentication().getCredentials().toString())
+            .isEqualTo(jwt);
     }
 
     @Test
@@ -91,11 +98,13 @@ public class JWTFilterTest {
 
     @Test
     public void testJWTFilterWrongScheme() throws Exception {
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-            "test-user",
-            "test-password",
-            Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER))
-        );
+        UsernamePasswordAuthenticationToken
+            authentication =
+            new UsernamePasswordAuthenticationToken(
+                "test-user",
+                "test-password",
+                Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER))
+            );
         String jwt = tokenProvider.createToken(authentication, false);
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Basic " + jwt);

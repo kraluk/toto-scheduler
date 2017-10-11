@@ -5,6 +5,7 @@ import com.kraluk.totoscheduler.repository.TherapyTypeRepository;
 import com.kraluk.totoscheduler.repository.search.TherapyTypeSearchRepository;
 import com.kraluk.totoscheduler.service.dto.TherapyTypeDTO;
 import com.kraluk.totoscheduler.service.mapper.TherapyTypeMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * Service Implementation for managing TherapyType.
@@ -32,7 +33,9 @@ public class TherapyTypeService {
 
     private final TherapyTypeSearchRepository therapyTypeSearchRepository;
 
-    public TherapyTypeService(TherapyTypeRepository therapyTypeRepository, TherapyTypeMapper therapyTypeMapper, TherapyTypeSearchRepository therapyTypeSearchRepository) {
+    public TherapyTypeService(TherapyTypeRepository therapyTypeRepository,
+                              TherapyTypeMapper therapyTypeMapper,
+                              TherapyTypeSearchRepository therapyTypeSearchRepository) {
         this.therapyTypeRepository = therapyTypeRepository;
         this.therapyTypeMapper = therapyTypeMapper;
         this.therapyTypeSearchRepository = therapyTypeSearchRepository;
@@ -54,9 +57,9 @@ public class TherapyTypeService {
     }
 
     /**
-     *  Get all the therapyTypes.
+     * Get all the therapyTypes.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public List<TherapyTypeDTO> findAll() {
@@ -67,10 +70,10 @@ public class TherapyTypeService {
     }
 
     /**
-     *  Get one therapyType by id.
+     * Get one therapyType by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Transactional(readOnly = true)
     public TherapyTypeDTO findOne(Long id) {
@@ -80,9 +83,9 @@ public class TherapyTypeService {
     }
 
     /**
-     *  Delete the  therapyType by id.
+     * Delete the  therapyType by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     public void delete(Long id) {
         log.debug("Request to delete TherapyType : {}", id);
@@ -93,14 +96,15 @@ public class TherapyTypeService {
     /**
      * Search for the therapyType corresponding to the query.
      *
-     *  @param query the query of the search
-     *  @return the list of entities
+     * @param query the query of the search
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public List<TherapyTypeDTO> search(String query) {
         log.debug("Request to search TherapyTypes for query {}", query);
         return StreamSupport
-            .stream(therapyTypeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .stream(therapyTypeSearchRepository.search(queryStringQuery(query)).spliterator(),
+                false)
             .map(therapyTypeMapper::toDto)
             .collect(Collectors.toList());
     }

@@ -1,7 +1,9 @@
 package com.kraluk.totoscheduler.web.rest;
 
-import io.github.jhipster.config.JHipsterProperties;
 import com.kraluk.totoscheduler.TotoSchedulerApp;
+
+import io.github.jhipster.config.JHipsterProperties;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,7 +50,9 @@ public class ProfileInfoResourceIntTest {
         when(environment.getDefaultProfiles()).thenReturn(activeProfiles);
         when(environment.getActiveProfiles()).thenReturn(activeProfiles);
 
-        ProfileInfoResource profileInfoResource = new ProfileInfoResource(environment, jHipsterProperties);
+        ProfileInfoResource
+            profileInfoResource =
+            new ProfileInfoResource(environment, jHipsterProperties);
         this.restProfileMockMvc = MockMvcBuilders
             .standaloneSetup(profileInfoResource)
             .build();

@@ -5,6 +5,7 @@ import com.kraluk.totoscheduler.repository.ChildRepository;
 import com.kraluk.totoscheduler.repository.search.ChildSearchRepository;
 import com.kraluk.totoscheduler.service.dto.ChildDTO;
 import com.kraluk.totoscheduler.service.mapper.ChildMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 /**
  * Service Implementation for managing Child.
@@ -32,7 +33,8 @@ public class ChildService {
 
     private final ChildSearchRepository childSearchRepository;
 
-    public ChildService(ChildRepository childRepository, ChildMapper childMapper, ChildSearchRepository childSearchRepository) {
+    public ChildService(ChildRepository childRepository, ChildMapper childMapper,
+                        ChildSearchRepository childSearchRepository) {
         this.childRepository = childRepository;
         this.childMapper = childMapper;
         this.childSearchRepository = childSearchRepository;
@@ -54,9 +56,9 @@ public class ChildService {
     }
 
     /**
-     *  Get all the children.
+     * Get all the children.
      *
-     *  @return the list of entities
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public List<ChildDTO> findAll() {
@@ -67,10 +69,10 @@ public class ChildService {
     }
 
     /**
-     *  Get one child by id.
+     * Get one child by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Transactional(readOnly = true)
     public ChildDTO findOne(Long id) {
@@ -80,9 +82,9 @@ public class ChildService {
     }
 
     /**
-     *  Delete the  child by id.
+     * Delete the  child by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     public void delete(Long id) {
         log.debug("Request to delete Child : {}", id);
@@ -93,8 +95,8 @@ public class ChildService {
     /**
      * Search for the child corresponding to the query.
      *
-     *  @param query the query of the search
-     *  @return the list of entities
+     * @param query the query of the search
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public List<ChildDTO> search(String query) {

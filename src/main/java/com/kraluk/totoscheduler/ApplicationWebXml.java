@@ -1,6 +1,7 @@
 package com.kraluk.totoscheduler;
 
 import com.kraluk.totoscheduler.config.DefaultProfileUtil;
+
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
